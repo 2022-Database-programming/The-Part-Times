@@ -3,9 +3,11 @@ package model.dao;
 import model.dto.MyTodayWorkTimeDto;
 import util.JDBCUtil;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MyTodayWorkTimeDao {
+    private final String TABLE_NAME = "\"mytodayworktime\"";
     private JDBCUtil jdbcUtil = null;
 
     public MyTodayWorkTimeDao() {
@@ -14,10 +16,10 @@ public class MyTodayWorkTimeDao {
 
     // 오늘 근무한 시간 저장
     public int insert(MyTodayWorkTimeDto myTodayWorkTimeDto) throws SQLException {
-        String sqlQuery = "INSERT INTO \"mytodayworktime\" VALUES (\"mytodayworktime_seq\".nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sqlQuery = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         Object[] params = new Object[] {
-                myTodayWorkTimeDto.getMyTotalWorkTimeId(),
+                myTodayWorkTimeDto.getId(), myTodayWorkTimeDto.getMyTotalWorkTimeId(),
                 myTodayWorkTimeDto.getWorkStartTime(), myTodayWorkTimeDto.getWorkFinishTime(),
                 myTodayWorkTimeDto.getBreakStartTime(), myTodayWorkTimeDto.getBreakFinishTime(),
                 myTodayWorkTimeDto.getTotalWorkTimeOfDay(), myTodayWorkTimeDto.getTotalBreakTimeOfDay(),
@@ -44,7 +46,7 @@ public class MyTodayWorkTimeDao {
 
     // 오늘 근무 시간 삭제
     public int delete(int id) {
-        String sqlQuery = "DELETE FROM \"mytodayworktime\" WHERE \"id\"=?";
+        String sqlQuery = "DELETE FROM " + TABLE_NAME + " WHERE \"id\"=?";
         jdbcUtil.setSqlAndParameters(sqlQuery, new Object[] { id });
 
         try {
@@ -59,5 +61,33 @@ public class MyTodayWorkTimeDao {
         }
 
         return 0;
+    }
+
+    public MyTodayWorkTimeDto findMyWorkTimeByDate(int id) {
+        String sqlQuery = "SELECT * "
+                + "FROM " + TABLE_NAME + " WHERE \"id\"=?";
+
+        jdbcUtil.setSqlAndParameters(sqlQuery, new Object[] {id});
+
+        try {
+            ResultSet resultSet = jdbcUtil.executeQuery();
+
+            if(resultSet.next()) {
+                MyTodayWorkTimeDto myTodayWorkTimeDto = new MyTodayWorkTimeDto(
+                        id, resultSet.getInt("mytotal_worktime_id"), resultSet.getTime("work_start_time"),
+                        resultSet.getTime("work_finish_time"), resultSet.getTime("break_start_time"), resultSet.getTime("break_finish_time"),
+                        resultSet.getTime("total_work_time_of_day"), resultSet.getTime("total_break_time_of_day"),
+                        resultSet.getDate("work_date"), resultSet.getTimestamp("created_at"), resultSet.getTimestamp("updated_at")
+                );
+
+                return myTodayWorkTimeDto;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            jdbcUtil.close();
+        }
+
+        return null;
     }
 }

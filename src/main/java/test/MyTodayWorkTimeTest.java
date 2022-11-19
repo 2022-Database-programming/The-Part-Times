@@ -24,7 +24,7 @@ public class MyTodayWorkTimeTest {
 
 //        myTodayWorkTimeDao.delete(2);
 
-        MyTodayWorkTimeDto myTodayWorkTimeDto2 = myTodayWorkTimeDao.findMyWorkTimeByDate(2);
+        MyTodayWorkTimeDto myTodayWorkTimeDto2 = myTodayWorkTimeDao.findMyWorkTimeByDate(Date.valueOf("2022-01-01"));
         System.out.println(myTodayWorkTimeDto2);
     }
 }

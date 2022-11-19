@@ -3,6 +3,7 @@ package model.dao;
 import model.dto.MyTodayWorkTimeDto;
 import util.JDBCUtil;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -63,18 +64,19 @@ public class MyTodayWorkTimeDao {
         return 0;
     }
 
-    public MyTodayWorkTimeDto findMyWorkTimeByDate(int id) {
+    // 오늘 날짜로 찾기
+    public MyTodayWorkTimeDto findMyWorkTimeByDate(Date date) {
         String sqlQuery = "SELECT * "
-                + "FROM " + TABLE_NAME + " WHERE \"id\"=?";
+                + "FROM " + TABLE_NAME + " WHERE \"work_date\"=?";
 
-        jdbcUtil.setSqlAndParameters(sqlQuery, new Object[] {id});
+        jdbcUtil.setSqlAndParameters(sqlQuery, new Object[] {date});
 
         try {
             ResultSet resultSet = jdbcUtil.executeQuery();
 
             if(resultSet.next()) {
                 MyTodayWorkTimeDto myTodayWorkTimeDto = new MyTodayWorkTimeDto(
-                        id, resultSet.getInt("mytotal_worktime_id"), resultSet.getTime("work_start_time"),
+                        resultSet.getInt("id"), resultSet.getInt("mytotal_worktime_id"), resultSet.getTime("work_start_time"),
                         resultSet.getTime("work_finish_time"), resultSet.getTime("break_start_time"), resultSet.getTime("break_finish_time"),
                         resultSet.getTime("total_work_time_of_day"), resultSet.getTime("total_break_time_of_day"),
                         resultSet.getDate("work_date"), resultSet.getTimestamp("created_at"), resultSet.getTimestamp("updated_at")

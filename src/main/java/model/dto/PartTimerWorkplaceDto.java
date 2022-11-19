@@ -1,34 +1,57 @@
 package model.dto;
 
-import java.time.LocalDateTime;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 public class PartTimerWorkplaceDto {
+	// Primary key field
 	private int id;
+
+	//Foreign key field
 	private MemberDto memberDto;
+	private WorkplaceDto workplaceDto;
+
 	private String salaryForm;
 	private int salaryDay;
-	private LocalDateTime totalWorkTimeOfMonth;
+	private Time totalWorkTimeOfMonth;
 	private int salary;
-	private LocalDateTime createdAt;
-	private LocalDateTime updatedAt;
+	private Timestamp createdAt;
+	private Timestamp updatedAt;
 
-	public PartTimerWorkplaceDto(int id, MemberDto memberDto, String salaryForm, int salaryDay, int salary, LocalDateTime createdAt, LocalDateTime updatedAt) {
-		super();
+	public PartTimerWorkplaceDto(int id, MemberDto memberDto, WorkplaceDto workplaceDto, String salaryForm, int salaryDay, Time totalWorkTimeOfMonth, int salary, Timestamp createdAt, Timestamp updatedAt) {
 		this.id = id;
 		this.memberDto = memberDto;
+		this.workplaceDto = workplaceDto;
 		this.salaryForm = salaryForm;
 		this.salaryDay = salaryDay;
+		this.totalWorkTimeOfMonth = totalWorkTimeOfMonth;
 		this.salary = salary;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public MemberDto getMemberDto() {
+		return memberDto;
+	}
+
+	public void setMemberDto(MemberDto memberDto) {
+		this.memberDto = memberDto;
+	}
+
+	public WorkplaceDto getWorkplaceDto() {
+		return workplaceDto;
+	}
+
+	public void setWorkplaceDto(WorkplaceDto workplaceDto) {
+		this.workplaceDto = workplaceDto;
 	}
 
 	public String getSalaryForm() {
@@ -47,11 +70,11 @@ public class PartTimerWorkplaceDto {
 		this.salaryDay = salaryDay;
 	}
 
-	public LocalDateTime getTotalWorkTimeOfMonth() {
+	public Time getTotalWorkTimeOfMonth() {
 		return totalWorkTimeOfMonth;
 	}
 
-	public void setTotalWorkTimeOfMonth(LocalDateTime totalWorkTimeOfMonth) {
+	public void setTotalWorkTimeOfMonth(Time totalWorkTimeOfMonth) {
 		this.totalWorkTimeOfMonth = totalWorkTimeOfMonth;
 	}
 
@@ -63,33 +86,34 @@ public class PartTimerWorkplaceDto {
 		this.salary = salary;
 	}
 
-	public LocalDateTime getCreatedAt() {
+	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(LocalDateTime createdAt) {
+	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public LocalDateTime getUpdatedAt() {
+	public Timestamp getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(LocalDateTime updatedAt) {
+	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
-	}
-	
-	public MemberDto getMemberDto() {
-		return memberDto;
-	}
-
-	public void setMemberDto(MemberDto memberDto) {
-		this.memberDto = memberDto;
 	}
 
 	@Override
 	public String toString() {
-		return "PartTimerWorkplaceDto [id=" + id + ", salaryForm=" + salaryForm + ", salaryDay=" + salaryDay
-				+ ", salary=" + salary + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+		return "PartTimerWorkplaceDto{" +
+				"id=" + id +
+				", memberDto=" + memberDto +
+				", workplaceDto=" + workplaceDto +
+				", salaryForm='" + salaryForm + '\'' +
+				", salaryDay=" + salaryDay +
+				", totalWorkTimeOfMonth=" + totalWorkTimeOfMonth +
+				", salary=" + salary +
+				", createdAt=" + createdAt +
+				", updatedAt=" + updatedAt +
+				'}';
 	}
 }

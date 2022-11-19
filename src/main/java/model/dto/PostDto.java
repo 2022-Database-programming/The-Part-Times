@@ -10,6 +10,7 @@ public class PostDto {
     private int isAnonymous;
     private String type;
     private String title;
+    private String content;
     private int likes;
     private int views;
     private Timestamp createdAt;
@@ -28,6 +29,13 @@ public class PostDto {
         this.views = views;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public PostDto(int memberId, String type, String title, String content) {
+        this.memberId = memberId;
+        this.type = type;
+        this.title = title;
+        this.content = content;
     }
 
     public int getId() {
@@ -102,5 +110,11 @@ public class PostDto {
         this.updatedAt = updatedAt;
     }
 
+    public String getContent() {
+        return content;
+    }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

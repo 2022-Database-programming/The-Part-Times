@@ -1,46 +1,46 @@
 package model.dto;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.sql.Date;
 
 public class MemberDto {
 	private int id;		//유저번호
-	private String member_id;	//아이디
+	private String memberId;	//아이디
 	private String password;	//비밀번호
 	private String name;	//이름
 	private Date date;	//생년월일  Date타입으로 해도 되는지 아니면 String으로 받고 jsp 페이지에서 바꿀건지
-	private String phone_number;	//전화번호
+	private String phoneNumber;	//전화번호
 	private String type;	//멤버타입
-	private int is_active;	//계정 활성화 여부
-	private LocalDateTime createdAt;	//생성 날짜
-	private LocalDateTime updatedAt;	//수정 날짜
+	private int isActive;	//계정 활성화 여부
+	private Timestamp createdAt;	//생성 날짜
+	private Timestamp updatedAt;	//수정 날짜
 	
 	public MemberDto() {
 		
 	}
 	
-	public MemberDto(String member_id, String password, String name, Date date, String phone_number,
-			String type, int is_active) {
+	public MemberDto(String memberId, String password, String name, Date date, String phoneNumber,
+			String type, int isActive) {
 		super();
-		this.member_id = member_id;
+		this.memberId = memberId;
 		this.password = password;
 		this.name = name;
 		this.date = date;
-		this.phone_number = phone_number;
+		this.phoneNumber = phoneNumber;
 		this.type = type;
-		this.is_active = is_active;
+		this.isActive = isActive;
 	}
 
 	public int getId() {
 		return id;
 	}
 	
-	public String getMember_id() {
-		return member_id;
+	public String getMemberId() {
+		return memberId;
 	}
 	
-	public void setMember_id(String member_id) {
-		this.member_id = member_id;
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 	
 	public String getPassword() {
@@ -67,12 +67,12 @@ public class MemberDto {
 		this.date = date;
 	}
 	
-	public String getPhone_number() {
-		return phone_number;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 	
-	public void setPhone_number(String phone_number) {
-		this.phone_number = phone_number;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 	
 	public String getType() {
@@ -83,29 +83,37 @@ public class MemberDto {
 		this.type = type;
 	}
 	
-	public int getIs_active() {
-		return is_active;
+	public int getIsActive() {
+		return isActive;
 	}
 	
-	public void setIs_active(int is_active) {
-		this.is_active = is_active;
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
 	}
 	
-	public LocalDateTime getCreated_at() {
+	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
 	
-	public void setCreated_at(LocalDateTime updatedAt) {
+	public void setCreatedAt(Timestamp updatedAt) {
 		this.createdAt = updatedAt;
 	}
 	
-	public LocalDateTime getUpdated_at() {
+	public Timestamp getUpdatedAt() {
 		return updatedAt;
 	}
 	
-	public void setUpdated_at(LocalDateTime updatedAt) {
+	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+	@Override
+	public String toString() {
+		return "MemberDto [id=" + id + ", memberId=" + memberId + ", password=" + password + ", name=" + name
+				+ ", date=" + date + ", phoneNumber=" + phoneNumber + ", type=" + type + ", isActive=" + isActive
+				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+	}
+	
 	
 	
 }

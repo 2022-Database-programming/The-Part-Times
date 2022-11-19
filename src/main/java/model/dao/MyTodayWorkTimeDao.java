@@ -14,10 +14,10 @@ public class MyTodayWorkTimeDao {
 
     // 오늘 근무한 시간 저장
     public int insert(MyTodayWorkTimeDto myTodayWorkTimeDto) throws SQLException {
-        String sqlQuery = "INSERT INTO \"mytodayworktime\" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sqlQuery = "INSERT INTO \"mytodayworktime\" VALUES (\"mytodayworktime_seq\".nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         Object[] params = new Object[] {
-                myTodayWorkTimeDto.getId(), myTodayWorkTimeDto.getMyTotalWorkTimeId(),
+                myTodayWorkTimeDto.getMyTotalWorkTimeId(),
                 myTodayWorkTimeDto.getWorkStartTime(), myTodayWorkTimeDto.getWorkFinishTime(),
                 myTodayWorkTimeDto.getBreakStartTime(), myTodayWorkTimeDto.getBreakFinishTime(),
                 myTodayWorkTimeDto.getTotalWorkTimeOfDay(), myTodayWorkTimeDto.getTotalBreakTimeOfDay(),
@@ -44,8 +44,8 @@ public class MyTodayWorkTimeDao {
 
     // 오늘 근무 시간 삭제
     public int delete(int id) {
-        String sqlQuery = "DELETE FROM mytodayworktime WHERE id=?";
-        jdbcUtil.setSqlAndParameters(sqlQuery, new Object[] {id});
+        String sqlQuery = "DELETE FROM \"mytodayworktime\" WHERE \"id\"=?";
+        jdbcUtil.setSqlAndParameters(sqlQuery, new Object[] { id });
 
         try {
             int result = jdbcUtil.executeUpdate();

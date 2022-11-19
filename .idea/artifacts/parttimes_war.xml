@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="parttimes:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>parttimes</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="parttimes-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="parttimes:war exploded" />
+    </root>
+  </artifact>
+</component>

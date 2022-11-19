@@ -9,5 +9,11 @@
         <module name="parttimes" />
       </profile>
     </annotationProcessing>
+<<<<<<< HEAD
+=======
+    <bytecodeTargetLevel>
+      <module name="parttimes" target="1.8" />
+    </bytecodeTargetLevel>
+>>>>>>> 6dbaeef76f0c4aeccc831e816ca28e07e2b5a6ef
   </component>
 </project>

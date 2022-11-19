@@ -21,7 +21,7 @@ public class MyTodayWorkTimeDto {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public MyTodayWorkTimeDto(int id, int myTotalWorkTimeDto, Time workStartTime, Time workFinishTime, Time breakStartTime, Time breakFinishTime, Time totalWorkTimeOfDay, Time totalBreakTimeOfDay, Date workDate, Timestamp createdAt, Timestamp updatedAt) {
+    public MyTodayWorkTimeDto(int id, int myTotalWorkTimeId, Time workStartTime, Time workFinishTime, Time breakStartTime, Time breakFinishTime, Time totalWorkTimeOfDay, Time totalBreakTimeOfDay, Date workDate, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.myTotalWorkTimeId = myTotalWorkTimeId;
         this.workStartTime = workStartTime;

@@ -14,8 +14,8 @@ public class MyTodayWorkTimeTest {
         Scanner sc = new Scanner(System.in);
 
         MyTodayWorkTimeDto myTodayWorkTimeDto = new MyTodayWorkTimeDto(
-        2, 1, new Time(1, 0, 0), new Time(1, 30, 0), new Time(0, 10, 0), new Time(0, 0, 0),
-                new Time(2, 0, 1), new Time(0, 0, 0), Date.valueOf("2022-01-01"), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis())
+        3, 1, new Time(1, 0, 0), new Time(1, 30, 0), new Time(0, 10, 0), new Time(0, 0, 0),
+                new Time(2, 0, 1), new Time(0, 0, 0), Date.valueOf("2022-11-20"), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis())
         );
 
         MyTodayWorkTimeDao myTodayWorkTimeDao = new MyTodayWorkTimeDao();
@@ -24,7 +24,7 @@ public class MyTodayWorkTimeTest {
 
 //        myTodayWorkTimeDao.delete(2);
 
-        MyTodayWorkTimeDto myTodayWorkTimeDto2 = myTodayWorkTimeDao.findMyWorkTimeByDate(Date.valueOf("2022-01-01"));
+        MyTodayWorkTimeDto myTodayWorkTimeDto2 = myTodayWorkTimeDao.findMyWorkTimeByDate(Date.valueOf("2022-11-20"));
         System.out.println(myTodayWorkTimeDto2);
     }
 }

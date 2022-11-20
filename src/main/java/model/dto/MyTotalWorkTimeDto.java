@@ -8,7 +8,7 @@ public class MyTotalWorkTimeDto {
     private int id;
 
     // Foreign key field
-    private PartTimerWorkplaceDto partTimerWorkplaceDto;
+    private int partTimerWorkplaceId;
 
     private Timestamp totalWorkTimeOfDay;
     private Date date;
@@ -16,9 +16,9 @@ public class MyTotalWorkTimeDto {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public MyTotalWorkTimeDto(int id, PartTimerWorkplaceDto partTimerWorkplaceDto, Timestamp totalWorkTimeOfDay, Date date, int salary, Timestamp createdAt, Timestamp updatedAt) {
+    public MyTotalWorkTimeDto(int id, int partTimerWorkplaceId, Timestamp totalWorkTimeOfDay, Date date, int salary, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
-        this.partTimerWorkplaceDto = partTimerWorkplaceDto;
+        this.partTimerWorkplaceId = partTimerWorkplaceId;
         this.totalWorkTimeOfDay = totalWorkTimeOfDay;
         this.date = date;
         this.salary = salary;
@@ -34,12 +34,12 @@ public class MyTotalWorkTimeDto {
         this.id = id;
     }
 
-    public PartTimerWorkplaceDto getPartTimerWorkplaceDto() {
-        return partTimerWorkplaceDto;
+    public int getPartTimerWorkplaceId() {
+        return partTimerWorkplaceId;
     }
 
-    public void setPartTimerWorkplaceDto(PartTimerWorkplaceDto partTimerWorkplaceDto) {
-        this.partTimerWorkplaceDto = partTimerWorkplaceDto;
+    public void setPartTimerWorkplaceId(int partTimerWorkplaceId) {
+        this.partTimerWorkplaceId = partTimerWorkplaceId;
     }
 
     public Timestamp getTotalWorkTimeOfDay() {
@@ -84,9 +84,9 @@ public class MyTotalWorkTimeDto {
 
     @Override
     public String toString() {
-        return "MyTotalWorkTime{" +
+        return "MyTotalWorkTimeDto{" +
                 "id=" + id +
-                ", partTimerWorkplaceDto=" + partTimerWorkplaceDto +
+                ", partTimerWorkplaceId=" + partTimerWorkplaceId +
                 ", totalWorkTimeOfDay=" + totalWorkTimeOfDay +
                 ", date=" + date +
                 ", salary=" + salary +

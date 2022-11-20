@@ -11,17 +11,17 @@ public class MyTotalWorkTimeDto {
     // Foreign key field
     private int partTimerWorkplaceId;
 
-    private Time totalWorkTimeOfDay;
-    private Date date;
+    private Time totalWorkTimeOfMonth;
+    private Date workDateOfMonth;
     private int salary;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public MyTotalWorkTimeDto(int id, int partTimerWorkplaceId, Time totalWorkTimeOfDay, Date date, int salary, Timestamp createdAt, Timestamp updatedAt) {
+    public MyTotalWorkTimeDto(int id, int partTimerWorkplaceId, Time totalWorkTimeOfMonth, Date workDateOfMonth, int salary, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.partTimerWorkplaceId = partTimerWorkplaceId;
-        this.totalWorkTimeOfDay = totalWorkTimeOfDay;
-        this.date = date;
+        this.totalWorkTimeOfMonth = totalWorkTimeOfMonth;
+        this.workDateOfMonth = workDateOfMonth;
         this.salary = salary;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -43,20 +43,20 @@ public class MyTotalWorkTimeDto {
         this.partTimerWorkplaceId = partTimerWorkplaceId;
     }
 
-    public Time getTotalWorkTimeOfDay() {
-        return totalWorkTimeOfDay;
+    public Time getTotalWorkTimeOfMonth() {
+        return totalWorkTimeOfMonth;
     }
 
-    public void setTotalWorkTimeOfDay(Time totalWorkTimeOfDay) {
-        this.totalWorkTimeOfDay = totalWorkTimeOfDay;
+    public void setTotalWorkTimeOfMonth(Time totalWorkTimeOfMonth) {
+        this.totalWorkTimeOfMonth = totalWorkTimeOfMonth;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getWorkDateOfMonth() {
+        return workDateOfMonth;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setWorkDateOfMonth(Date workDateOfMonth) {
+        this.workDateOfMonth = workDateOfMonth;
     }
 
     public int getSalary() {
@@ -88,8 +88,9 @@ public class MyTotalWorkTimeDto {
         return "MyTotalWorkTimeDto{" +
                 "id=" + id +
                 ", partTimerWorkplaceId=" + partTimerWorkplaceId +
-                ", totalWorkTimeOfDay=" + totalWorkTimeOfDay +
-                ", date=" + date +
+                ", totalWorkTimeOfMonth=" + totalWorkTimeOfMonth +
+                ", workDateOfMonth=" + workDateOfMonth +
+                ", date=" + workDateOfMonth +
                 ", salary=" + salary +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +

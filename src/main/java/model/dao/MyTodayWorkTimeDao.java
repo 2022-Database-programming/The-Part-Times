@@ -7,7 +7,7 @@ import util.JDBCUtil;
 import java.sql.*;
 
 public class MyTodayWorkTimeDao {
-    private final String TABLE_NAME = "MYTOTALWORKTIME";
+    private final String TABLE_NAME = "MYTODAYWORKTIME";
     private JDBCUtil jdbcUtil = null;
     private MyTotalWorkTimeDao myTotalWorkTimeDao = null;
 
@@ -36,8 +36,7 @@ public class MyTodayWorkTimeDao {
             int salary = Integer.valueOf(times[0]) * myTodayWorkTimeDto.getMinimumWage();
 
             MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDto(
-            1, 1, myTodayWorkTimeDto.getTotalWorkTimeOfDay(), myTodayWorkTimeDto.getWorkDate(),
-                    salary, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis())
+            1, 1, myTodayWorkTimeDto.getTotalWorkTimeOfDay(), myTodayWorkTimeDto.getWorkDate(), salary, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis())
             );
 
             return result;
@@ -76,7 +75,7 @@ public class MyTodayWorkTimeDao {
     // 오늘 날짜로 찾기
     public MyTodayWorkTimeDto findMyWorkTimeByDate(Date date) {
         String sqlQuery = "SELECT * "
-                + "FROM " + TABLE_NAME + " WHERE \"work_date\"=?";
+                + "FROM " + TABLE_NAME + " WHERE work_date=?";
 
         jdbcUtil.setSqlAndParameters(sqlQuery, new Object[] {date});
 

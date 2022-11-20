@@ -19,12 +19,12 @@ public class MyTodayWorkTimeTest {
         );
 
         MyTodayWorkTimeDao myTodayWorkTimeDao = new MyTodayWorkTimeDao();
-//        int result = myTodayWorkTimeDao.insert(myTodayWorkTimeDto);
-//        System.out.println(result);
+        int result = myTodayWorkTimeDao.insert(myTodayWorkTimeDto);
+        System.out.println(result);
 
 //        myTodayWorkTimeDao.delete(2);
 
-        MyTodayWorkTimeDto myTodayWorkTimeDto2 = myTodayWorkTimeDao.findMyWorkTimeByDate(Date.valueOf("2022-11-20"));
-        System.out.println(myTodayWorkTimeDto2);
+        //MyTodayWorkTimeDto myTodayWorkTimeDto2 = myTodayWorkTimeDao.findMyWorkTimeByDate(Date.valueOf("2022-11-20"));
+        //System.out.println(myTodayWorkTimeDto2);
     }
 }

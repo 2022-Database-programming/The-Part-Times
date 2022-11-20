@@ -1,5 +1,6 @@
 package model.dto;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -10,13 +11,13 @@ public class MyTotalWorkTimeDto {
     // Foreign key field
     private int partTimerWorkplaceId;
 
-    private Timestamp totalWorkTimeOfDay;
+    private Time totalWorkTimeOfDay;
     private Date date;
     private int salary;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public MyTotalWorkTimeDto(int id, int partTimerWorkplaceId, Timestamp totalWorkTimeOfDay, Date date, int salary, Timestamp createdAt, Timestamp updatedAt) {
+    public MyTotalWorkTimeDto(int id, int partTimerWorkplaceId, Time totalWorkTimeOfDay, Date date, int salary, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.partTimerWorkplaceId = partTimerWorkplaceId;
         this.totalWorkTimeOfDay = totalWorkTimeOfDay;
@@ -42,11 +43,11 @@ public class MyTotalWorkTimeDto {
         this.partTimerWorkplaceId = partTimerWorkplaceId;
     }
 
-    public Timestamp getTotalWorkTimeOfDay() {
+    public Time getTotalWorkTimeOfDay() {
         return totalWorkTimeOfDay;
     }
 
-    public void setTotalWorkTimeOfDay(Timestamp totalWorkTimeOfDay) {
+    public void setTotalWorkTimeOfDay(Time totalWorkTimeOfDay) {
         this.totalWorkTimeOfDay = totalWorkTimeOfDay;
     }
 

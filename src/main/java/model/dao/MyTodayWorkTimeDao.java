@@ -18,6 +18,15 @@ public class MyTodayWorkTimeDao {
 
     // 오늘 근무한 시간 저장
     public int insert(MyTodayWorkTimeDto myTodayWorkTimeDto) throws SQLException {
+        String[] times = String.valueOf(myTodayWorkTimeDto.getTotalWorkTimeOfDay()).split(":");
+        int salary = Integer.valueOf(times[0]) * myTodayWorkTimeDto.getMinimumWage();
+
+        MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDto(
+                1, 999, myTodayWorkTimeDto.getTotalWorkTimeOfDay(), myTodayWorkTimeDto.getWorkDate(), salary, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis())
+        );
+
+        myTotalWorkTimeDao.insert(myTotalWorkTimeDto);
+
         String sqlQuery = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         Object[] params = new Object[] {
@@ -32,12 +41,6 @@ public class MyTodayWorkTimeDao {
 
         try {
             int result = jdbcUtil.executeUpdate();
-            String[] times = String.valueOf(myTodayWorkTimeDto.getTotalWorkTimeOfDay()).split(":");
-            int salary = Integer.valueOf(times[0]) * myTodayWorkTimeDto.getMinimumWage();
-
-            MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDto(
-            1, 1, myTodayWorkTimeDto.getTotalWorkTimeOfDay(), myTodayWorkTimeDto.getWorkDate(), salary, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis())
-            );
 
             return result;
         } catch (SQLException e) {

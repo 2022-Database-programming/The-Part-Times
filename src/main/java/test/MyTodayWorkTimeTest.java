@@ -14,7 +14,7 @@ public class MyTodayWorkTimeTest {
         Scanner sc = new Scanner(System.in);
 
         MyTodayWorkTimeDto myTodayWorkTimeDto = new MyTodayWorkTimeDto(
-        1, 1, new Time(1, 0, 0), new Time(1, 30, 0), new Time(0, 10, 0), new Time(0, 0, 0),
+        3, 1, new Time(1, 0, 0), new Time(1, 30, 0), new Time(0, 10, 0), new Time(0, 0, 0),
                 new Time(2, 0, 1), new Time(0, 0, 0), Date.valueOf("2022-11-20"), 9160, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis())
         );
 

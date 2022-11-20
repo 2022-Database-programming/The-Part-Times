@@ -25,7 +25,7 @@ public class MyTodayWorkTimeDao {
                 1, 999, myTodayWorkTimeDto.getTotalWorkTimeOfDay(), myTodayWorkTimeDto.getWorkDate(), salary, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis())
         );
 
-        myTotalWorkTimeDao.insert(myTotalWorkTimeDto);
+        myTotalWorkTimeDao.insertOrUpdate(myTotalWorkTimeDto);
 
         String sqlQuery = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 

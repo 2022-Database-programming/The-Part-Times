@@ -14,6 +14,16 @@ public class MemberDao {
 		jdbcUtil = new JDBCUtil();
 	}
 	
+	public int insertOrUpdate(MemberDto memberDto) throws SQLException {
+		int result = -1;
+		if(existedMember(memberDto.getMemberId())) {
+			result = updateMember(memberDto);
+		} else {
+			result = insertMember(memberDto);
+		}
+		return result;
+	}
+	
 	
 	//사용자 정보 확인 (회원가입시)
 	public boolean existedMember(String memberId) throws SQLException {
@@ -87,28 +97,39 @@ public class MemberDao {
 	
 	//마이페이지 (사용자 정보 수정)
 	public int updateMember(MemberDto memberDto) throws SQLException {
-		String sql = "UPDATE member "
+		MemberDto findmemberDto = findMember(memberDto.getMemberId());
+		
+		if(memberDto.getPassword() != null) {
+			String sql = "UPDATE member "
 						+ "SET password=?, phone_number=? "
 						+ "WHERE member_id=?";
-			Object[] param = new Object[] {memberDto.getPassword(), memberDto.getPhoneNumber(), memberDto.getMemberId()};				
+			Object[] param = new Object[] {memberDto.getPassword(), memberDto.getPhoneNumber(), findmemberDto.getMemberId()};				
 			jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
-				
-			try {				
-				int result = jdbcUtil.executeUpdate();	// update 문 실행
-				return result;
-			} catch (Exception ex) {
-				jdbcUtil.rollback();
-				ex.printStackTrace();
-			}
-			finally {
-				jdbcUtil.commit();
-				jdbcUtil.close();	// resource 반환
-			}		
-			return 0;
+		} else {
+			String sql = "UPDATE member "
+					+ "SET phone_number=? "
+					+ "WHERE member_id=?";
+			Object[] param = new Object[] {memberDto.getPhoneNumber(), findmemberDto.getMemberId()};				
+			jdbcUtil.setSqlAndParameters(sql, param);	
+		}
+
+		try {				
+			int result = jdbcUtil.executeUpdate();	// update 문 실행
+			return result;
+		} catch (Exception ex) {
+			jdbcUtil.rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			jdbcUtil.commit();
+			jdbcUtil.close();	// resource 반환
+		}		
+		return 0;
 	}
 	
+	
 	//로그인 기능
-	public boolean findByMemberIdAndPassword(String memberId, String password) throws SQLException {
+	public String findByMemberIdAndPassword(String memberId, String password) throws SQLException {
 		if(existedMember(memberId)) {
 			String sql = "SELECT member_id, password "
 	     			+ "FROM member "
@@ -122,17 +143,17 @@ public class MemberDao {
 					String id = rs.getString("member_id");
 					String pwd = rs.getString("password");
 					if(memberId.equals(id) && password.equals(pwd))
-						return true;
+						return id;
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			} finally {
 				jdbcUtil.close();
 			}
-			return false;
+			return null;
 		}
 		
-		return false;
+		return null;
 	}
 
 }

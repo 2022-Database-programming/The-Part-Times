@@ -7,8 +7,10 @@ import java.sql.SQLException;
 
 import model.dao.MemberDao;
 import model.dto.MemberDto;
+import model.dao.MyTotalIncomeDao;
+import model.dto.MyTotalIncomeDto;
 
-public class MemberTest {
+public class Test {
 
 	public static void main(String[] args) throws SQLException{
 		Scanner sc = new Scanner(System.in);
@@ -25,6 +27,8 @@ public class MemberTest {
 		MemberDao memberDao;
 		
 		MemberDao memberDao2;
+		
+		MyTotalIncomeDao myTotalIncomeDao;
 		
 		// 날짜 형식 변환시 parsing 오류를 try catch로 체크
 				try {
@@ -43,14 +47,11 @@ public class MemberTest {
 					
 					memberDao = new MemberDao();
 					
-					//사용자 존재 확인 후 추가
-//					if(memberDao.existedMember("abcdef") == false) {
-//						memberDto = new MemberDto("abcdef", "bbb", "acbd", Date.valueOf("2001-02-03") , "01056342123", "PARTTIMER");
-//						System.out.println("result: " + memberDao.insertMember(memberDto));
-//					} else {
-//						System.out.println("existed");
-//					}
+					//insert
+//					memberDto = new MemberDto("john1230", "jhn1230", "john", Date.valueOf("1994-08-17") , "01044981362", "EMPLOYER");
+//					System.out.println("result: " + memberDao.insertOrUpdate(memberDto));
 					
+//					
 					//사용자 정보 상세 조회
 //					memberDto = memberDao.findMember("ddegs");
 //					
@@ -67,26 +68,25 @@ public class MemberTest {
 //						return;
 //					}
 					
-					//사용자 존재 확인 후 update
-//					if(memberDao.existedMember("abcdef")) {
-//						memberDto = memberDao.findMember("abcdef");
-//						String pwd = "skfslfsf";
-//						String phone = "01055667893";
-//						
-//						memberDto.setPassword(pwd);
-//						memberDto.setPhoneNumber(phone);
-//						
-//						System.out.println("result : " + memberDao.updateMember(memberDto));
-//					} else {
-//						System.out.println("unexisted");
-//					}
+					//update
+//					memberDto = new MemberDto("john1230", "j1h2n307", "john", Date.valueOf("1994-08-17") , "01044981362", "EMPLOYER");
+//					System.out.println("result: " + memberDao.insertOrUpdate(memberDto));
 					
-					//로그인
-//					if(memberDao.findByMemberIdAndPassword("aaa", "bbb")) {
-//						System.out.println("로그인 성공");
+//					memberDto = new MemberDto("john1230", "jj1230nn" , "john", Date.valueOf("1994-08-17") , "01048791362", "EMPLOYER");
+//					System.out.println("result: " + memberDao.insertOrUpdate(memberDto));
+					
+//					memberDto = new MemberDto("john1230", null , "john", Date.valueOf("1994-08-17") , "01044981388", "EMPLOYER");
+//					System.out.println("result: " + memberDao.insertOrUpdate(memberDto));
+					
+					//로그인 -> memberId 리턴 아님 dto 리턴이 낫나?
+//					String ID = null;
+//					if((ID = memberDao.findByMemberIdAndPassword("aaa", "bbb")) != null) {			
+//						System.out.println(ID + " 로그인 성공");
 //					} else {
 //						System.out.println("로그인 실패");
 //					}	
+					
+					
 					
 					
 				}catch (Exception e) {

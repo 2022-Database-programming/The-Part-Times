@@ -58,7 +58,7 @@ public class MyTodayWorkTimeDao {
 
     // 오늘 근무 시간 삭제
     public int delete(int id) {
-        String sqlQuery = "DELETE FROM " + TABLE_NAME + " WHERE \"id\"=?";
+        String sqlQuery = "DELETE FROM " + TABLE_NAME + " WHERE id=?";
         jdbcUtil.setSqlAndParameters(sqlQuery, new Object[] { id });
 
         try {

@@ -9,7 +9,8 @@ public class MyTodayWorkTimeDto {
     private int id;
 
     // Foreign key field
-    private int myTotalWorkTimeId;
+    // private int myTotalWorkTimeId;
+    private MyTotalWorkTimeDto myTotalWorkTimeDto;
 
     private Time workStartTime;
     private Time workFinishTime;
@@ -22,9 +23,9 @@ public class MyTodayWorkTimeDto {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public MyTodayWorkTimeDto(int id, int myTotalWorkTimeId, Time workStartTime, Time workFinishTime, Time breakStartTime, Time breakFinishTime, Time totalWorkTimeOfDay, Time totalBreakTimeOfDay, Date workDate, int minimumWage, Timestamp createdAt, Timestamp updatedAt) {
+    public MyTodayWorkTimeDto(int id, MyTotalWorkTimeDto myTotalWorkTimeDto, Time workStartTime, Time workFinishTime, Time breakStartTime, Time breakFinishTime, Time totalWorkTimeOfDay, Time totalBreakTimeOfDay, Date workDate, int minimumWage, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
-        this.myTotalWorkTimeId = myTotalWorkTimeId;
+        this.myTotalWorkTimeDto = myTotalWorkTimeDto;
         this.workStartTime = workStartTime;
         this.workFinishTime = workFinishTime;
         this.breakStartTime = breakStartTime;
@@ -45,12 +46,12 @@ public class MyTodayWorkTimeDto {
         this.id = id;
     }
 
-    public int getMyTotalWorkTimeId() {
-        return myTotalWorkTimeId;
+    public MyTotalWorkTimeDto getMyTotalWorkTimeDto() {
+        return myTotalWorkTimeDto;
     }
 
-    public void setMyTotalWorkTimeId(int myTotalWorkTimeId) {
-        this.myTotalWorkTimeId = myTotalWorkTimeId;
+    public void setMyTotalWorkTimeId(MyTotalWorkTimeDto myTotalWorkTimeId) {
+        this.myTotalWorkTimeDto = myTotalWorkTimeId;
     }
 
     public Time getWorkStartTime() {
@@ -137,7 +138,7 @@ public class MyTodayWorkTimeDto {
     public String toString() {
         return "MyTodayWorkTimeDto{" +
                 "id=" + id +
-                ", myTotalWorkTimeId=" + myTotalWorkTimeId +
+                ", myTotalWorkTimeDto=" + myTotalWorkTimeDto +
                 ", workStartTime=" + workStartTime +
                 ", workFinishTime=" + workFinishTime +
                 ", breakStartTime=" + breakStartTime +

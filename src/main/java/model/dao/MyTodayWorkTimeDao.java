@@ -17,12 +17,12 @@ public class MyTodayWorkTimeDao {
     }
 
     // 오늘 근무한 시간 저장
-    public int insert(MyTodayWorkTimeDto myTodayWorkTimeDto) throws SQLException {
+    public int insert(MyTodayWorkTimeDto myTodayWorkTimeDto, int partTimerWorkPlaceId) throws SQLException {
         String[] times = String.valueOf(myTodayWorkTimeDto.getTotalWorkTimeOfDay()).split(":");
         int salary = Integer.valueOf(times[0]) * myTodayWorkTimeDto.getMinimumWage();
 
         MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDto(
-                1, 999, myTodayWorkTimeDto.getTotalWorkTimeOfDay(), myTodayWorkTimeDto.getWorkDate(), salary, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis())
+                (int) (Math.random() * 100), partTimerWorkPlaceId, myTodayWorkTimeDto.getTotalWorkTimeOfDay(), myTodayWorkTimeDto.getWorkDate(), salary, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis())
         );
 
         myTotalWorkTimeDao.insertOrUpdate(myTotalWorkTimeDto);
@@ -30,7 +30,7 @@ public class MyTodayWorkTimeDao {
         String sqlQuery = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         Object[] params = new Object[] {
-                myTodayWorkTimeDto.getId(), myTodayWorkTimeDto.getMyTotalWorkTimeId(),
+                myTodayWorkTimeDto.getId(), myTodayWorkTimeDto.getMyTotalWorkTimeDto().getId(),
                 myTodayWorkTimeDto.getWorkStartTime(), myTodayWorkTimeDto.getWorkFinishTime(),
                 myTodayWorkTimeDto.getBreakStartTime(), myTodayWorkTimeDto.getBreakFinishTime(),
                 myTodayWorkTimeDto.getTotalWorkTimeOfDay(), myTodayWorkTimeDto.getTotalBreakTimeOfDay(), myTodayWorkTimeDto.getMinimumWage(),
@@ -82,12 +82,14 @@ public class MyTodayWorkTimeDao {
 
         jdbcUtil.setSqlAndParameters(sqlQuery, new Object[] {date});
 
+        MyTotalWorkTimeDto myTotalWorkTimeDto = myTotalWorkTimeDao.findMyTotalWorkTImeByDate(date);
+
         try {
             ResultSet resultSet = jdbcUtil.executeQuery();
 
             if(resultSet.next()) {
                 MyTodayWorkTimeDto myTodayWorkTimeDto = new MyTodayWorkTimeDto(
-                        resultSet.getInt("id"), resultSet.getInt("mytotal_worktime_id"), resultSet.getTime("work_start_time"),
+                        resultSet.getInt("id"), myTotalWorkTimeDto, resultSet.getTime("work_start_time"),
                         resultSet.getTime("work_finish_time"), resultSet.getTime("break_start_time"), resultSet.getTime("break_finish_time"),
                         resultSet.getTime("total_work_time_of_day"), resultSet.getTime("total_break_time_of_day"),
                         resultSet.getDate("work_date"), resultSet.getInt("minimum_wage"), resultSet.getTimestamp("created_at"), resultSet.getTimestamp("updated_at")

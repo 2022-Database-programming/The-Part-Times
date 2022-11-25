@@ -22,7 +22,7 @@ public class MyTodayWorkTimeTest {
                 new Time(13, 0, 0), new Time(16, 0, 0),
                 new Time(15, 0, 0), new Time(15, 30, 0),
                 new Time(2, 30, 0), new Time(0, 30, 0),
-                Date.valueOf("2022-11-21"), 9160, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()
+                Date.valueOf("2022-11-30"), 9160, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()
         ));
 
         MyTodayWorkTimeDao myTodayWorkTimeDao = new MyTodayWorkTimeDao();

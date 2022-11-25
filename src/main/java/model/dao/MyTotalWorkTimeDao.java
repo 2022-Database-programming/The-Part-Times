@@ -1,102 +1,104 @@
 package model.dao;
 
-import model.dto.MyTodayWorkTimeDto;
 import model.dto.MyTotalWorkTimeDto;
 import util.JDBCUtil;
-
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MyTotalWorkTimeDao {
     private final String TABLE_NAME = "MYTOTAL_WORKTIME";
-    private JDBCUtil jdbcUtil = null;
+    private final String ID = "id";
+    private final String PARTTIMER_WORKPLACE_ID = "parttimer_workplace_id";
+    private final String TOTAL_WORK_TIME_OF_MONTH = "total_work_time_of_month";
+    private final String WORK_DATE_OF_MONTH = "work_date_of_month";
+    private final String SALARY = "salary";
+    private final String CREATED_AT = "created_at";
+    private final String UPDATED_AT = "updated_at";
+
+    private final JDBCUtil JDBC_UTIL;
+
+    private final String insertQuery = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, TO_CHAR(?, HH34:MI:SS), TO_CHAR(?, YYYY-MM), ?, ?, ?)";
+    private final String updateQuery = "UPDATE " + TABLE_NAME + " SET " + TOTAL_WORK_TIME_OF_MONTH + "=?, " + SALARY + "=NVL(" + SALARY + ", 0) + ?" +
+            "WHERE " + WORK_DATE_OF_MONTH + "=?";
+    private final String findQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + WORK_DATE_OF_MONTH + "=?";
 
     public MyTotalWorkTimeDao() {
-        jdbcUtil = new JDBCUtil();
+        JDBC_UTIL = new JDBCUtil();
     }
 
-    public void insertOrUpdate(MyTotalWorkTimeDto myTotalWorkTimeDto) throws SQLException {
-        if (findMyTotalWorkTImeByDate((Date) myTotalWorkTimeDto.getWorkDateOfMonth()) != null) {
-            int result = update(myTotalWorkTimeDto);
-        } else {
-            int result = insert(myTotalWorkTimeDto);
+    public int insertOrUpdate(MyTotalWorkTimeDto myTotalWorkTimeDto) throws SQLException {
+        if (isNotMyTotalWorkTimeNull(myTotalWorkTimeDto)) {
+            return update(myTotalWorkTimeDto);
         }
+
+        return insert(myTotalWorkTimeDto);
     }
 
-    public int insert(MyTotalWorkTimeDto myTotalWorkTimeDto) throws SQLException {
-        System.out.println("insert start");
-        String sqlQuery = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private boolean isNotMyTotalWorkTimeNull(MyTotalWorkTimeDto myTotalWorkTimeDto) {
+        if (findMyTotalWorkTImeByDate((Date) myTotalWorkTimeDto.getWorkDateOfMonth()) != null) {
+            return true;
+        }
 
+        return false;
+    }
+
+    private int insert(MyTotalWorkTimeDto myTotalWorkTimeDto) {
         Object[] params = new Object[] {
                 myTotalWorkTimeDto.getId(), myTotalWorkTimeDto.getPartTimerWorkplaceId(),
                 myTotalWorkTimeDto.getTotalWorkTimeOfMonth(), myTotalWorkTimeDto.getWorkDateOfMonth(),
                 myTotalWorkTimeDto.getSalary(), myTotalWorkTimeDto.getCreatedAt(), myTotalWorkTimeDto.getUpdatedAt()
         };
 
-        jdbcUtil.setSqlAndParameters(sqlQuery, params);
-
-        try {
-            int result = jdbcUtil.executeUpdate();
-            return result;
-        } catch (Exception e) {
-            jdbcUtil.rollback();
-            e.printStackTrace();
-        } finally {
-            jdbcUtil.commit();
-            jdbcUtil.close();
-        }
-
-        return 0;
+        return executeInsertOrUpdateQuery(insertQuery, params);
     }
 
-    public int update(MyTotalWorkTimeDto myTotalWorkTimeDto) throws SQLException {
-        System.out.println("update start");
-        String sqlQuery = "UPDATE " + TABLE_NAME
-                + " SET total_work_time_of_month=?, salary=NVL(salary, 0) + ?" +
-                "WHERE work_date_of_month=?";
+    private int update(MyTotalWorkTimeDto myTotalWorkTimeDto) {
+        Object[] params = new Object[] { myTotalWorkTimeDto.getTotalWorkTimeOfMonth(), myTotalWorkTimeDto.getSalary(), myTotalWorkTimeDto.getWorkDateOfMonth() };
 
+        return executeInsertOrUpdateQuery(updateQuery, params);
+    }
+
+    private int executeInsertOrUpdateQuery(String query, Object[] params) {
         try {
-            jdbcUtil.setSqlAndParameters(sqlQuery, new Object[] {myTotalWorkTimeDto.getTotalWorkTimeOfMonth(), myTotalWorkTimeDto.getSalary(),
-                    myTotalWorkTimeDto.getWorkDateOfMonth()});
+            JDBC_UTIL.setSqlAndParameters(query, params);
+            int result = JDBC_UTIL.executeUpdate();
 
-            int result = jdbcUtil.executeUpdate();
             return result;
-        } catch (SQLException e) {
-            jdbcUtil.rollback();
-            e.printStackTrace();
         } catch (Exception e) {
-            jdbcUtil.rollback();
+            JDBC_UTIL.rollback();
             e.printStackTrace();
         } finally {
-            jdbcUtil.commit();
-            jdbcUtil.close();
+            JDBC_UTIL.commit();
+            JDBC_UTIL.close();
         }
 
         return 0;
     }
 
     public MyTotalWorkTimeDto findMyTotalWorkTImeByDate(Date date) {
-        String sqlQuery = "SELECT * "
-                + "FROM " + TABLE_NAME + " WHERE work_date_of_month=?";
+        Object[] params = new Object[] { date };
 
-        jdbcUtil.setSqlAndParameters(sqlQuery, new Object[] {date});
+        return executeSelectQuery(params);
+    }
 
+    private MyTotalWorkTimeDto executeSelectQuery(Object[] params) {
         try {
-            ResultSet resultSet = jdbcUtil.executeQuery();
+            JDBC_UTIL.setSqlAndParameters(findQuery, params);
+            ResultSet resultSet = JDBC_UTIL.executeQuery();
 
-            if(resultSet.next()) {
-                MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDto(
-                        resultSet.getInt("id"), resultSet.getInt("parttimer_workplace_id"), resultSet.getTime("total_work_time_of_month"),
-                        resultSet.getDate("work_date_of_month"), resultSet.getInt("salary"), resultSet.getTimestamp("created_at"), resultSet.getTimestamp("updated_at"));
+            if (resultSet.next()) {
+                MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDto (
+                        resultSet.getInt(ID), resultSet.getInt(PARTTIMER_WORKPLACE_ID), resultSet.getTime(TOTAL_WORK_TIME_OF_MONTH),
+                        resultSet.getDate(WORK_DATE_OF_MONTH), resultSet.getInt(SALARY), resultSet.getTimestamp(CREATED_AT), resultSet.getTimestamp(UPDATED_AT)
+                );
+
                 return myTotalWorkTimeDto;
             }
-
-            return null;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            jdbcUtil.close();
+            JDBC_UTIL.close();
         }
 
         return null;

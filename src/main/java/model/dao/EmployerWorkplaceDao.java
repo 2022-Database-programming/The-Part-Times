@@ -59,7 +59,7 @@ public class EmployerWorkplaceDao {
 
     public int remove(int memberId, int workplaceId) {
         String sql = "delete from EMPLOYER_WORKPLACE " +
-                "where MEMBER_ID=1 and WORKPLACE_ID=1235";
+                "where MEMBER_ID=? and WORKPLACE_ID=?";
         jdbcUtil.setSqlAndParameters(sql, new Object[] { memberId, workplaceId});
 
         try {

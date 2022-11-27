@@ -25,7 +25,6 @@ public class MyTodayWorkTimeDao {
     private final String findQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + WORK_DATE + "=?";
 
     private final JDBCUtil JDBC_UTIL;
-
     private final MyTotalWorkTimeDao MY_TOTAL_WORKTIME_DAO;
 
     public MyTodayWorkTimeDao() {

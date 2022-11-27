@@ -18,7 +18,7 @@ public class MyTodayWorkTimeTest {
         // 오늘 일한 날짜로 외래키 검색
         MyTotalWorkTimeDto myTotalWorkTimeDto = myTotalWorkTimeDao.findMyTotalWorkTImeByDate(Date.valueOf("2022-11-21"));
         MyTodayWorkTimeDto myTodayWorkTimeDto = new MyTodayWorkTimeDto(
-                (int) (Math.random() * 100), myTotalWorkTimeDto,
+                (int) (Math.random() * 1000000000), myTotalWorkTimeDto,
                 new Time(13, 0, 0), new Time(16, 0, 0),
                 new Time(15, 0, 0), new Time(15, 30, 0),
                 new Time(2, 30, 0), new Time(0, 30, 0),

@@ -21,7 +21,7 @@ public class MyTodayWorkTimeDao {
     private final String CREATED_AT = "created_at";
     private final String UPDATED_AT = "updated_at";
 
-    private final String insertQuery = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, TO_CHAR(?, 'HH24:MI:SS'), TO_CHAR(?, 'HH24:MI:SS'), TO_CHAR(?, 'HH24:MI:SS'), TO_CHAR(?, 'HH24:MI:SS'), TO_CHAR(?, 'HH24:MI:SS'), TO_CHAR(?, 'HH24:MI:SS'), TO_CHAR(?, 'YYYY-mm'), ?, ?, ?)";
+    private final String insertQuery = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final String deleteQuery = "DELETE FROM " + TABLE_NAME + " WHERE " + ID + "=?";
     private final String findQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + WORK_DATE + "=?";
 
@@ -46,7 +46,7 @@ public class MyTodayWorkTimeDao {
                 myTodayWorkTimeDto.getWorkDate(), myTodayWorkTimeDto.getCreatedAt(), myTodayWorkTimeDto.getUpdatedAt()
         };
 
-        return executeInserOrDelete(insertQuery, params);
+        return executeInsertOrDelete(insertQuery, params);
     }
 
     private void saveMyTotalWorkTime(MyTodayWorkTimeDto myTodayWorkTimeDto, int partTimerWorkPlaceId) throws SQLException {
@@ -64,10 +64,10 @@ public class MyTodayWorkTimeDao {
     public int delete(int id) {
         Object[] params = new Object[] { id };
 
-        return executeInserOrDelete(deleteQuery, params);
+        return executeInsertOrDelete(deleteQuery, params);
     }
 
-    private int executeInserOrDelete(String query, Object[] params) {
+    private int executeInsertOrDelete(String query, Object[] params) {
         try {
             JDBC_UTIL.setSqlAndParameters(query, params);
             int result = JDBC_UTIL.executeUpdate();

@@ -8,24 +8,27 @@ public class PartTimerWorkplaceDto {
 	private int id;
 
 	//Foreign key field
-	private MemberDto memberDto;
-	private WorkplaceDto workplaceDto;
+	private int memberId;
+	private int workplaceId;
 
 	private String salaryForm;
 	private int salaryDay;
-	private Time totalWorkTimeOfMonth;
-	private int salary;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
 
-	public PartTimerWorkplaceDto(int id, MemberDto memberDto, WorkplaceDto workplaceDto, String salaryForm, int salaryDay, Time totalWorkTimeOfMonth, int salary, Timestamp createdAt, Timestamp updatedAt) {
-		this.id = id;
-		this.memberDto = memberDto;
-		this.workplaceDto = workplaceDto;
+	public PartTimerWorkplaceDto(int memberId, int workplaceId, String salaryForm, int salaryDay) {
+		this.memberId = memberId;
+		this.workplaceId = workplaceId;
 		this.salaryForm = salaryForm;
 		this.salaryDay = salaryDay;
-		this.totalWorkTimeOfMonth = totalWorkTimeOfMonth;
-		this.salary = salary;
+	}
+
+	public PartTimerWorkplaceDto(int id, int memberId, int workplaceId, String salaryForm, int salaryDay, Timestamp createdAt, Timestamp updatedAt) {
+		this.id = id;
+		this.memberId = memberId;
+		this.workplaceId = workplaceId;
+		this.salaryForm = salaryForm;
+		this.salaryDay = salaryDay;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
@@ -34,68 +37,52 @@ public class PartTimerWorkplaceDto {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public int getMemberId() {
+		return memberId;
 	}
 
-	public MemberDto getMemberDto() {
-		return memberDto;
-	}
-
-	public void setMemberDto(MemberDto memberDto) {
-		this.memberDto = memberDto;
-	}
-
-	public WorkplaceDto getWorkplaceDto() {
-		return workplaceDto;
-	}
-
-	public void setWorkplaceDto(WorkplaceDto workplaceDto) {
-		this.workplaceDto = workplaceDto;
+	public int getWorkplaceId() {
+		return workplaceId;
 	}
 
 	public String getSalaryForm() {
 		return salaryForm;
 	}
 
-	public void setSalaryForm(String salaryForm) {
-		this.salaryForm = salaryForm;
-	}
-
 	public int getSalaryDay() {
 		return salaryDay;
-	}
-
-	public void setSalaryDay(int salaryDay) {
-		this.salaryDay = salaryDay;
-	}
-
-	public Time getTotalWorkTimeOfMonth() {
-		return totalWorkTimeOfMonth;
-	}
-
-	public void setTotalWorkTimeOfMonth(Time totalWorkTimeOfMonth) {
-		this.totalWorkTimeOfMonth = totalWorkTimeOfMonth;
-	}
-
-	public int getSalary() {
-		return salary;
-	}
-
-	public void setSalary(int salary) {
-		this.salary = salary;
 	}
 
 	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Timestamp createdAt) {
-		this.createdAt = createdAt;
-	}
-
 	public Timestamp getUpdatedAt() {
 		return updatedAt;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
+	}
+
+	public void setWorkplaceId(int workplaceId) {
+		this.workplaceId = workplaceId;
+	}
+
+	public void setSalaryForm(String salaryForm) {
+		this.salaryForm = salaryForm;
+	}
+
+	public void setSalaryDay(int salaryDay) {
+		this.salaryDay = salaryDay;
+	}
+
+	public void setCreatedAt(Timestamp createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	public void setUpdatedAt(Timestamp updatedAt) {
@@ -106,12 +93,10 @@ public class PartTimerWorkplaceDto {
 	public String toString() {
 		return "PartTimerWorkplaceDto{" +
 				"id=" + id +
-				", memberDto=" + memberDto +
-				", workplaceDto=" + workplaceDto +
+				", memberId=" + memberId +
+				", workplaceId=" + workplaceId +
 				", salaryForm='" + salaryForm + '\'' +
 				", salaryDay=" + salaryDay +
-				", totalWorkTimeOfMonth=" + totalWorkTimeOfMonth +
-				", salary=" + salary +
 				", createdAt=" + createdAt +
 				", updatedAt=" + updatedAt +
 				'}';

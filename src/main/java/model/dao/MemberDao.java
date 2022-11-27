@@ -1,7 +1,7 @@
 package model.dao;
 
 import model.dto.MemberDto;
-import java.sql.SQLException;
+
 import java.sql.*;
 
 import util.JDBCUtil;
@@ -102,15 +102,15 @@ public class MemberDao {
 		
 		if(memberDto.getPassword() != null) {
 			String sql = "UPDATE member "
-						+ "SET password=?, phone_number=? "
+						+ "SET password=?, phone_number=?, updated_at=? "
 						+ "WHERE member_id=?";
-			Object[] param = new Object[] {memberDto.getPassword(), memberDto.getPhoneNumber(), findmemberDto.getMemberId()};				
+			Object[] param = new Object[] {memberDto.getPassword(), memberDto.getPhoneNumber(), new Timestamp(System.currentTimeMillis()), findmemberDto.getMemberId()};				
 			jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
 		} else {
 			String sql = "UPDATE member "
-					+ "SET phone_number=? "
+					+ "SET phone_number=?, updated_at=? "
 					+ "WHERE member_id=?";
-			Object[] param = new Object[] {memberDto.getPhoneNumber(), findmemberDto.getMemberId()};				
+			Object[] param = new Object[] {memberDto.getPhoneNumber(), new Timestamp(System.currentTimeMillis()), findmemberDto.getMemberId()};				
 			jdbcUtil.setSqlAndParameters(sql, param);	
 		}
 

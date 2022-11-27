@@ -31,9 +31,9 @@ public class MyTotalIncomeDao {
 	
 	//해당 근무지 월별 총수익 추가
 	public int insertMyTotalIncome(MyTotalIncomeDto myTotalIncomeDto) throws SQLException {
-		String sql = "INSERT INTO mytotal_income VALUES (?, ?, ?, ?, ?, ?)";
-		Object[] param = new Object[] {myTotalIncomeDto.getId(), myTotalIncomeDto.getEmployerWorkplaceId(), myTotalIncomeDto.getIncomeDateOfMonth(),
-						myTotalIncomeDto.getIncome(), myTotalIncomeDto.getCreatedAt(), myTotalIncomeDto.getUpdatedAt()};
+		String sql = "INSERT INTO mytotal_income (id, employer_workplace_id, income_date_of_month, income) VALUES (mytotal_income_seq.nextval, ?, ?, ?)";
+		Object[] param = new Object[] {myTotalIncomeDto.getEmployerWorkplaceId(), myTotalIncomeDto.getIncomeDateOfMonth(),
+						myTotalIncomeDto.getIncome()};
 	
 		jdbcUtil.setSqlAndParameters(sql, param);
 		
@@ -53,10 +53,10 @@ public class MyTotalIncomeDao {
 	
 	public int updateMyTotalIncome(MyTotalIncomeDto myTotalIncomeDto) throws SQLException {
 		String sql = "UPDATE mytotal_income "
-					+ "SET income=? "
+					+ "SET income=?, updated_at=?"
 					+ "WHERE employer_workplace_id=? and income_date_of_month=?";
 		
-		Object[] param = new Object[] {myTotalIncomeDto.getIncome(), myTotalIncomeDto.getEmployerWorkplaceId(), myTotalIncomeDto.getIncomeDateOfMonth()};				
+		Object[] param = new Object[] {myTotalIncomeDto.getIncome(), new Timestamp(System.currentTimeMillis()), myTotalIncomeDto.getEmployerWorkplaceId(), myTotalIncomeDto.getIncomeDateOfMonth()};				
 		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
 		
 		try {				

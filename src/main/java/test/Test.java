@@ -66,7 +66,7 @@ public class Test {
 //					}
 					
 					//update
-//					memberDto = new MemberDto("john1230", "j1h2n307", "john", Date.valueOf("1994-08-17") , "01044981362", "EMPLOYER");
+//					memberDto = new MemberDto("john1230", "j1h2n3", "john", Date.valueOf("1994-08-17") , "01044981377", "EMPLOYER");
 //					System.out.println("result: " + memberDao.insertOrUpdate(memberDto));
 					
 //					memberDto = new MemberDto("john1230", "jj1230nn" , "john", Date.valueOf("1994-08-17") , "01048791362", "EMPLOYER");
@@ -104,8 +104,11 @@ public class Test {
 					myTotalIncomeDao = new MyTotalIncomeDao();
 					
 					//insert
-					myTotalIncomeDto = new MyTotalIncomeDto(3, 3, Date.valueOf("2022-08-01"), 336000, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()));
-					System.out.println("result: " + myTotalIncomeDao.insertOrUpdate(myTotalIncomeDto));
+//					myTotalIncomeDto = new MyTotalIncomeDto(3, Date.valueOf("2022-08-01"), 336000);
+//					System.out.println("result: " + myTotalIncomeDao.insertOrUpdate(myTotalIncomeDto));
+					
+//					myTotalIncomeDto = new MyTotalIncomeDto(4, Date.valueOf("2022-06-01"), 154880);
+//					System.out.println("result: " + myTotalIncomeDao.insertOrUpdate(myTotalIncomeDto));
 					
 					//update
 //					myTotalIncomeDto = new MyTotalIncomeDto(4, 1000, Date.valueOf("2022-11-01"), 4200000, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()));

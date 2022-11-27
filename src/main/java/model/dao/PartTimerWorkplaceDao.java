@@ -1,11 +1,14 @@
 package model.dao;
 
 import model.dto.PartTimerWorkplaceDto;
+import model.dto.WorkplaceDto;
 import util.JDBCUtil;
 
 import javax.xml.transform.Result;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PartTimerWorkplaceDao {
 
@@ -118,5 +121,36 @@ public class PartTimerWorkplaceDao {
             jdbcUtil.close();
         }
         return false;
+    }
+
+    public List<WorkplaceDto> findAllWorkplace(int memberId) {
+        String sql = "select W.* from EMPLOYER_WORKPLACE " +
+                "join WORKPLACE W on EMPLOYER_WORKPLACE.WORKPLACE_ID = W.ID " +
+                "where MEMBER_ID = ?";
+        jdbcUtil.setSqlAndParameters(sql, new Object[] { memberId });
+
+        try {
+            ResultSet rs = jdbcUtil.executeQuery();
+            List<WorkplaceDto> memberList = new ArrayList<>();
+
+            while(rs.next()) {
+                WorkplaceDto workplaceDto = new WorkplaceDto(
+                        rs.getInt("id"),
+                        rs.getString("workplace_name"),
+                        rs.getString("address"),
+                        rs.getString("phone_number"),
+                        rs.getString("business_number"),
+                        rs.getTimestamp("created_at"),
+                        rs.getTimestamp("updated_at")
+                );
+                memberList.add(workplaceDto);
+            }
+            return memberList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            jdbcUtil.close();
+        }
+        return null;
     }
 }

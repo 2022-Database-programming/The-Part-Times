@@ -1,9 +1,7 @@
 package model.dao;
 
-import model.dto.MemberDto;
 import model.dto.MyTotalIncomeDto;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.sql.*;
 import util.JDBCUtil;
 import java.sql.Date;

@@ -30,6 +30,18 @@ public class MemberDto {
 		this.type = type;
 	}
 
+	public MemberDto(int id, String memberId, String password, String name, Date birth, String phoneNumber,
+			String type) {
+		super();
+		this.id = id;
+		this.memberId = memberId;
+		this.password = password;
+		this.name = name;
+		this.birth = birth;
+		this.phoneNumber = phoneNumber;
+		this.type = type;
+	}
+	
 	public int getId() {
 		return id;
 	}

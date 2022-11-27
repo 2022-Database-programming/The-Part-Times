@@ -1,9 +1,12 @@
 package test;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import model.dao.MemberDao;
 import model.dto.MemberDto;
@@ -15,13 +18,6 @@ public class Test {
 	public static void main(String[] args) throws SQLException{
 		Scanner sc = new Scanner(System.in);
 		
-//		String strDate;
-//		SimpleDateFormat dtFormat;
-//		SimpleDateFormat newDtFormat;
-//		
-//		Date formatDate;
-//		String strNewDtFormat;
-//		Date newFormatDate;
 		
 		MemberDto memberDto;
 		MemberDao memberDao;
@@ -29,6 +25,7 @@ public class Test {
 		MemberDao memberDao2;
 		
 		MyTotalIncomeDao myTotalIncomeDao;
+		MyTotalIncomeDto myTotalIncomeDto;
 		
 		// 날짜 형식 변환시 parsing 오류를 try catch로 체크
 				try {
@@ -86,6 +83,49 @@ public class Test {
 //						System.out.println("로그인 실패");
 //					}	
 					
+//					
+//					newDtFormat = new SimpleDateFormat("yy-MM-dd");
+////					
+////					// String 타입을 Date 타입으로 변환
+//					formatDate = (Date) newDtFormat.parse("22-11-01");
+					
+//					SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
+//			        String strDate = "22-11-01";
+//			        Date date = new Date(sdf.parse(strDate).getTime());
+//			        System.out.println(date);
+					
+//			        SimpleDateFormat newFormat = new SimpleDateFormat("yy/MM/dd");
+//					String to = newFormat.format(date);
+//			        
+//					System.out.println(to);
+//					System.out.println(Date.valueOf("2022-11-01"));
+//					System.out.println(Date.valueOf("2022-11-01").getClass().getSimpleName());
+					
+					myTotalIncomeDao = new MyTotalIncomeDao();
+					
+					//insert
+					myTotalIncomeDto = new MyTotalIncomeDto(3, 3, Date.valueOf("2022-08-01"), 336000, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()));
+					System.out.println("result: " + myTotalIncomeDao.insertOrUpdate(myTotalIncomeDto));
+					
+					//update
+//					myTotalIncomeDto = new MyTotalIncomeDto(4, 1000, Date.valueOf("2022-11-01"), 4200000, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()));
+//					System.out.println("result: " + myTotalIncomeDao.insertOrUpdate(myTotalIncomeDto));
+					
+					//find
+//					myTotalIncomeDao = new MyTotalIncomeDao();
+//					
+//					myTotalIncomeDto = myTotalIncomeDao.findMyWorkPlaceTotalIncome(Date.valueOf("2022-11-01"), 1000);
+//					
+//					if (myTotalIncomeDto != null) {
+//						System.out.println("근무정보번호 : " + myTotalIncomeDto.getId());
+//						System.out.println("나의 근무지 번호 : " + myTotalIncomeDto.getEmployerWorkplaceId());
+//						System.out.println("연월 : " + myTotalIncomeDto.getIncomeDateOfMonth());
+//						System.out.println("이번달 수익 : " + myTotalIncomeDto.getIncome());
+//						System.out.println();
+//					} else {
+//						System.out.println("찾지 못했음");
+//						return;
+//					}
 					
 					
 					

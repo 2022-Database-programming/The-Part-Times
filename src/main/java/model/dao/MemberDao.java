@@ -47,7 +47,7 @@ public class MemberDao {
 	
 	//회원가입 (사용자 정보 등록)
 	public int insertMember(MemberDto memberDto) throws SQLException {
-		String sql = "INSERT INTO member (id, name, member_id, password, birth, phone_number, type) VALUES (member_seq.nextval, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO member (name, member_id, password, birth, phone_number, type) VALUES (member_seq.nextval, ?, ?, ?, ?, ?, ?)";
 		Object[] param = new Object[] {memberDto.getName(), memberDto.getMemberId(), memberDto.getPassword(),
 				memberDto.getBirth(), memberDto.getPhoneNumber(), memberDto.getType()};
 	
@@ -69,7 +69,7 @@ public class MemberDao {
 	
 	//마이페이지 또는 로그인 시 사용자 정보 상세 조회
 	public MemberDto findMember(String memberId) throws SQLException {
-		 String sql = "SELECT member_id, password, name, birth, phone_number, type "
+		 String sql = "SELECT * "
      			+ "FROM member "
      			+ "WHERE member_id=?";      
 		 
@@ -79,6 +79,7 @@ public class MemberDao {
 			ResultSet rs = jdbcUtil.executeQuery();		// query 실행
 			if (rs.next()) {						
 				MemberDto member = new MemberDto(		
+					rs.getInt("id"),
 					rs.getString("member_id"),
 					rs.getString("password"),
 					rs.getString("name"),
@@ -128,7 +129,7 @@ public class MemberDao {
 	}
 	
 	
-	//로그인 기능
+	//로그인 기능 -> id도 같이 select 할까요?
 	public String findByMemberIdAndPassword(String memberId, String password) throws SQLException {
 		if(existedMember(memberId)) {
 			String sql = "SELECT member_id, password "

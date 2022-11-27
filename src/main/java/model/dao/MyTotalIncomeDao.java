@@ -1,7 +1,9 @@
 package model.dao;
 
+import model.dto.MemberDto;
 import model.dto.MyTotalIncomeDto;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.sql.*;
 import util.JDBCUtil;
 import java.sql.Date;
@@ -13,12 +15,70 @@ public class MyTotalIncomeDao {
 	public MyTotalIncomeDao() {
 		jdbcUtil = new JDBCUtil();
 	}
-	
-	public MyTotalIncomeDto findMyTotalIncome(Date date) {
-		 String sql = "SELECT * "
-	                + "FROM MYTOTAL_INCOME " + " WHERE income_date_of_month=?";
 
-	        jdbcUtil.setSqlAndParameters(sql, new Object[] {date});
+	
+	public int insertOrUpdate(MyTotalIncomeDto myTotalIncomeDto) throws SQLException {
+		int result = -1;
+		
+		if(findMyWorkPlaceTotalIncome(myTotalIncomeDto.getIncomeDateOfMonth(), myTotalIncomeDto.getEmployerWorkplaceId()) != null) {
+			result = updateMyTotalIncome(myTotalIncomeDto);
+		} else {
+			result = insertMyTotalIncome(myTotalIncomeDto);
+		}
+		return result;
+	}
+	
+	
+	//해당 근무지 월별 총수익 추가
+	public int insertMyTotalIncome(MyTotalIncomeDto myTotalIncomeDto) throws SQLException {
+		String sql = "INSERT INTO mytotal_income VALUES (?, ?, ?, ?, ?, ?)";
+		Object[] param = new Object[] {myTotalIncomeDto.getId(), myTotalIncomeDto.getEmployerWorkplaceId(), myTotalIncomeDto.getIncomeDateOfMonth(),
+						myTotalIncomeDto.getIncome(), myTotalIncomeDto.getCreatedAt(), myTotalIncomeDto.getUpdatedAt()};
+	
+		jdbcUtil.setSqlAndParameters(sql, param);
+		
+		try {
+			int result = jdbcUtil.executeUpdate();
+			return result;
+		} catch (Exception ex) {
+			jdbcUtil.rollback();
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.commit();
+			jdbcUtil.close();
+		}
+		
+		return 0;
+	}
+	
+	public int updateMyTotalIncome(MyTotalIncomeDto myTotalIncomeDto) throws SQLException {
+		String sql = "UPDATE mytotal_income "
+					+ "SET income=? "
+					+ "WHERE employer_workplace_id=? and income_date_of_month=?";
+		
+		Object[] param = new Object[] {myTotalIncomeDto.getIncome(), myTotalIncomeDto.getEmployerWorkplaceId(), myTotalIncomeDto.getIncomeDateOfMonth()};				
+		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
+		
+		try {				
+			int result = jdbcUtil.executeUpdate();	// update 문 실행
+			return result;
+		} catch (Exception ex) {
+			jdbcUtil.rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			jdbcUtil.commit();
+			jdbcUtil.close();	// resource 반환
+		}		
+		return 0;
+	
+	}
+	
+	//근무지별 수익
+	public MyTotalIncomeDto findMyWorkPlaceTotalIncome(Date date, int employerWorkplaceId) {
+		 String sql = "SELECT * FROM MYTOTAL_INCOME " + "WHERE employer_workplace_id=? and income_date_of_month=?";
+
+	        jdbcUtil.setSqlAndParameters(sql, new Object[] {employerWorkplaceId, date});
 
 	        try {
 	            ResultSet resultSet = jdbcUtil.executeQuery();
@@ -43,6 +103,4 @@ public class MyTotalIncomeDao {
 
 	        return null;
 	}
-	
-	
 }

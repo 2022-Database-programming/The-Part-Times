@@ -100,4 +100,23 @@ public class PartTimerWorkplaceDao {
         }
         return null;
     }
+
+    public boolean isExistPartTimerWorkplace(int memberId, int workplaceId) {
+        String sql = "select count(*) from EMPLOYER_WORKPLACE " +
+                "where MEMBER_ID=? and WORKPLACE_ID=?";
+        jdbcUtil.setSqlAndParameters(sql, new Object[] { memberId, workplaceId});
+
+        try {
+            ResultSet rs = jdbcUtil.executeQuery();
+            if(rs.next()) {
+                int count = rs.getInt(1);
+                return (count == 1 ? true : false);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            jdbcUtil.close();
+        }
+        return false;
+    }
 }

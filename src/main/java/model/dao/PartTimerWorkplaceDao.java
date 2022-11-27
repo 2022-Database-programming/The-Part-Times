@@ -3,6 +3,8 @@ package model.dao;
 import model.dto.PartTimerWorkplaceDto;
 import util.JDBCUtil;
 
+import java.sql.Timestamp;
+
 public class PartTimerWorkplaceDao {
 
     private JDBCUtil jdbcUtil;
@@ -32,4 +34,26 @@ public class PartTimerWorkplaceDao {
         }
         return 0;
     }
+
+    public int update(PartTimerWorkplaceDto partTimerWorkplaceDto) {
+        String sql = "update PARTTIMER_WORKPLACE " +
+                "set SALARY_FORM=?, SALARY_DAY=?, UPDATED_AT=? " +
+                "where MEMBER_ID=? and WORKPLACE_ID=?";
+        Object[] param = new Object[] { partTimerWorkplaceDto.getSalaryForm(),
+                partTimerWorkplaceDto.getSalaryDay(), new Timestamp(System.currentTimeMillis()),
+                partTimerWorkplaceDto.getMemberId(), partTimerWorkplaceDto.getWorkplaceId()};
+        jdbcUtil.setSqlAndParameters(sql, param);
+
+        try {
+            return jdbcUtil.executeUpdate();
+        } catch(Exception e) {
+            jdbcUtil.rollback();
+            e.printStackTrace();
+        } finally {
+            jdbcUtil.commit();
+            jdbcUtil.close();
+        }
+        return 0;
+    }
+
 }

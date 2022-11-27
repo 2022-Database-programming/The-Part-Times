@@ -1,7 +1,10 @@
 package model.dao;
 
 import model.dto.EmployerWorkplaceDto;
+import model.dto.PartTimerWorkplaceDto;
 import util.JDBCUtil;
+
+import java.sql.ResultSet;
 
 public class EmployerWorkplaceDao {
     private JDBCUtil jdbcUtil;
@@ -68,5 +71,31 @@ public class EmployerWorkplaceDao {
             jdbcUtil.close();
         }
         return 0;
+    }
+
+    public EmployerWorkplaceDto findByMemberIdAndWorkplaceId(int memberId, int workplaceId) {
+        String sql = "select * from EMPLOYER_WORKPLACE " +
+                "where MEMBER_ID=? and WORKPLACE_ID=?";
+        jdbcUtil.setSqlAndParameters(sql, new Object[] {memberId, workplaceId});
+
+        try {
+            ResultSet rs = jdbcUtil.executeQuery();
+            if(rs.next()) {
+                return new EmployerWorkplaceDto(
+                        rs.getInt("id"),
+                        rs.getInt("member_id"),
+                        rs.getInt("workplace_id"),
+                        rs.getString("salary_form"),
+                        rs.getInt("salary_day"),
+                        rs.getTimestamp("created_at"),
+                        rs.getTimestamp("updated_at")
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            jdbcUtil.close();
+        }
+        return null;
     }
 }

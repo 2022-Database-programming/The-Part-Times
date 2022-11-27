@@ -18,7 +18,7 @@ public class MyTotalWorkTimeDao {
 
     private final JDBCUtil JDBC_UTIL;
 
-    private final String insertQuery = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, TO_CHAR(?, HH34:MI:SS), TO_CHAR(?, YYYY-MM), ?, ?, ?)";
+    private final String insertQuery = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?, ?, ?, ?)";
     private final String updateQuery = "UPDATE " + TABLE_NAME + " SET " + TOTAL_WORK_TIME_OF_MONTH + "=?, " + SALARY + "=NVL(" + SALARY + ", 0) + ?" +
             "WHERE " + WORK_DATE_OF_MONTH + "=?";
     private final String findQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + WORK_DATE_OF_MONTH + "=?";

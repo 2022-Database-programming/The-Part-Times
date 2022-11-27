@@ -3,7 +3,6 @@ package model.dao;
 import model.dto.MyTodayWorkTimeDto;
 import model.dto.MyTotalWorkTimeDto;
 import util.JDBCUtil;
-
 import java.sql.*;
 
 public class MyTodayWorkTimeDao {

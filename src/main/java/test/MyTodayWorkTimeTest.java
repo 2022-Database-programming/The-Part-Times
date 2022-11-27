@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class MyTodayWorkTimeTest {
@@ -22,12 +23,11 @@ public class MyTodayWorkTimeTest {
                 new Time(13, 0, 0), new Time(16, 0, 0),
                 new Time(15, 0, 0), new Time(15, 30, 0),
                 new Time(2, 30, 0), new Time(0, 30, 0),
-                Date.valueOf("2022-11-30"), 9160, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()
+                Date.valueOf(LocalDate.now()), 9160, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()
         ));
 
         MyTodayWorkTimeDao myTodayWorkTimeDao = new MyTodayWorkTimeDao();
         int result = myTodayWorkTimeDao.insert(myTodayWorkTimeDto, 1);   // parttimer workplace 검색하는 로직 추가 필요
         System.out.println(result);
-
     }
 }

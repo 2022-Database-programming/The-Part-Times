@@ -51,6 +51,10 @@ public class MyTodayWorkTimeDao {
         String[] times = String.valueOf(myTodayWorkTimeDto.getTotalWorkTimeOfDay()).split(":");
         int salary = Integer.valueOf(times[0]) * myTodayWorkTimeDto.getMinimumWage();
 
+        if (Integer.valueOf(times[1]) == 30) {
+            salary += myTodayWorkTimeDto.getMinimumWage() / 2;
+        }
+
         MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDto(
                 (int) (Math.random() * 100), partTimerWorkPlaceId, myTodayWorkTimeDto.getTotalWorkTimeOfDay(), myTodayWorkTimeDto.getWorkDate(), salary, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis())
         );

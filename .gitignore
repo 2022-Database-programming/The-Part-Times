@@ -1,3 +1,4 @@
 context.properties
 .idea/
 .metadata/
+target/

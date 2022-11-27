@@ -11,6 +11,16 @@ public class EmployerWorkplaceDto {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
+    public EmployerWorkplaceDto(int id, int memberId, int workplaceId, String salaryForm, int salaryDay, Timestamp createdAt, Timestamp updatedAt) {
+        this.id = id;
+        this.memberId = memberId;
+        this.workplaceId = workplaceId;
+        this.salaryForm = salaryForm;
+        this.salaryDay = salaryDay;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     public EmployerWorkplaceDto(int memberId, int workplaceId, String salaryForm, int salaryDay) {
         this.memberId = memberId;
         this.workplaceId = workplaceId;

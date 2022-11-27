@@ -83,4 +83,17 @@ public class EmployerWorkplaceDto {
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    @Override
+    public String toString() {
+        return "EmployerWorkplaceDto{" +
+                "id=" + id +
+                ", memberId=" + memberId +
+                ", workplaceId=" + workplaceId +
+                ", salaryForm='" + salaryForm + '\'' +
+                ", salaryDay=" + salaryDay +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

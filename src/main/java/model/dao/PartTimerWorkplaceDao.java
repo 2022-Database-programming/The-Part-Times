@@ -58,10 +58,10 @@ public class PartTimerWorkplaceDao {
         return 0;
     }
 
-    public int remove(int userId, int workplaceId) {
+    public int remove(int memberId, int workplaceId) {
         String sql = "delete from PARTTIMER_WORKPLACE " +
                 "where MEMBER_ID=? and WORKPLACE_ID=?";
-        jdbcUtil.setSqlAndParameters(sql, new Object[] { userId, workplaceId});
+        jdbcUtil.setSqlAndParameters(sql, new Object[] { memberId, workplaceId});
 
         try {
             return jdbcUtil.executeUpdate();

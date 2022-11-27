@@ -5,6 +5,7 @@ import model.dto.PartTimerWorkplaceDto;
 import util.JDBCUtil;
 
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 public class EmployerWorkplaceDao {
     private JDBCUtil jdbcUtil;
@@ -39,7 +40,7 @@ public class EmployerWorkplaceDao {
                 "where MEMBER_ID = ? and WORKPLACE_ID=?";
 
         Object[] param = new Object[] { employerWorkplaceDto.getSalaryForm(),
-                employerWorkplaceDto.getSalaryDay(), employerWorkplaceDto.getSalaryDay(),
+                employerWorkplaceDto.getSalaryDay(), new Timestamp(System.currentTimeMillis()),
                 employerWorkplaceDto.getMemberId(), employerWorkplaceDto.getWorkplaceId()};
 
         jdbcUtil.setSqlAndParameters(sql, param);

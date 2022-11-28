@@ -124,8 +124,8 @@ public class PartTimerWorkplaceDao {
     }
 
     public List<WorkplaceDto> findAllWorkplace(int memberId) {
-        String sql = "select W.* from EMPLOYER_WORKPLACE " +
-                "join WORKPLACE W on EMPLOYER_WORKPLACE.WORKPLACE_ID = W.ID " +
+        String sql = "select W.* from PARTTIMER_WORKPLACE " +
+                "join WORKPLACE W on PARTTIMER_WORKPLACE.WORKPLACE_ID = W.ID " +
                 "where MEMBER_ID = ?";
         jdbcUtil.setSqlAndParameters(sql, new Object[] { memberId });
 

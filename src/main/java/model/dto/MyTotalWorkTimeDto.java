@@ -1,5 +1,6 @@
 package model.dto;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -8,19 +9,19 @@ public class MyTotalWorkTimeDto {
     private int id;
 
     // Foreign key field
-    private PartTimerWorkplaceDto partTimerWorkplaceDto;
+    private int partTimerWorkplaceId;
 
-    private Timestamp totalWorkTimeOfDay;
-    private Date date;
+    private Time totalWorkTimeOfMonth;
+    private Date workDateOfMonth;
     private int salary;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public MyTotalWorkTimeDto(int id, PartTimerWorkplaceDto partTimerWorkplaceDto, Timestamp totalWorkTimeOfDay, Date date, int salary, Timestamp createdAt, Timestamp updatedAt) {
+    public MyTotalWorkTimeDto(int id, int partTimerWorkplaceId, Time totalWorkTimeOfMonth, Date workDateOfMonth, int salary, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
-        this.partTimerWorkplaceDto = partTimerWorkplaceDto;
-        this.totalWorkTimeOfDay = totalWorkTimeOfDay;
-        this.date = date;
+        this.partTimerWorkplaceId = partTimerWorkplaceId;
+        this.totalWorkTimeOfMonth = totalWorkTimeOfMonth;
+        this.workDateOfMonth = workDateOfMonth;
         this.salary = salary;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -34,28 +35,28 @@ public class MyTotalWorkTimeDto {
         this.id = id;
     }
 
-    public PartTimerWorkplaceDto getPartTimerWorkplaceDto() {
-        return partTimerWorkplaceDto;
+    public int getPartTimerWorkplaceId() {
+        return partTimerWorkplaceId;
     }
 
-    public void setPartTimerWorkplaceDto(PartTimerWorkplaceDto partTimerWorkplaceDto) {
-        this.partTimerWorkplaceDto = partTimerWorkplaceDto;
+    public void setPartTimerWorkplaceId(int partTimerWorkplaceId) {
+        this.partTimerWorkplaceId = partTimerWorkplaceId;
     }
 
-    public Timestamp getTotalWorkTimeOfDay() {
-        return totalWorkTimeOfDay;
+    public Time getTotalWorkTimeOfMonth() {
+        return totalWorkTimeOfMonth;
     }
 
-    public void setTotalWorkTimeOfDay(Timestamp totalWorkTimeOfDay) {
-        this.totalWorkTimeOfDay = totalWorkTimeOfDay;
+    public void setTotalWorkTimeOfMonth(Time totalWorkTimeOfMonth) {
+        this.totalWorkTimeOfMonth = totalWorkTimeOfMonth;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getWorkDateOfMonth() {
+        return workDateOfMonth;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setWorkDateOfMonth(Date workDateOfMonth) {
+        this.workDateOfMonth = workDateOfMonth;
     }
 
     public int getSalary() {
@@ -84,11 +85,12 @@ public class MyTotalWorkTimeDto {
 
     @Override
     public String toString() {
-        return "MyTotalWorkTime{" +
+        return "MyTotalWorkTimeDto{" +
                 "id=" + id +
-                ", partTimerWorkplaceDto=" + partTimerWorkplaceDto +
-                ", totalWorkTimeOfDay=" + totalWorkTimeOfDay +
-                ", date=" + date +
+                ", partTimerWorkplaceId=" + partTimerWorkplaceId +
+                ", totalWorkTimeOfMonth=" + totalWorkTimeOfMonth +
+                ", workDateOfMonth=" + workDateOfMonth +
+                ", date=" + workDateOfMonth +
                 ", salary=" + salary +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +

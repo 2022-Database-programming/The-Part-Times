@@ -1,11 +1,12 @@
 package util;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Properties;
-import javax.sql.DataSource;
 import java.sql.*;
-import org.apache.commons.dbcp2.BasicDataSource;
+import java.util.Properties;
 
 public class JDBCUtil {
 	private String sql = null; // 실행할 query

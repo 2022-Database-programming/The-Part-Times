@@ -33,18 +33,18 @@ public class JDBCUtil {
 					e.printStackTrace();
 				}
 			}
-		} 
+		}
 	}
 
 	// DBCP 연결 초기화 메소드
-	private static void initJDBCUtil() {		
+	private static void initJDBCUtil() {
 		try {
 			if (ds == null) { // DBCP 설정
 				BasicDataSource bds = new BasicDataSource();
 				bds.setDriverClassName(prop.getProperty("db.driver"));
-		        bds.setUrl(prop.getProperty("db.url"));
-		        bds.setUsername(prop.getProperty("db.username"));
-		        bds.setPassword(prop.getProperty("db.password"));     
+				bds.setUrl(prop.getProperty("db.url"));
+				bds.setUsername(prop.getProperty("db.username"));
+				bds.setPassword(prop.getProperty("db.password"));
 				ds = bds;
 			}
 		} catch (Exception ex) {
@@ -86,7 +86,7 @@ public class JDBCUtil {
 	}
 
 	// sql 및 매개변수 배열 저장
-	public void setSqlAndParameters(String sql, Object[] parameters) {  
+	public void setSqlAndParameters(String sql, Object[] parameters) {
 		this.sql = sql;
 		this.parameters = parameters;
 	}

@@ -3,6 +3,7 @@ package model.dao;
 import model.dto.MemberDto;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 import util.JDBCUtil;
 
@@ -79,7 +80,6 @@ public class MemberDao {
 			ResultSet rs = jdbcUtil.executeQuery();		// query 실행
 			if (rs.next()) {
 				MemberDto member = new MemberDto(
-						rs.getInt("id"),
 						rs.getString("member_id"),
 						rs.getString("password"),
 						rs.getString("name"),
@@ -104,13 +104,13 @@ public class MemberDao {
 			String sql = "UPDATE member "
 					+ "SET password=?, phone_number=?, updated_at=? "
 					+ "WHERE member_id=?";
-			Object[] param = new Object[] {memberDto.getPassword(), memberDto.getPhoneNumber(), new Timestamp(System.currentTimeMillis()), findmemberDto.getMemberId()};
+			Object[] param = new Object[] {memberDto.getPassword(), memberDto.getPhoneNumber(), Date.valueOf(LocalDate.now()), findmemberDto.getMemberId()};
 			jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
 		} else {
 			String sql = "UPDATE member "
 					+ "SET phone_number=?, updated_at=? "
 					+ "WHERE member_id=?";
-			Object[] param = new Object[] {memberDto.getPhoneNumber(), new Timestamp(System.currentTimeMillis()), findmemberDto.getMemberId()};
+			Object[] param = new Object[] {memberDto.getPhoneNumber(), Date.valueOf(LocalDate.now()), findmemberDto.getMemberId()};
 			jdbcUtil.setSqlAndParameters(sql, param);
 		}
 
@@ -126,35 +126,6 @@ public class MemberDao {
 			jdbcUtil.close();	// resource 반환
 		}
 		return 0;
-	}
-
-
-	//로그인 기능 -> id도 같이 select 할까요?
-	public String findByMemberIdAndPassword(String memberId, String password) throws SQLException {
-		if(existedMember(memberId)) {
-			String sql = "SELECT member_id, password "
-					+ "FROM member "
-					+ "WHERE member_id=?";
-
-			jdbcUtil.setSqlAndParameters(sql, new Object[] {memberId});
-
-			try {
-				ResultSet rs = jdbcUtil.executeQuery();		// query 실행
-				if (rs.next()) {
-					String id = rs.getString("member_id");
-					String pwd = rs.getString("password");
-					if(memberId.equals(id) && password.equals(pwd))
-						return id;
-				}
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			} finally {
-				jdbcUtil.close();
-			}
-			return null;
-		}
-
-		return null;
 	}
 
 }

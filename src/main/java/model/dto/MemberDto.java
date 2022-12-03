@@ -1,6 +1,5 @@
 package model.dto;
 
-import java.sql.Timestamp;
 import java.sql.Date;
 
 public class MemberDto {
@@ -12,11 +11,11 @@ public class MemberDto {
 	private String phoneNumber;	//전화번호
 	private String type;	//멤버타입
 	private int isActive;	//계정 활성화 여부 -> 따로 작업할 것 뭐가 있나..?
-	private Timestamp createdAt;	//생성 날짜
-	private Timestamp updatedAt;	//수정 날짜
+	private Date createdAt;	//생성 날짜
+	private Date updatedAt;	//수정 날짜
 
 	public MemberDto() {
-
+		
 	}
 
 	public MemberDto(String memberId, String password, String name, Date birth, String phoneNumber,
@@ -30,8 +29,8 @@ public class MemberDto {
 		this.type = type;
 	}
 
-	public MemberDto(int id, String memberId, String password, String name, Date birth, String phoneNumber,
-					 String type) {
+	public MemberDto(int id, String memberId, String password, String name, Date birth, String phoneNumber, String type,
+			int isActive, Date createdAt, Date updatedAt) {
 		super();
 		this.id = id;
 		this.memberId = memberId;
@@ -40,6 +39,9 @@ public class MemberDto {
 		this.birth = birth;
 		this.phoneNumber = phoneNumber;
 		this.type = type;
+		this.isActive = isActive;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 	}
 
 	public int getId() {
@@ -102,33 +104,21 @@ public class MemberDto {
 		this.isActive = isActive;
 	}
 
-	public Timestamp getCreatedAt() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Timestamp updatedAt) {
+	public void setCreatedAt(Date updatedAt) {
 		this.createdAt = updatedAt;
 	}
 
-	public Timestamp getUpdatedAt() {
+	public Date getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(Timestamp updatedAt) {
+	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-
-//	/* 비밀번호 검사 */
-//	public boolean matchPassword(String password) {
-//		if (password == null) {
-//			return false;
-//		}
-//		return this.password.equals(password);
-//	}
-//
-//	public boolean isSameMember(String memberid) {
-//        return this.memberId.equals(memberid);
-//    }
 
 	@Override
 	public String toString() {

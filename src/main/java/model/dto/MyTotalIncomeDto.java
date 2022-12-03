@@ -10,9 +10,9 @@ public class MyTotalIncomeDto {
 	private int income;		//이번달 수익
 	private Timestamp createdAt;	//생성 날짜
 	private Timestamp updatedAt;	//수정 날짜
-	
+
 	public MyTotalIncomeDto() {
-		
+
 	}
 
 	public MyTotalIncomeDto(int employerWorkplaceId, Date incomeDateOfMonth, int income) {
@@ -23,7 +23,7 @@ public class MyTotalIncomeDto {
 	}
 
 	public MyTotalIncomeDto(int id, int employerWorkplaceId, Date incomeDateOfMonth, int income, Timestamp createdAt,
-			Timestamp updatedAt) {
+							Timestamp updatedAt) {
 		super();
 		this.id = id;
 		this.employerWorkplaceId = employerWorkplaceId;
@@ -87,5 +87,5 @@ public class MyTotalIncomeDto {
 				+ incomeDateOfMonth + ", income=" + income + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt
 				+ "]";
 	}
-	
+
 }

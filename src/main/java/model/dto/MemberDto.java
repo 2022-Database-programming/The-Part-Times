@@ -14,13 +14,13 @@ public class MemberDto {
 	private int isActive;	//계정 활성화 여부 -> 따로 작업할 것 뭐가 있나..?
 	private Timestamp createdAt;	//생성 날짜
 	private Timestamp updatedAt;	//수정 날짜
-	
+
 	public MemberDto() {
-		
+
 	}
-	
+
 	public MemberDto(String memberId, String password, String name, Date birth, String phoneNumber,
-			String type) {
+					 String type) {
 		super();
 		this.memberId = memberId;
 		this.password = password;
@@ -31,7 +31,7 @@ public class MemberDto {
 	}
 
 	public MemberDto(int id, String memberId, String password, String name, Date birth, String phoneNumber,
-			String type) {
+					 String type) {
 		super();
 		this.id = id;
 		this.memberId = memberId;
@@ -41,79 +41,79 @@ public class MemberDto {
 		this.phoneNumber = phoneNumber;
 		this.type = type;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
-	
+
 	public String getMemberId() {
 		return memberId;
 	}
-	
+
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
-	
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public Date getBirth() {
 		return birth;
 	}
-	
+
 	public void setBirth(Date birth) {
 		this.birth = birth;
 	}
-	
+
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
-	
+
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
+
 	public String getType() {
 		return type;
 	}
-	
+
 	public void setType(String type) {
 		this.type = type;
 	}
-	
+
 	public int getIsActive() {
 		return isActive;
 	}
-	
+
 	public void setIsActive(int isActive) {
 		this.isActive = isActive;
 	}
-	
+
 	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
-	
+
 	public void setCreatedAt(Timestamp updatedAt) {
 		this.createdAt = updatedAt;
 	}
-	
+
 	public Timestamp getUpdatedAt() {
 		return updatedAt;
 	}
-	
+
 	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
@@ -125,18 +125,18 @@ public class MemberDto {
 //		}
 //		return this.password.equals(password);
 //	}
-//	
+//
 //	public boolean isSameMember(String memberid) {
 //        return this.memberId.equals(memberid);
 //    }
-	
+
 	@Override
 	public String toString() {
 		return "MemberDto [id=" + id + ", memberId=" + memberId + ", password=" + password + ", name=" + name
 				+ ", birth=" + birth + ", phoneNumber=" + phoneNumber + ", type=" + type + ", isActive=" + isActive
 				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
 	}
-	
-	
-	
+
+
+
 }

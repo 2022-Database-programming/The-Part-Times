@@ -1,4 +1,4 @@
 context.properties
-uiDesigner.xml
-.idea
+.idea/
 .metadata/
+target/

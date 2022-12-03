@@ -15,15 +15,15 @@ public class MemberDao {
 		jdbcUtil = new JDBCUtil();
 	}
 
-	public int insertOrUpdate(MemberDto memberDto) throws SQLException {
-		int result = -1;
-		if(existedMember(memberDto.getMemberId())) {
-			result = updateMember(memberDto);
-		} else {
-			result = insertMember(memberDto);
-		}
-		return result;
-	}
+//	public int insertOrUpdate(MemberDto memberDto) throws SQLException {
+//		int result = -1;
+//		if(existedMember(memberDto.getMemberId())) {
+//			result = updateMember(memberDto);
+//		} else {
+//			result = insertMember(memberDto);
+//		}
+//		return result;
+//	}
 
 
 	//사용자 정보 확인 (회원가입시)
@@ -48,7 +48,7 @@ public class MemberDao {
 
 	//회원가입 (사용자 정보 등록)
 	public int insertMember(MemberDto memberDto) throws SQLException {
-		String sql = "INSERT INTO member (name, member_id, password, birth, phone_number, type) VALUES (member_seq.nextval, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO member (id, name, member_id, password, birth, phone_number, type, is_active, created_at, updated_at) VALUES (member_seq.nextval, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT)";
 		Object[] param = new Object[] {memberDto.getName(), memberDto.getMemberId(), memberDto.getPassword(),
 				memberDto.getBirth(), memberDto.getPhoneNumber(), memberDto.getType()};
 
@@ -100,20 +100,13 @@ public class MemberDao {
 	public int updateMember(MemberDto memberDto) throws SQLException {
 		MemberDto findmemberDto = findMember(memberDto.getMemberId());
 
-		if(memberDto.getPassword() != null) {
-			String sql = "UPDATE member "
-					+ "SET password=?, phone_number=?, updated_at=? "
-					+ "WHERE member_id=?";
-			Object[] param = new Object[] {memberDto.getPassword(), memberDto.getPhoneNumber(), Date.valueOf(LocalDate.now()), findmemberDto.getMemberId()};
+		String sql = "UPDATE member "
+				+ "SET phone_number=?, birth=?, updated_at=? "
+				+ "WHERE member_id=?";
+		
+			Object[] param = new Object[] {memberDto.getPhoneNumber(), memberDto.getBirth(), Date.valueOf(LocalDate.now()), findmemberDto.getMemberId()};
 			jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
-		} else {
-			String sql = "UPDATE member "
-					+ "SET phone_number=?, updated_at=? "
-					+ "WHERE member_id=?";
-			Object[] param = new Object[] {memberDto.getPhoneNumber(), Date.valueOf(LocalDate.now()), findmemberDto.getMemberId()};
-			jdbcUtil.setSqlAndParameters(sql, param);
-		}
-
+	
 		try {
 			int result = jdbcUtil.executeUpdate();	// update 문 실행
 			return result;

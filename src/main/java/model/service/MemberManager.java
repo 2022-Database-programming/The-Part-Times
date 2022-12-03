@@ -5,6 +5,7 @@ import java.util.List;
 
 //import model.Community;
 import model.dto.MemberDto;
+import model.dto.MemberUpdateDto;
 //import model.dao.CommunityDAO;
 import model.dao.MemberDao;
 import model.exception.ExistingMemberException;
@@ -41,7 +42,7 @@ public class MemberManager {
 		return memberDao.insertMember(member);
 	}
 
-	public int update(MemberDto member) throws SQLException, MemberNotFoundException {
+	public int update(MemberUpdateDto member) throws SQLException, MemberNotFoundException {
 		String memberId = memberDao.findMember(member.getMemberId()).getMemberId();
 		if (!member.getMemberId().equals(memberId)) { 
 			throw new MemberNotFoundException(member.getMemberId() + "는 일치하지 않는 아이디입니다.");

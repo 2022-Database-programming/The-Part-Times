@@ -3,9 +3,28 @@
 <head>
     <title>Title</title>
     <style>
+        @font-face {
+            font-family: 'GmarketSansMedium';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'GmarketSansBold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            font-family: 'GmarketSansMedium';
+        }
+
         .title {
             color: #89a6d6;
             text-align: center;
+            font-family: 'GmarketSansBold';
         }
 
         .titleBox {
@@ -28,20 +47,23 @@
         }
 
         .submitButton {
-            width: 50%;
-            height: 10%;
+            width: 60%;
+            height: 100%;
+            background-color: #89a6d6;
+            border-width: 0px;
+            color: white;
         }
 
         .phone1 {
-            width: 15%;
+            width: 10%;
         }
 
         .phone2 {
-            width: 20%;
+            width: 15%;
         }
 
         .phone3 {
-            width: 20%;
+            width: 15%;
         }
 
         .underline {
@@ -52,7 +74,7 @@
         }
 
         .table {
-            margin-left: 30%;
+            margin-left: 25%;
             width: 80%;
             height: 90%;
         }

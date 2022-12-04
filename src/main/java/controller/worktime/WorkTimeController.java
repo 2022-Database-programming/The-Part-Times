@@ -13,10 +13,13 @@ public class WorkTimeController implements Controller {
         MemberSessionUtils memberSessionUtils = new MemberSessionUtils();
         String sessionForGetId = memberSessionUtils.getLoginUserId(request.getSession());
 
-        if (request.getServletPath().equals("/worktime") && request.getMethod().equals("GET")) {
-        	System.out.println(sessionForGetId);
-          return sessionForGetId;            
+        if (request.getServletPath().equals("/worktime/today")) {
+            if (request.getMethod().equals("POST")) {
+
+            }
         }
+
+
         
         return "error.jsp";
     }

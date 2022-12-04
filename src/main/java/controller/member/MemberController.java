@@ -43,7 +43,7 @@ public class MemberController implements Controller {
 			}
 
 			if (request.getMethod().equals("POST")) {   // 마이페이지 수정 요청
-				MemberDto updateUser = new MemberDto(
+				MemberUpdateDto updateUser = new MemberUpdateDto(
 						memberId,
 						request.getParameter("password"),
 						request.getParameter("name"),
@@ -128,5 +128,4 @@ public class MemberController implements Controller {
 
 		return "/error/error.jsp";
 	}
-  }
 }

@@ -18,7 +18,7 @@
 <!--			<param-name>encoding</param-name>-->
 <!--			<param-value>utf-8</param-value>-->
 <!--		</init-param>-->
-<!--	</filter> -->
+<!--	</filter>-->
 <!--	<filter-mapping>-->
 <!--		<filter-name>Resource Filter</filter-name>-->
 <!--		<url-pattern>/*</url-pattern>-->
@@ -31,7 +31,7 @@
 <!--		<servlet-name>DispatcherServlet</servlet-name>-->
 <!--		<servlet-class>controller.DispatcherServlet</servlet-class>-->
 <!--	</servlet>-->
-<!--&lt;!&ndash;	<servlet-mapping>&ndash;&gt;-->
+<!--	<servlet-mapping>-->
 <!--		<servlet-name>DispatcherServlet</servlet-name>-->
 <!--		<url-pattern>/</url-pattern>-->
 <!--	</servlet-mapping>-->

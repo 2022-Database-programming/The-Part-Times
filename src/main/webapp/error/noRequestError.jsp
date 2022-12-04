@@ -1,16 +1,16 @@
 <%--
   Created by IntelliJ IDEA.
   User: hee
-  Date: 2022/12/04
-  Time: 10:43 PM
+  Date: 2022/12/05
+  Time: 8:40 AM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>로그인 후 화면</title>
+    <title>Title</title>
 </head>
 <body>
-    로그인 후 화면입니다.
+    올바른 요청이 오지 않을 경우 보여지는 화면입니다.
 </body>
 </html>

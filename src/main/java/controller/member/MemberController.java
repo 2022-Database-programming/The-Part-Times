@@ -17,39 +17,31 @@ import model.service.MemberManager;
 
 public class MemberController implements Controller {
 	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
+	private static final MemberSessionUtils memberSessionUtils = new MemberSessionUtils();
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		/* 사용자가 로그아웃하지 않았으면 세션에서 아이디를 꺼내온다. */
+		if (request.getSession() == null) {
+			return "로그아웃된 유저입니다.";
+		}
+
+		String memberId = memberSessionUtils.getLoginUserId(request.getSession());
+
 		if(request.getServletPath().equals("/member/update")) {    // 회원정보 관련 컨트롤러
 			if (request.getMethod().equals("GET")) {
-				MemberSessionUtils memberSessionUtils = new MemberSessionUtils();
-				String updateId = memberSessionUtils.getLoginUserId(request.getSession());
-
-				if (updateId == null) {
-					return "/error/error.jsp";
-				}
-
-				System.out.println(updateId);
-
-				log.debug("UpdateForm Request : {}", updateId);
+				log.debug("UpdateForm Request : {}", memberId);
 
 				MemberManager manager = MemberManager.getInstance();
-				MemberDto member = manager.findMember(updateId);   // 수정하려는 사용자 정보 검색
+				MemberDto member = manager.findMember(memberId);   // 수정하려는 사용자 정보 검색
 				request.setAttribute("member", member);   // DTO 값을 통째로 넣어줌
 
 				return "/member/mypageForm.jsp";   // 사용자 보기 화면으로 이동 (forwarding)
 			}
 
 			if (request.getMethod().equals("POST")) {   // 마이페이지 수정 요청
-				MemberSessionUtils memberSessionUtils = new MemberSessionUtils();
-				String updateId = memberSessionUtils.getLoginUserId(request.getSession());
-
-				if (updateId == null) {
-					return "/error/error.jsp";
-				}
-
 				MemberDto updateUser = new MemberDto(
-						request.getParameter("memberId"),
+						memberId,
 						request.getParameter("password"),
 						request.getParameter("name"),
 						Date.valueOf(request.getParameter("birth")),
@@ -69,9 +61,6 @@ public class MemberController implements Controller {
 			if (request.getMethod().equals("POST")) {
 				String userId = request.getParameter("memberId");
 				String password = request.getParameter("password");
-
-				System.out.println(userId);
-				System.out.println(password);
 
 				try {
 					// 모델에 로그인 처리를 위임
@@ -96,7 +85,7 @@ public class MemberController implements Controller {
 
 		if (request.getServletPath().equals("/member/signup")) {    // 회원가입
 			if (request.getMethod().equals("GET")) {
-				return "index.jsp";
+				return "/member/register.jsp";
 			}
 
 			if (request.getMethod().equals("POST")) {
@@ -114,7 +103,7 @@ public class MemberController implements Controller {
 					MemberManager manager = MemberManager.getInstance();
 					manager.create(member);
 
-					return "redirect:/login.jsp";   // 성공 시 사용자 리스트 화면으로 redirect
+					return "redirect:/login.jsp";   // 성공 시 로그인 화면으로 이동하기
 				} catch (ExistingMemberException e) {   // 예외 발생 시 회원가입 form으로 forwarding
 					request.setAttribute("registerFailed", true);
 					request.setAttribute("exception", e);
@@ -124,6 +113,16 @@ public class MemberController implements Controller {
 				}
 			}
 		}
+
+		if (request.getServletPath().equals("/member/signout")) {   // 로그아웃
+			if (request.getMethod().equals("POST")) {
+				HttpSession session = request.getSession();
+				session.removeAttribute(memberSessionUtils.USER_SESSION_KEY);
+				session.invalidate();
+			}
+			return "index.jsp";
+		}
+
 		return "/error/error.jsp";
 	}
 }

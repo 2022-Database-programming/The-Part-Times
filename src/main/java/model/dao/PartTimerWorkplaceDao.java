@@ -7,6 +7,7 @@ import util.JDBCUtil;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PartTimerWorkplaceDao {
     private final JDBCUtil JDBC_UTIL;

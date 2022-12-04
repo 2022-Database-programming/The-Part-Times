@@ -3,6 +3,9 @@ package test;
 
 import model.dao.MyTodayWorkTimeDao;
 import model.dao.MyTotalWorkTimeDao;
+import model.dto.MyTodayWorkTimeDto;
+import model.dto.MyTotalWorkTimeDto;
+import model.dto.TimeSettingDto;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
@@ -46,7 +49,7 @@ public class MyTodayWorkTimeTest {
 
 
         // 이 부분 컨트롤러로 변경
-        int result = myTodayWorkTimeDao.insert(myTodayWorkTimeDto, );
-        System.out.println(result);
+//        int result = myTodayWorkTimeDao.insert(myTodayWorkTimeDto, 1);
+//        System.out.println(result);
     }
 }

@@ -15,8 +15,9 @@ public class WorkTimeController implements Controller {
 
         if (request.getServletPath().equals("/worktime") && request.getMethod().equals("GET")) {
         	System.out.println(sessionForGetId);
-            return sessionForGetId;            
+          return sessionForGetId;            
         }
+        
         return "error.jsp";
     }
 }

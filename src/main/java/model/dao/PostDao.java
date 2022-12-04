@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostDao {
-    private JDBCUtil jdbcUtil;
+    private final JDBCUtil JDBC_UTIL;
 
     public PostDao() {
-        jdbcUtil = new JDBCUtil();
+        JDBC_UTIL = new JDBCUtil();
     }
 
     //게시글 추가
@@ -26,17 +26,17 @@ public class PostDao {
         Object[] param = new Object[] { postDto.getMemberId(), postDto.getIsAnonymous(), postDto.getType(), 
         			postDto.getTitle(), postDto.getContent(), postDto.getLikes(), postDto.getViews() };
 
-        jdbcUtil.setSqlAndParameters(sql, param);
+        JDBC_UTIL.setSqlAndParameters(sql, param);
 
         try {
-            rs = jdbcUtil.executeUpdate();
+            rs = JDBC_UTIL.executeUpdate();
             System.out.println("insert success");
         } catch(Exception e) {
-            jdbcUtil.rollback();
+            JDBC_UTIL.rollback();
             e.printStackTrace();
         } finally {
-            jdbcUtil.commit();
-            jdbcUtil.close();
+            JDBC_UTIL.commit();
+            JDBC_UTIL.close();
         }
         return rs;
     }

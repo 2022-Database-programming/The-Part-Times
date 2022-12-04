@@ -19,8 +19,9 @@ public class MyTodayWorkTimeDao {
     private final String WORK_DATE = "work_date";
     private final String CREATED_AT = "created_at";
     private final String UPDATED_AT = "updated_at";
+    private final String ID_SEQUENCE = TABLE_NAME + "_seq.nextval";
 
-    private final String insertQuery = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private final String insertQuery = "INSERT INTO " + TABLE_NAME + " VALUES (" + ID_SEQUENCE + ", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final String deleteQuery = "DELETE FROM " + TABLE_NAME + " WHERE " + ID + "=?";
     private final String findQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + WORK_DATE + "=?";
 
@@ -33,11 +34,12 @@ public class MyTodayWorkTimeDao {
     }
 
     // 오늘 근무한 시간 저장
-    public int insert(MyTodayWorkTimeDto myTodayWorkTimeDto, int partTimerWorkPlaceId) throws SQLException {
-        saveMyTotalWorkTime(myTodayWorkTimeDto, partTimerWorkPlaceId);
+    public int insert(MyTodayWorkTimeDto myTodayWorkTimeDto, MyTotalWorkTimeDto myTotalWorkTimeDto, int partTimerWorkPlaceId) throws SQLException {
+        saveMyTotalWorkTime(myTodayWorkTimeDto, myTotalWorkTimeDto);
+        System.out.println(myTotalWorkTimeDto.getId());
 
         Object[] params = new Object[] {
-                myTodayWorkTimeDto.getId(), myTodayWorkTimeDto.getMyTotalWorkTimeDto().getId(),
+                myTotalWorkTimeDto.getId(),
                 myTodayWorkTimeDto.getWorkStartTime(), myTodayWorkTimeDto.getWorkFinishTime(),
                 myTodayWorkTimeDto.getBreakStartTime(), myTodayWorkTimeDto.getBreakFinishTime(),
                 myTodayWorkTimeDto.getTotalWorkTimeOfDay(), myTodayWorkTimeDto.getTotalBreakTimeOfDay(), myTodayWorkTimeDto.getMinimumWage(),
@@ -47,7 +49,8 @@ public class MyTodayWorkTimeDao {
         return executeInsertOrDelete(insertQuery, params);
     }
 
-    private void saveMyTotalWorkTime(MyTodayWorkTimeDto myTodayWorkTimeDto, int partTimerWorkPlaceId) throws SQLException {
+    private int saveMyTotalWorkTime(MyTodayWorkTimeDto myTodayWorkTimeDto, MyTotalWorkTimeDto myTotalWorkTimeDto) throws SQLException {
+        System.out.println("total work time save start...");
         String[] times = String.valueOf(myTodayWorkTimeDto.getTotalWorkTimeOfDay()).split(":");
         int salary = Integer.valueOf(times[0]) * myTodayWorkTimeDto.getMinimumWage();
 
@@ -55,11 +58,9 @@ public class MyTodayWorkTimeDao {
             salary += myTodayWorkTimeDto.getMinimumWage() / 2;
         }
 
-        MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDto(
-                (int) (Math.random() * 100), partTimerWorkPlaceId, myTodayWorkTimeDto.getTotalWorkTimeOfDay(), myTodayWorkTimeDto.getWorkDate(), salary, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis())
-        );
+        myTotalWorkTimeDto.setSalary(salary);
 
-        MY_TOTAL_WORKTIME_DAO.insertOrUpdate(myTotalWorkTimeDto);
+        return MY_TOTAL_WORKTIME_DAO.insertOrUpdate(myTotalWorkTimeDto);
     }
 
     // 오늘 근무 시간 삭제
@@ -83,25 +84,25 @@ public class MyTodayWorkTimeDao {
             JDBC_UTIL.close();
         }
 
-        return 0;
+        return -1;
     }
 
     // 오늘 날짜로 찾기
-    public MyTodayWorkTimeDto findMyWorkTimeByDate(Date date) {
-        MyTotalWorkTimeDto myTotalWorkTimeDto = MY_TOTAL_WORKTIME_DAO.findMyTotalWorkTImeByDate(date);
-        Object[] params = new Object[] { date };
+//    public MyTodayWorkTimeDto findMyWorkTimeByDate(Date date) {
+//        MyTotalWorkTimeDto myTotalWorkTimeDto = MY_TOTAL_WORKTIME_DAO.findMyTotalWorkTImeByDate(date);
+//        Object[] params = new Object[] { date };
+//
+//        return executeSelectQuery(params, myTotalWorkTimeDto);
+//    }
 
-        return executeSelectQuery(params, myTotalWorkTimeDto);
-    }
-
-    private MyTodayWorkTimeDto executeSelectQuery(Object[] params, MyTotalWorkTimeDto myTotalWorkTimeDto) {
+    private MyTodayWorkTimeDto executeSelectQuery(Object[] params) {
         try {
             JDBC_UTIL.setSqlAndParameters(findQuery, params);
             ResultSet resultSet = JDBC_UTIL.executeQuery();
 
             if (resultSet.next()) {
                 MyTodayWorkTimeDto myTodayWorkTimeDto = new MyTodayWorkTimeDto(
-                        resultSet.getInt(ID), myTotalWorkTimeDto, resultSet.getTime(WORK_START_TIME),
+                        resultSet.getInt(ID), resultSet.getInt(MYTOTAL_WORKTIME_ID), resultSet.getTime(WORK_START_TIME),
                         resultSet.getTime(WORK_FINISH_TIME), resultSet.getTime(BREAK_START_TIME), resultSet.getTime(BREAK_FINISH_TIME),
                         resultSet.getTime(TOTAL_WORK_TIME_OF_DAY), resultSet.getTime(TOTAL_BREAK_TIME_OF_DAY),
                         resultSet.getDate(WORK_DATE), resultSet.getInt(MINIMUM_WAGE), resultSet.getTimestamp(CREATED_AT), resultSet.getTimestamp(UPDATED_AT)

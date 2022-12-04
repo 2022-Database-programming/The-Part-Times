@@ -1,5 +1,6 @@
 package controller;
 
+import controller.worktime.WorkTimeController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,11 +20,13 @@ public class RequestMapping {
     	System.out.println("mapping 받음");
         // 각 uri에 대응되는 controller 객체를 생성 및 저장
         mappings.put("/", new ForwardController("index.jsp"));
-        mappings.put("/member", new ForwardController("/member/loginForm.jsp"));
+        //mappings.put("/member", new ForwardController("/member/loginForm.jsp"));
         mappings.put("/member/signin", new MemberController());
         mappings.put("/member/signup", new MemberController());
+        mappings.put("/member/signout", new MemberController());
         mappings.put("/member/update", new MemberController());
-        //mappings.put("/member/update", new MemberController());
+        mappings.put("/member/update/page", new ForwardController("/member/mypage.jsp"));
+        mappings.put("/worktime", new WorkTimeController());
 
         mappings.put("/worktime", new WorkTimeController());
         

@@ -77,7 +77,7 @@ public class ReplyDao {
 		}
 		return rs;
 	}
-	
+
 	
 	//댓글 수정
 	public int updateReply(ReplyDto replyDto) throws SQLException {
@@ -118,6 +118,7 @@ public class ReplyDao {
 			jdbcUtil.commit();
 			jdbcUtil.close();
 		}
+    
 		return 0;
 	}
 	

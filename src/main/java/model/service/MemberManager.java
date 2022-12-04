@@ -1,11 +1,9 @@
 package model.service;
 
 import java.sql.SQLException;
-import java.util.List;
 
 //import model.Community;
 import model.dto.MemberDto;
-import model.dto.MemberUpdateDto;
 //import model.dao.CommunityDAO;
 import model.dao.MemberDao;
 import model.exception.ExistingMemberException;

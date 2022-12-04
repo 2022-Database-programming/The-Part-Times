@@ -12,41 +12,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostDao {
-    private final JDBCUtil JDBC_UTIL;
+	private JDBCUtil jdbcUtil;
 
-    public PostDao() {
-        JDBC_UTIL = new JDBCUtil();
-    }
+	public PostDao() {
+		jdbcUtil = new JDBCUtil();
+	}
 
-    //게시글 추가
-    public int createPost(PostDto postDto) throws SQLException {
-        String sql = "INSERT INTO post VALUES (post_seq.nextval, ?, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT)";
+	//게시글 추가
+	public int createPost(PostDto postDto) throws SQLException {
+		String sql = "INSERT INTO post VALUES (post_seq.nextval, ?, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT)";
 
-        int rs = 0;
-        Object[] param = new Object[] { postDto.getMemberId(), postDto.getIsAnonymous(), postDto.getType(), 
-        			postDto.getTitle(), postDto.getContent(), postDto.getLikes(), postDto.getViews() };
+		int rs = 0;
+		Object[] param = new Object[] { postDto.getMemberId(), postDto.getIsAnonymous(), postDto.getType(),
+				postDto.getTitle(), postDto.getContent(), postDto.getLikes(), postDto.getViews() };
 
-        JDBC_UTIL.setSqlAndParameters(sql, param);
+		jdbcUtil.setSqlAndParameters(sql, param);
 
-        try {
-            rs = JDBC_UTIL.executeUpdate();
-            System.out.println("insert success");
-        } catch(Exception e) {
-            JDBC_UTIL.rollback();
-            e.printStackTrace();
-        } finally {
-            JDBC_UTIL.commit();
-            JDBC_UTIL.close();
-        }
-        return rs;
-    }
-    
-    //게시글 수정
-    public int updatePost(PostDto postDto) throws SQLException {
-    	PostDto findPostDto = findPost(postDto.getId());
-    	
+		try {
+			rs = jdbcUtil.executeUpdate();
+			System.out.println("insert success");
+		} catch(Exception e) {
+			jdbcUtil.rollback();
+			e.printStackTrace();
+		} finally {
+			jdbcUtil.commit();
+			jdbcUtil.close();
+		}
+		return rs;
+	}
+
+	//게시글 수정
+	public int updatePost(PostDto postDto) throws SQLException {
+		PostDto findPostDto = findPost(postDto.getId());
+
 		String sql = "UPDATE post " + "SET title=?, content=?, updated_at=? " + "WHERE id=?";
-		
+
 		Object[] param = new Object[] {postDto.getTitle(), postDto.getContent(), new Timestamp(System.currentTimeMillis()),findPostDto.getId()};
 		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
 
@@ -62,11 +62,11 @@ public class PostDao {
 			jdbcUtil.close();	// resource 반환
 		}
 		return 0;
-    }
-    
-    
-    //게시글 삭제
-    public int deletePost(int id) throws SQLException {
+	}
+
+
+	//게시글 삭제
+	public int deletePost(int id) throws SQLException {
 		String sql = "DELETE FROM post WHERE id=?";
 
 		Object[] param = new Object[] {id};
@@ -83,13 +83,13 @@ public class PostDao {
 			jdbcUtil.close();
 		}
 		return 0;
-    }
-    
-    
-    //게시글 조회
-    public PostDto findPost(int id) throws SQLException {
+	}
+
+
+	//게시글 조회
+	public PostDto findPost(int id) throws SQLException {
 		String sql = "SELECT * " + "FROM post " + "WHERE id=?";
-		
+
 		jdbcUtil.setSqlAndParameters(sql, new Object[] { id });	// JDBCUtil에 query문과 매개 변수 설정
 
 		try {
@@ -116,14 +116,14 @@ public class PostDao {
 		}
 		return null;
 	}
-    
-    
-    //게시글 전체 조회
-    public List<PostDto> findAllPost() throws SQLException {
+
+
+	//게시글 전체 조회
+	public List<PostDto> findAllPost() throws SQLException {
 		String sql = "SELECT * " + "FROM post " + "ORDER BY created_at DESC";
-		
+
 		jdbcUtil.setSqlAndParameters(sql, null);
-		
+
 		try {
 			ResultSet rs = jdbcUtil.executeQuery();
 			List<PostDto> postList = new ArrayList<PostDto>();
@@ -142,7 +142,7 @@ public class PostDao {
 				postList.add(post);
 			}
 			return postList;
-		
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -150,10 +150,10 @@ public class PostDao {
 		}
 		return null;
 	}
-    
-    
-    //게시글 개수 조회
-    public int countPost() throws SQLException {
+
+
+	//게시글 개수 조회
+	public int countPost() throws SQLException {
 		String sql = "SELECT count(*) FROM post";
 		jdbcUtil.setSqlAndParameters(sql, null);	// JDBCUtil에 query문과 매개 변수 설정
 

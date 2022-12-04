@@ -87,8 +87,8 @@ public class MyTotalIncomeDao {
 						resultSet.getInt("employer_workplace_id"),
 						resultSet.getDate("income_date_of_month"),
 						resultSet.getInt("income"),
-						resultSet.getTimestamp("created_at"),
-						resultSet.getTimestamp("updated_at"));
+						resultSet.getDate("created_at"),
+						resultSet.getDate("updated_at"));
 				return myTotalIncomeDto;
 			}
 

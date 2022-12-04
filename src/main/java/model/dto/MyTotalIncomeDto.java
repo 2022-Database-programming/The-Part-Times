@@ -1,6 +1,5 @@
 package model.dto;
 
-import java.sql.Timestamp;
 import java.sql.Date;
 
 public class MyTotalIncomeDto {
@@ -8,8 +7,8 @@ public class MyTotalIncomeDto {
 	private int employerWorkplaceId;	//FK 나의 근무지 번호
 	private Date incomeDateOfMonth;		//연월일, 월별 수익 저장
 	private int income;		//이번달 수익
-	private Timestamp createdAt;	//생성 날짜
-	private Timestamp updatedAt;	//수정 날짜
+	private Date createdAt;	//생성 날짜
+	private Date updatedAt;	//수정 날짜
 
 	public MyTotalIncomeDto() {
 
@@ -22,8 +21,8 @@ public class MyTotalIncomeDto {
 		this.income = income;
 	}
 
-	public MyTotalIncomeDto(int id, int employerWorkplaceId, Date incomeDateOfMonth, int income, Timestamp createdAt,
-							Timestamp updatedAt) {
+	public MyTotalIncomeDto(int id, int employerWorkplaceId, Date incomeDateOfMonth, int income, Date createdAt,
+							Date updatedAt) {
 		super();
 		this.id = id;
 		this.employerWorkplaceId = employerWorkplaceId;
@@ -65,19 +64,19 @@ public class MyTotalIncomeDto {
 		this.income = income;
 	}
 
-	public Timestamp getCreatedAt() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Timestamp createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public Timestamp getUpdatedAt() {
+	public Date getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(Timestamp updatedAt) {
+	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 

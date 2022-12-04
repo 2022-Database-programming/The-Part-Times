@@ -1,8 +1,10 @@
 package model.dao;
 
 import model.dto.MemberDto;
+import model.dto.MemberUpdateDto;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 import util.JDBCUtil;
 
@@ -14,15 +16,15 @@ public class MemberDao {
 		jdbcUtil = new JDBCUtil();
 	}
 
-	public int insertOrUpdate(MemberDto memberDto) throws SQLException {
-		int result = -1;
-		if(existedMember(memberDto.getMemberId())) {
-			result = updateMember(memberDto);
-		} else {
-			result = insertMember(memberDto);
-		}
-		return result;
-	}
+//	public int insertOrUpdate(MemberDto memberDto) throws SQLException {
+//		int result = -1;
+//		if(existedMember(memberDto.getMemberId())) {
+//			result = updateMember(memberDto);
+//		} else {
+//			result = insertMember(memberDto);
+//		}
+//		return result;
+//	}
 
 
 	//사용자 정보 확인 (회원가입시)
@@ -47,7 +49,7 @@ public class MemberDao {
 
 	//회원가입 (사용자 정보 등록)
 	public int insertMember(MemberDto memberDto) throws SQLException {
-		String sql = "INSERT INTO member (name, member_id, password, birth, phone_number, type) VALUES (member_seq.nextval, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO member (id, name, member_id, password, birth, phone_number, type, is_active, created_at, updated_at) VALUES (member_seq.nextval, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT)";
 		Object[] param = new Object[] {memberDto.getName(), memberDto.getMemberId(), memberDto.getPassword(),
 				memberDto.getBirth(), memberDto.getPhoneNumber(), memberDto.getType()};
 
@@ -79,7 +81,6 @@ public class MemberDao {
 			ResultSet rs = jdbcUtil.executeQuery();		// query 실행
 			if (rs.next()) {
 				MemberDto member = new MemberDto(
-						rs.getInt("id"),
 						rs.getString("member_id"),
 						rs.getString("password"),
 						rs.getString("name"),
@@ -97,23 +98,16 @@ public class MemberDao {
 	}
 
 	//마이페이지 (사용자 정보 수정)
-	public int updateMember(MemberDto memberDto) throws SQLException {
-		MemberDto findmemberDto = findMember(memberDto.getMemberId());
+	public int updateMember(MemberUpdateDto member) throws SQLException {
+		MemberDto findmemberDto = findMember(member.getMemberId());
 
-		if(memberDto.getPassword() != null) {
-			String sql = "UPDATE member "
-					+ "SET password=?, phone_number=?, updated_at=? "
-					+ "WHERE member_id=?";
-			Object[] param = new Object[] {memberDto.getPassword(), memberDto.getPhoneNumber(), new Timestamp(System.currentTimeMillis()), findmemberDto.getMemberId()};
+		String sql = "UPDATE member "
+				+ "SET phone_number=?, birth=?, updated_at=? "
+				+ "WHERE member_id=?";
+		
+			Object[] param = new Object[] {member.getPhoneNumber(), member.getBirth(), new Timestamp(System.currentTimeMillis()), findmemberDto.getMemberId()};
 			jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
-		} else {
-			String sql = "UPDATE member "
-					+ "SET phone_number=?, updated_at=? "
-					+ "WHERE member_id=?";
-			Object[] param = new Object[] {memberDto.getPhoneNumber(), new Timestamp(System.currentTimeMillis()), findmemberDto.getMemberId()};
-			jdbcUtil.setSqlAndParameters(sql, param);
-		}
-
+	
 		try {
 			int result = jdbcUtil.executeUpdate();	// update 문 실행
 			return result;
@@ -128,33 +122,5 @@ public class MemberDao {
 		return 0;
 	}
 
-
-	//로그인 기능 -> id도 같이 select 할까요?
-	public String findByMemberIdAndPassword(String memberId, String password) throws SQLException {
-		if(existedMember(memberId)) {
-			String sql = "SELECT member_id, password "
-					+ "FROM member "
-					+ "WHERE member_id=?";
-
-			jdbcUtil.setSqlAndParameters(sql, new Object[] {memberId});
-
-			try {
-				ResultSet rs = jdbcUtil.executeQuery();		// query 실행
-				if (rs.next()) {
-					String id = rs.getString("member_id");
-					String pwd = rs.getString("password");
-					if(memberId.equals(id) && password.equals(pwd))
-						return id;
-				}
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			} finally {
-				jdbcUtil.close();
-			}
-			return null;
-		}
-
-		return null;
-	}
-
+	//삭제...
 }

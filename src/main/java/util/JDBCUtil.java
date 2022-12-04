@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class JDBCUtil {
 	private String sql = null; // 실행할 query
-	private Object[] parameters = null;; // PreparedStatement 의 매개변수 값을 저장하는 배열
+	private Object[] parameters = null; // PreparedStatement 의 매개변수 값을 저장하는 배열
 	private static DataSource ds = null; // DBCP DataSource
 	private static Connection conn = null;
 	private PreparedStatement pstmt = null;

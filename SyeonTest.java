@@ -1,16 +1,22 @@
 package test;
 
-import java.util.Scanner;
+import java.util.*;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import model.dao.MemberDao;
 import model.dto.MemberDto;
+import model.dto.MemberUpdateDto;
+import model.dto.PostDto;
 import model.dao.MyTotalIncomeDao;
+import model.dao.ReplyDao;
+import model.dao.PostDao;
 import model.dto.MyTotalIncomeDto;
+import model.dto.ReplyDto;
 
-public class Test {
+public class SyeonTest {
 
 	public static void main(String[] args) throws SQLException{
 		Scanner sc = new Scanner(System.in);
@@ -23,6 +29,12 @@ public class Test {
 		
 		MyTotalIncomeDao myTotalIncomeDao;
 		MyTotalIncomeDto myTotalIncomeDto;
+		
+		ReplyDao replyDao;
+		ReplyDto replyDto;
+		
+		PostDao postDao;
+		PostDto postDto;
 		
 		// 날짜 형식 변환시 parsing 오류를 try catch로 체크
 				try {
@@ -42,8 +54,8 @@ public class Test {
 					memberDao = new MemberDao();
 					
 					//insert
-//					memberDto = new MemberDto("john1230", "jhn1230", "john", Date.valueOf("1994-08-17") , "01044981362", "EMPLOYER");
-//					System.out.println("result: " + memberDao.insertOrUpdate(memberDto));
+//					memberDto = new MemberDto("mina", "mina9875", "mina", Date.valueOf("1999-12-17") , "01098761234", "PARTTIMER");
+//					System.out.println("result: " + memberDao.insertMember(memberDto));
 					
 //					
 					//사용자 정보 상세 조회
@@ -63,8 +75,8 @@ public class Test {
 //					}
 					
 					//update
-//					memberDto = new MemberDto("john1230", "j1h2n3", "john", Date.valueOf("1994-08-17") , "01044981377", "EMPLOYER");
-//					System.out.println("result: " + memberDao.insertOrUpdate(memberDto));
+//					MemberUpdateDto memberUpdateDto = new MemberUpdateDto("john1230", "j1h2n3", "john", Date.valueOf("1994-08-17") , "01044981377", "EMPLOYER");
+//					System.out.println("result: " + memberDao.updateMember(memberUpdateDto));
 					
 //					memberDto = new MemberDto("john1230", "jj1230nn" , "john", Date.valueOf("1994-08-17") , "01048791362", "EMPLOYER");
 //					System.out.println("result: " + memberDao.insertOrUpdate(memberDto));
@@ -128,11 +140,94 @@ public class Test {
 //					}
 					
 					
+					replyDao = new ReplyDao();
+					
+					//<Reply>
+					//첫댓글 생성
+//					replyDto = new ReplyDto(2, 0, "sfskfjdljflsf", 0, 0);	
+//					System.out.println("result: " + replyDao.create(replyDto));
+	
+					//n번째 댓글 생성
+//					replyDto = new ReplyDto(2, 4, 0, "mollsldfksjlsnc", 0, 1);	
+//					System.out.println("result: " + replyDao.create(replyDto));
+								
+					//find
+					ReplyDto replyDto1 = replyDao.findReply(6);
+//					if (replyDto1 != null) {
+//						System.out.println("댓글 번호 : " + replyDto1.getId());
+//						System.out.println("소속 글 번호 : " + replyDto1.getPostId());
+//						System.out.println("소속 댓글 번호 : " + replyDto1.getReplyId());
+//						System.out.println("댓글 계층 : " + replyDto1.getLayer());
+//						System.out.println();
+//					} else {
+//						System.out.println("찾지 못했음");
+//						return;
+//					}
+					
+					
+					//update
+//					replyDto = new ReplyDto(6, 2, 4, 0, "poiuyrewsgjxnjsfdljfsdljfsd", 0, 1, replyDto1.getCreatedAt(), replyDto1.getUpdatedAt());	
+//					System.out.println("result: " + replyDao.updateReply(replyDto));
+					
+					//delete
+//					System.out.println("result: " + replyDao.delete(774));
+				
+					
+					//댓글 전체 조회
+//					List<ReplyDto> list = new ArrayList<ReplyDto>();
+//					list = replyDao.findAllReply(2);
+//					
+//					for (int i = 0; i < list.size(); i++) {
+//						System.out.println(list.get(i).getId());
+//					}
+					
+					//count
+//					System.out.println("result: " + replyDao.countReply(1));
+					
+					
+					//<Post>
+					postDao = new PostDao();
+					
+					//게시글 create
+//					postDto = new PostDto(1, 0, "PARTTIMER", "html", "hard", 0, 0);
+//					System.out.println("result: " + postDao.createPost(postDto));
+					
+					//게시글 find
+					PostDto postDto1 = postDao.findPost(3);
+//					if (postDto1 != null) {
+//						System.out.println("글 번호 : " + postDto1.getId());
+//						System.out.println("유저 번호 : " + postDto1.getMemberId());
+//						System.out.println("커뮤니티 타입 : " + postDto1.getType());
+//						System.out.println("글 제목 : " + postDto1.getTitle());
+//						System.out.println();
+//					} else {
+//						System.out.println("찾지 못했음");
+//						return;
+//					}
+					
+					//게시글 update
+//					postDto = new PostDto(3, 1, 0, "PARTTIMER", "JSP", "HELLO WORLD", 0, 0, postDto1.getCreatedAt(), postDto1.getUpdatedAt());
+//					System.out.println("result: " + postDao.updatePost(postDto));
+//					
+					//게시글 delete
+//					System.out.println("result: " + postDao.deletePost(3));
+					
+					//게시글 개수 조회
+//					System.out.println("result: " + postDao.countPost());
+					
+					//게시글 전체 조회
+//					List<PostDto> list = new ArrayList<PostDto>();
+//					list = postDao.findAllPost();
+					
+//					for (int i = 0; i < list.size(); i++) {
+//						System.out.println(list.get(i).getId());
+//					}
 					
 				}catch (Exception e) {
 					e.printStackTrace();
 				}
 
+				
 	}
 
 }

@@ -5,11 +5,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class CommentDao {
+public class ReplyDao {
 	private final String TABLE_NAME = "comment";
 	private JDBCUtil jdbcUtil;
 	private Connection conn;
-	public CommentDao() {
+	public ReplyDao() {
 		jdbcUtil = new JDBCUtil();
 	}
 	

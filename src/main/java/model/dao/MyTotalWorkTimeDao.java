@@ -5,6 +5,7 @@ import util.JDBCUtil;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class MyTotalWorkTimeDao {
     private final String TABLE_NAME = "MYTOTAL_WORKTIME";
@@ -19,9 +20,10 @@ public class MyTotalWorkTimeDao {
     private final JDBCUtil JDBC_UTIL;
 
     private final String insertQuery = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?, ?, ?, ?)";
-    private final String updateQuery = "UPDATE " + TABLE_NAME + " SET " + TOTAL_WORK_TIME_OF_MONTH + "=?, " + SALARY + "=NVL(" + SALARY + ", 0) + ?" +
+    private final String updateQuery = "UPDATE " + TABLE_NAME + " SET " + TOTAL_WORK_TIME_OF_MONTH + "=?, " + SALARY + "=NVL(" + SALARY + ", 0) + ?, " + UPDATED_AT +
             "WHERE " + WORK_DATE_OF_MONTH + "=?";
     private final String findQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + WORK_DATE_OF_MONTH + "=?";
+
 
     public MyTotalWorkTimeDao() {
         JDBC_UTIL = new JDBCUtil();
@@ -54,7 +56,7 @@ public class MyTotalWorkTimeDao {
     }
 
     private int update(MyTotalWorkTimeDto myTotalWorkTimeDto) {
-        Object[] params = new Object[] { myTotalWorkTimeDto.getTotalWorkTimeOfMonth(), myTotalWorkTimeDto.getSalary(), myTotalWorkTimeDto.getWorkDateOfMonth() };
+        Object[] params = new Object[] { myTotalWorkTimeDto.getTotalWorkTimeOfMonth(), myTotalWorkTimeDto.getSalary(), myTotalWorkTimeDto.getWorkDateOfMonth(), new Timestamp(System.currentTimeMillis())};
 
         return executeInsertOrUpdateQuery(updateQuery, params);
     }

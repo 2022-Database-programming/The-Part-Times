@@ -7,7 +7,6 @@ import util.JDBCUtil;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PartTimerWorkplaceDao {
     private final JDBCUtil JDBC_UTIL;
@@ -34,12 +33,12 @@ public class PartTimerWorkplaceDao {
     private String SELECT_BY_ID_QUERY = "select * from " + TABLE_NAME +
             "where " + MEMBER_ID + "=? and " + WORKPLACE_ID + "=?";
 
-    private final String CHECK_EXISTED_QUERY = "select count(*) from EMPLOYER_WORKPLACE " +
+    private final String CHECK_EXISTED_QUERY = "select count(*) from " + TABLE_NAME +
             "where MEMBER_ID=? and WORKPLACE_ID=?";    // 이거 왜 넣은거야?
 
-    private final String FIND_ALL_QUERY = "select W.* from PARTTIMER_WORKPLACE " +   // W.*은 뭘까요
+    private final String FIND_ALL_QUERY = "select W.* from " + TABLE_NAME +
             "join WORKPLACE W on PARTTIMER_WORKPLACE.WORKPLACE_ID = W.ID " +
-            "where MEMBER_ID = ?";
+            "where " + MEMBER_ID + "=?";
 
     public PartTimerWorkplaceDao() {
         JDBC_UTIL = new JDBCUtil();
@@ -80,8 +79,8 @@ public class PartTimerWorkplaceDao {
     }
 
     public int remove(int memberId, int workplaceId) {
-        JDBC_UTIL.setSqlAndParameters(DELETE_QUERY, new Object[] { memberId, workplaceId});
         try {
+            JDBC_UTIL.setSqlAndParameters(DELETE_QUERY, new Object[] { memberId, workplaceId});
             return JDBC_UTIL.executeUpdate();
         } catch (Exception e) {
             JDBC_UTIL.rollback();
@@ -116,8 +115,7 @@ public class PartTimerWorkplaceDao {
         return null;
     }
 
-    public boolean isExistPartTimerWorkplace(int memberId, int workplaceId) {   // 이거 왜 넣은거야?
-
+    public boolean isExistPartTimerWorkplace(int memberId, int workplaceId) {
         JDBC_UTIL.setSqlAndParameters(CHECK_EXISTED_QUERY, new Object[] { memberId, workplaceId});
 
         try {
@@ -143,7 +141,7 @@ public class PartTimerWorkplaceDao {
             List<WorkplaceDto> memberList = new ArrayList<>();
 
             while(rs.next()) {
-                WorkplaceDto workplaceDto = new WorkplaceDto(
+                WorkplaceDto workplaceDto = new WorkplaceDto (
                         rs.getInt(ID),
                         rs.getString(WORKPLACE_ID),
                         rs.getString(ADDRESS),

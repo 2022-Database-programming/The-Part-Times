@@ -9,9 +9,7 @@ public class MyTodayWorkTimeDto {
     private int id;
 
     // Foreign key field
-    // private int myTotalWorkTimeId;
-    private MyTotalWorkTimeDto myTotalWorkTimeDto;
-
+    private int myTotalWorkTimeId;
     private Time workStartTime;
     private Time workFinishTime;
     private Time breakStartTime;
@@ -23,9 +21,23 @@ public class MyTodayWorkTimeDto {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public MyTodayWorkTimeDto(int id, MyTotalWorkTimeDto myTotalWorkTimeDto, Time workStartTime, Time workFinishTime, Time breakStartTime, Time breakFinishTime, Time totalWorkTimeOfDay, Time totalBreakTimeOfDay, Date workDate, int minimumWage, Timestamp createdAt, Timestamp updatedAt) {
+    public MyTodayWorkTimeDto(int myTotalWorkTimeId, Time workStartTime, Time workFinishTime, Time breakStartTime, Time breakFinishTime, Time totalWorkTimeOfDay, Time totalBreakTimeOfDay, Date workDate, int minimumWage, Timestamp createdAt, Timestamp updatedAt) {
+        this.myTotalWorkTimeId = myTotalWorkTimeId;
+        this.workStartTime = workStartTime;
+        this.workFinishTime = workFinishTime;
+        this.breakStartTime = breakStartTime;
+        this.breakFinishTime = breakFinishTime;
+        this.totalWorkTimeOfDay = totalWorkTimeOfDay;
+        this.totalBreakTimeOfDay = totalBreakTimeOfDay;
+        this.workDate = workDate;
+        this.minimumWage = minimumWage;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public MyTodayWorkTimeDto(int id, int myTotalWorkTimeId, Time workStartTime, Time workFinishTime, Time breakStartTime, Time breakFinishTime, Time totalWorkTimeOfDay, Time totalBreakTimeOfDay, Date workDate, int minimumWage, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
-        this.myTotalWorkTimeDto = myTotalWorkTimeDto;
+        this.myTotalWorkTimeId = myTotalWorkTimeId;
         this.workStartTime = workStartTime;
         this.workFinishTime = workFinishTime;
         this.breakStartTime = breakStartTime;
@@ -46,12 +58,12 @@ public class MyTodayWorkTimeDto {
         this.id = id;
     }
 
-    public MyTotalWorkTimeDto getMyTotalWorkTimeDto() {
-        return myTotalWorkTimeDto;
+    public int getMyTotalWorkTimeId() {
+        return myTotalWorkTimeId;
     }
 
-    public void setMyTotalWorkTimeId(MyTotalWorkTimeDto myTotalWorkTimeId) {
-        this.myTotalWorkTimeDto = myTotalWorkTimeId;
+    public void setMyTotalWorkTimeId(int myTotalWorkTimeId) {
+        this.myTotalWorkTimeId = myTotalWorkTimeId;
     }
 
     public Time getWorkStartTime() {
@@ -138,7 +150,7 @@ public class MyTodayWorkTimeDto {
     public String toString() {
         return "MyTodayWorkTimeDto{" +
                 "id=" + id +
-                ", myTotalWorkTimeDto=" + myTotalWorkTimeDto +
+                ", myTotalWorkTimeId=" + myTotalWorkTimeId +
                 ", workStartTime=" + workStartTime +
                 ", workFinishTime=" + workFinishTime +
                 ", breakStartTime=" + breakStartTime +

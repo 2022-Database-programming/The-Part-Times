@@ -1,7 +1,7 @@
 package model.dto;
 
-import java.sql.Timestamp;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class MemberDto {
 	private int id;		//유저번호
@@ -16,7 +16,7 @@ public class MemberDto {
 	private Timestamp updatedAt;	//수정 날짜
 
 	public MemberDto() {
-
+		
 	}
 
 	public MemberDto(String memberId, String password, String name, Date birth, String phoneNumber,
@@ -30,8 +30,8 @@ public class MemberDto {
 		this.type = type;
 	}
 
-	public MemberDto(int id, String memberId, String password, String name, Date birth, String phoneNumber,
-					 String type) {
+	public MemberDto(int id, String memberId, String password, String name, Date birth, String phoneNumber, String type,
+			int isActive, Timestamp createdAt, Timestamp updatedAt) {
 		super();
 		this.id = id;
 		this.memberId = memberId;
@@ -40,6 +40,9 @@ public class MemberDto {
 		this.birth = birth;
 		this.phoneNumber = phoneNumber;
 		this.type = type;
+		this.isActive = isActive;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 	}
 
 	public int getId() {
@@ -117,18 +120,6 @@ public class MemberDto {
 	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-
-//	/* 비밀번호 검사 */
-//	public boolean matchPassword(String password) {
-//		if (password == null) {
-//			return false;
-//		}
-//		return this.password.equals(password);
-//	}
-//
-//	public boolean isSameMember(String memberid) {
-//        return this.memberId.equals(memberid);
-//    }
 
 	@Override
 	public String toString() {

@@ -1,12 +1,11 @@
 package model.dto;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 
-public class CommentDto {
+public class ReplyDto {
     private int id;
     private int postId;
-    private int commentId;
+    private int replyId;
     private int isAnonymous;
     private String content;
     private int likes;
@@ -14,13 +13,34 @@ public class CommentDto {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public CommentDto() {
+    public ReplyDto() {
+    	
     }
+    
+    public ReplyDto(int postId, int replyId, int isAnonymous, String content, int likes, int layer) {
+		super();
+		this.postId = postId;
+		this.replyId = replyId;
+		this.isAnonymous = isAnonymous;
+		this.content = content;
+		this.likes = likes;
+		this.layer = layer;
+	}
+    
 
-    public CommentDto(int id, int postId, int commentId, int isAnonymous, String content, int likes, int layer, Timestamp createdAt, Timestamp updatedAt) {
+	public ReplyDto(int postId, int isAnonymous, String content, int likes, int layer) {
+		super();
+		this.postId = postId;
+		this.isAnonymous = isAnonymous;
+		this.content = content;
+		this.likes = likes;
+		this.layer = layer;
+	}
+
+	public ReplyDto(int id, int postId, int replyId, int isAnonymous, String content, int likes, int layer, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.postId = postId;
-        this.commentId = commentId;
+        this.replyId = replyId;
         this.isAnonymous = isAnonymous;
         this.content = content;
         this.likes = likes;
@@ -37,8 +57,8 @@ public class CommentDto {
         return postId;
     }
 
-    public int getCommentId() {
-        return commentId;
+    public int getReplyId() {
+        return replyId;
     }
 
     public int getIsAnonymous() {
@@ -73,8 +93,8 @@ public class CommentDto {
         this.postId = postId;
     }
 
-    public void setCommentId(int commentId) {
-        this.commentId = commentId;
+    public void setReplytId(int replyId) {
+        this.replyId = replyId;
     }
 
     public void setIsAnonymous(int isAnonymous) {
@@ -103,10 +123,10 @@ public class CommentDto {
 
     @Override
     public String toString() {
-        return "CommentDto{" +
+        return "ReplyDto{" +
                 "id=" + id +
                 ", postId=" + postId +
-                ", commentId=" + commentId +
+                ", replyId=" + replyId +
                 ", isAnonymous=" + isAnonymous +
                 ", content='" + content + '\'' +
                 ", likes=" + likes +

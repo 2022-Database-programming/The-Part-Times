@@ -103,13 +103,13 @@ public class MemberController implements Controller {
 					MemberManager manager = MemberManager.getInstance();
 					manager.create(member);
 
-					return "redirect:/login.jsp";   // 성공 시 로그인 화면으로 이동하기
+					return "redirect:index.jsp";   // 성공 시 로그인 화면으로 이동하기
 				} catch (ExistingMemberException e) {   // 예외 발생 시 회원가입 form으로 forwarding
 					request.setAttribute("registerFailed", true);
 					request.setAttribute("exception", e);
 					request.setAttribute("member", member);
 
-					return "/registerForm.jsp";
+					return "registerForm.jsp";
 				}
 			}
 		}

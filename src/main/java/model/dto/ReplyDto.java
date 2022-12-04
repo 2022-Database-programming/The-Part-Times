@@ -1,9 +1,8 @@
 package model.dto;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 
-public class CommentDto {
+public class ReplyDto {
     private int id;
     private int postId;
     private int commentId;
@@ -14,10 +13,10 @@ public class CommentDto {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public CommentDto() {
+    public ReplyDto() {
     }
 
-    public CommentDto(int id, int postId, int commentId, int isAnonymous, String content, int likes, int layer, Timestamp createdAt, Timestamp updatedAt) {
+    public ReplyDto(int id, int postId, int commentId, int isAnonymous, String content, int likes, int layer, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.postId = postId;
         this.commentId = commentId;

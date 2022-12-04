@@ -1,5 +1,5 @@
 package model.dao;
-import model.dto.CommentDto;
+import model.dto.ReplyDto;
 import util.JDBCUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +14,7 @@ public class ReplyDao {
 	}
 	
 	//댓글 추가
-	public int create(CommentDto commentDto) throws SQLException{
+	public int create(ReplyDto commentDto) throws SQLException{
 		String sql = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, DEFAULT, ?, DEFAULT, DEFAULT, DEFAULT, DEFUALT)";
 		int rs = 0;
 		

@@ -21,8 +21,6 @@ public class PartTimerWorkplaceDao {
     private final String CREATED_AT = "created_at";
     private final String UPDATED_AT = "updated_at";
     private final String ID_SEQUENCE = "parttimer_workplace_seq.nextval";
-    private final String ADDRESS = "address";
-    private final String PHONE_NUMBER = "phone_number";
 
     private final String INSERT_QUERY = "insert into " + TABLE_NAME +
             " VALUES (" + ID_SEQUENCE + ", ?, ?, ?, ?, default, default)";
@@ -37,9 +35,9 @@ public class PartTimerWorkplaceDao {
     private final String CHECK_EXISTED_QUERY = "select count(*) from " + TABLE_NAME +
             "where MEMBER_ID=? and WORKPLACE_ID=?";    // 이거 왜 넣은거야?
 
-    private final String FIND_ALL_QUERY = "select W.* from " + TABLE_NAME +
+    private final String FIND_ALL_QUERY = "select W.* from PARTTIMER_WORKPLACE " +
             "join WORKPLACE W on PARTTIMER_WORKPLACE.WORKPLACE_ID = W.ID " +
-            "where " + MEMBER_ID + "=?";
+            "where MEMBER_ID = ?";
 
     public PartTimerWorkplaceDao() {
         JDBC_UTIL = new JDBCUtil();
@@ -133,27 +131,28 @@ public class PartTimerWorkplaceDao {
         return false;
     }
 
-    public List<WorkplaceDto> findAllWorkplace(int memberId) {
+    public List<PartTimerWorkplaceDto> findAllWorkplace(int memberId, String userId) {
 
         JDBC_UTIL.setSqlAndParameters(FIND_ALL_QUERY, new Object[] { memberId });
 
         try {
             ResultSet rs = JDBC_UTIL.executeQuery();
-            List<WorkplaceDto> memberList = new ArrayList<>();
+            List<PartTimerWorkplaceDto> partTimerWorkplaceDtos = new ArrayList<>();
 
             while(rs.next()) {
-                WorkplaceDto workplaceDto = new WorkplaceDto (
+                PartTimerWorkplaceDto partTimerWorkplaceDto = new PartTimerWorkplaceDto(
                         rs.getInt(ID),
-                        rs.getString(WORKPLACE_ID),
-                        rs.getString(ADDRESS),
-                        rs.getString(PHONE_NUMBER),
-                        rs.getString("business_number"),
+                        rs.getInt(MEMBER_ID),
+                        rs.getInt(WORKPLACE_ID),
+                        rs.getString(SALARY_FORM),
+                        rs.getInt(SALARY_DAY),
                         rs.getTimestamp(CREATED_AT),
                         rs.getTimestamp(UPDATED_AT)
                 );
-                memberList.add(workplaceDto);
+
+                partTimerWorkplaceDtos.add(partTimerWorkplaceDto);
             }
-            return memberList;
+            return partTimerWorkplaceDtos;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

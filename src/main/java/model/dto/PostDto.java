@@ -1,8 +1,6 @@
 package model.dto;
 
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class PostDto {
     private int id;
@@ -18,27 +16,34 @@ public class PostDto {
 
     public PostDto() {
     }
+    
+    public PostDto(int memberId, int isAnonymous, String type, String title, String content, int likes, int views) {
+		super();
+		this.memberId = memberId;
+		this.isAnonymous = isAnonymous;
+		this.type = type;
+		this.title = title;
+		this.content = content;
+		this.likes = likes;
+		this.views = views;
+	}
 
-    public PostDto(int id, int memberId, int isAnonymous, String type, String title, int likes, int views, Timestamp createdAt, Timestamp updatedAt) {
-        this.id = id;
-        this.memberId = memberId;
-        this.isAnonymous = isAnonymous;
-        this.type = type;
-        this.title = title;
-        this.likes = likes;
-        this.views = views;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
+    public PostDto(int id, int memberId, int isAnonymous, String type, String title, String content, int likes,
+			int views, Timestamp createdAt, Timestamp updatedAt) {
+		super();
+		this.id = id;
+		this.memberId = memberId;
+		this.isAnonymous = isAnonymous;
+		this.type = type;
+		this.title = title;
+		this.content = content;
+		this.likes = likes;
+		this.views = views;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 
-    public PostDto(int memberId, String type, String title, String content) {
-        this.memberId = memberId;
-        this.type = type;
-        this.title = title;
-        this.content = content;
-    }
-
-    public int getId() {
+	public int getId() {
         return id;
     }
 

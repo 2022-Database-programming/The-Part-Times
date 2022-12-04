@@ -1,6 +1,7 @@
 package controller.member;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +13,9 @@ import org.slf4j.LoggerFactory;
 import controller.Controller;
 
 import model.dto.MemberDto;
+import model.dto.MemberUpdateDto;
 import model.exception.ExistingMemberException;
+import model.exception.MemberNotFoundException;
 import model.service.MemberManager;
 
 public class MemberController implements Controller {
@@ -125,4 +128,5 @@ public class MemberController implements Controller {
 
 		return "/error/error.jsp";
 	}
+  }
 }

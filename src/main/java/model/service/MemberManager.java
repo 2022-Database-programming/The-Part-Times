@@ -40,12 +40,12 @@ public class MemberManager {
 		return memberDao.insertMember(member);
 	}
 
-	public int update(MemberDto member) throws SQLException, MemberNotFoundException {
-		String memberId = memberDao.findMember(member.getMemberId()).getMemberId();
-		if (!member.getMemberId().equals(memberId)) { 
-			throw new MemberNotFoundException(member.getMemberId() + "는 일치하지 않는 아이디입니다.");
+	public int update(MemberUpdateDto updateUser) throws SQLException, MemberNotFoundException {
+		String memberId = memberDao.findMember(updateUser.getMemberId()).getMemberId();
+		if (!updateUser.getMemberId().equals(memberId)) { 
+			throw new MemberNotFoundException(updateUser.getMemberId() + "는 일치하지 않는 아이디입니다.");
 		}
-		return memberDao.updateMember(member);
+		return memberDao.updateMember(updateUser);
 	}	
 
 	public MemberDto findMember(String memberId) throws SQLException, MemberNotFoundException {

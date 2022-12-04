@@ -1,6 +1,7 @@
 package model.dao;
 
 import model.dto.MemberDto;
+import model.dto.MemberUpdateDto;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -97,14 +98,14 @@ public class MemberDao {
 	}
 
 	//마이페이지 (사용자 정보 수정)
-	public int updateMember(MemberDto memberDto) throws SQLException {
-		MemberDto findmemberDto = findMember(memberDto.getMemberId());
+	public int updateMember(MemberUpdateDto member) throws SQLException {
+		MemberDto findmemberDto = findMember(member.getMemberId());
 
 		String sql = "UPDATE member "
 				+ "SET phone_number=?, birth=?, updated_at=? "
 				+ "WHERE member_id=?";
 		
-			Object[] param = new Object[] {memberDto.getPhoneNumber(), memberDto.getBirth(), Date.valueOf(LocalDate.now()), findmemberDto.getMemberId()};
+			Object[] param = new Object[] {member.getPhoneNumber(), member.getBirth(), new Timestamp(System.currentTimeMillis()), findmemberDto.getMemberId()};
 			jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
 	
 		try {
@@ -121,4 +122,5 @@ public class MemberDao {
 		return 0;
 	}
 
+	//삭제...
 }

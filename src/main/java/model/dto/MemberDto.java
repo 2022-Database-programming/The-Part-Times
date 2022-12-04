@@ -1,6 +1,7 @@
 package model.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class MemberDto {
 	private int id;		//유저번호
@@ -11,8 +12,8 @@ public class MemberDto {
 	private String phoneNumber;	//전화번호
 	private String type;	//멤버타입
 	private int isActive;	//계정 활성화 여부 -> 따로 작업할 것 뭐가 있나..?
-	private Date createdAt;	//생성 날짜
-	private Date updatedAt;	//수정 날짜
+	private Timestamp createdAt;	//생성 날짜
+	private Timestamp updatedAt;	//수정 날짜
 
 	public MemberDto() {
 		
@@ -30,7 +31,7 @@ public class MemberDto {
 	}
 
 	public MemberDto(int id, String memberId, String password, String name, Date birth, String phoneNumber, String type,
-			int isActive, Date createdAt, Date updatedAt) {
+			int isActive, Timestamp createdAt, Timestamp updatedAt) {
 		super();
 		this.id = id;
 		this.memberId = memberId;
@@ -104,19 +105,19 @@ public class MemberDto {
 		this.isActive = isActive;
 	}
 
-	public Date getCreatedAt() {
+	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date updatedAt) {
+	public void setCreatedAt(Timestamp updatedAt) {
 		this.createdAt = updatedAt;
 	}
 
-	public Date getUpdatedAt() {
+	public Timestamp getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(Date updatedAt) {
+	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 

@@ -1,20 +1,27 @@
 package test;
 
+//import model.dao.MyTodayWorkTimeDao;
+//import model.dao.MyTotalWorkTimeDao;
+//import model.dto.MyTodayWorkTimeDto;
+//import model.dto.MyTotalWorkTimeDto;
+//import model.dto.TimeSettingDto;
+//
+//import java.sql.Date;
+//import java.sql.SQLException;
+//import java.sql.Timestamp;
+//import java.time.LocalDate;
+
 import model.dao.MyTodayWorkTimeDao;
-import model.dao.MyTotalWorkTimeDao;
-import model.dto.MyTodayWorkTimeDto;
-import model.dto.MyTotalWorkTimeDto;
-import model.dto.TimeSettingDto;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 
 public class MyTodayWorkTimeTest {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         MyTotalWorkTimeDao myTotalWorkTimeDao = new MyTotalWorkTimeDao();
         MyTodayWorkTimeDao myTodayWorkTimeDao = new MyTodayWorkTimeDao();
+
 
         // PK and FK
         int id = (int) (Math.random() * 1000000000);

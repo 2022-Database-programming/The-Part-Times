@@ -5,6 +5,7 @@ import model.dto.MemberDto;
 import java.sql.*;
 import java.time.LocalDate;
 
+import model.dto.MemberUpdateDto;
 import util.JDBCUtil;
 
 public class MemberDao {
@@ -97,7 +98,7 @@ public class MemberDao {
 	}
 
 	//마이페이지 (사용자 정보 수정)
-	public int updateMember(MemberDto memberDto) throws SQLException {
+	public int updateMember(MemberUpdateDto memberDto) throws SQLException {
 		MemberDto findmemberDto = findMember(memberDto.getMemberId());
 
 		String sql = "UPDATE member "

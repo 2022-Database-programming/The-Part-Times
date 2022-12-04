@@ -6,10 +6,10 @@ import util.JDBCUtil;
 import java.sql.ResultSet;
 
 public class PostDao {
-    private JDBCUtil jdbcUtil;
+    private final JDBCUtil JDBC_UTIL;
 
     public PostDao() {
-        jdbcUtil = new JDBCUtil();
+        JDBC_UTIL = new JDBCUtil();
     }
 
     public int create(PostDto postDto) {
@@ -20,17 +20,17 @@ public class PostDao {
         Object[] param = new Object[] { tempId, postDto.getMemberId(), postDto.getType(),
                 postDto.getTitle(), postDto.getContent() };
 
-        jdbcUtil.setSqlAndParameters(sql, param);
+        JDBC_UTIL.setSqlAndParameters(sql, param);
 
         try {
-            rs = jdbcUtil.executeUpdate();
+            rs = JDBC_UTIL.executeUpdate();
             System.out.println("insert success");
         } catch(Exception e) {
-            jdbcUtil.rollback();
+            JDBC_UTIL.rollback();
             e.printStackTrace();
         } finally {
-            jdbcUtil.commit();
-            jdbcUtil.close();
+            JDBC_UTIL.commit();
+            JDBC_UTIL.close();
         }
         return rs;
     }

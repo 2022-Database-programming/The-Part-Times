@@ -25,7 +25,7 @@ public class MyTodayWorkTimeTest {
         MemberDto memberDto = memberDao.findMember(userId);
 
         // 사용자의 workplace를 죄다 가져온다.
-        List<PartTimerWorkplaceDto> workplaces = partTimerWorkplaceDao.findAllWorkplace(memberDto.getId(), userId);
+        List<PartTimerWorkplaceDto> workplaces = partTimerWorkplaceDao.findAllWorkplace(memberDto.getId());
 
         // 임시로 오늘 일한 아이디가 999라고 가정
         int partTimerWorkplaceId = 999;

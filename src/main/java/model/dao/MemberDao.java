@@ -81,12 +81,16 @@ public class MemberDao {
 			ResultSet rs = jdbcUtil.executeQuery();		// query 실행
 			if (rs.next()) {
 				MemberDto member = new MemberDto(
+						rs.getInt("id"),
 						rs.getString("member_id"),
 						rs.getString("password"),
 						rs.getString("name"),
 						rs.getDate("birth"),
 						rs.getString("phone_number"),
-						rs.getString("type"));
+						rs.getString("type"),
+						rs.getInt("is_active"),
+						rs.getTimestamp("created_at"),
+						rs.getTimestamp("updated_at"));
 				return member;
 			}
 		} catch (Exception ex) {

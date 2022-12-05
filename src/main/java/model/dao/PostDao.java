@@ -45,9 +45,9 @@ public class PostDao {
 	public int updatePost(PostDto postDto) throws SQLException {
 		PostDto findPostDto = findPost(postDto.getId());
 
-		String sql = "UPDATE post " + "SET title=?, content=?, updated_at=? " + "WHERE id=?";
+		String sql = "UPDATE post " + "SET title=?, content=?, likes=?, views=?, updated_at=? " + "WHERE id=?";
 
-		Object[] param = new Object[] {postDto.getTitle(), postDto.getContent(), new Timestamp(System.currentTimeMillis()),findPostDto.getId()};
+		Object[] param = new Object[] {postDto.getTitle(), postDto.getContent(), postDto.getLikes(), postDto.getViews(), new Timestamp(System.currentTimeMillis()),findPostDto.getId()};
 		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
 
 		try {

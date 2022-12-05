@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import controller.member.MemberController;
+import controller.post.PostController;
 import controller.worktime.WorkTimeController;
 
 import java.util.HashMap;
@@ -40,6 +41,8 @@ public class RequestMapping {
 //        mappings.put("/user/delete", new DeleteUserController());
 //
 //        // 커뮤니티 관련 request URI 추가
+        mappings.put("/post/update", new PostController());
+        mappings.put("/post/postin", new PostController());
 //        mappings.put("/community/list", new ListCommunityController());
 //        mappings.put("/community/view", new ViewCommunityController());
 //        mappings.put("/community/create/form", new ForwardController("/community/creationForm.jsp"));

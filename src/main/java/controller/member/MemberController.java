@@ -75,6 +75,8 @@ public class MemberController implements Controller {
                     HttpSession session = request.getSession();
                     session.setAttribute(MemberSessionUtils.USER_SESSION_KEY, userId);
 
+                    System.out.println(userId);
+                    System.out.println(password);
                     return "redirect:/member/main.jsp";
                 } catch (Exception e) {
                     /* UserNotFoundException이나 PasswordMismatchException 발생 시
@@ -98,7 +100,7 @@ public class MemberController implements Controller {
                         request.getParameter("password"),
                         request.getParameter("name"),
                         Date.valueOf(request.getParameter("birth")),
-                        request.getParameter("phone_number"),
+                        request.getParameter("phoneNumber"),
                         request.getParameter("type"));
 
                 log.debug("Create User : {}", member);

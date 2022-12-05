@@ -88,6 +88,12 @@ public class WorkTimeController implements Controller {
 
             }
         }
+
+        if (request.getServletPath().equals("/worktime/date")) {
+            if (request.getMethod().equals("GET")) {
+
+            }
+        }
         return "/error/noRequestError.jsp";
     }
 }

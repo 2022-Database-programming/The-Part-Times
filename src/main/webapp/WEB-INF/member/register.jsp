@@ -106,7 +106,7 @@
     <h2 class="title">회원가입</h2>
 </div>
 <div class="inputBox">
-    <form name="registerForm" method="POST" action="<c:url value='/member/signup'">
+    <form name="registerForm" method="POST">
         <table class="table">
             <tr>
                 <td>아이디</td>

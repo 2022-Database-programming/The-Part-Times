@@ -2,7 +2,7 @@ package model.dto;
 
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.sql.Date;
+import java.util.Date;
 
 public class MyTotalWorkTimeDto {
     // Primary key field
@@ -19,15 +19,6 @@ public class MyTotalWorkTimeDto {
 
     public MyTotalWorkTimeDto(int id, int partTimerWorkplaceId, Time totalWorkTimeOfMonth, Date workDateOfMonth, int salary, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
-        this.partTimerWorkplaceId = partTimerWorkplaceId;
-        this.totalWorkTimeOfMonth = totalWorkTimeOfMonth;
-        this.workDateOfMonth = workDateOfMonth;
-        this.salary = salary;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public MyTotalWorkTimeDto(int partTimerWorkplaceId, Time totalWorkTimeOfMonth, Date workDateOfMonth, int salary, Timestamp createdAt, Timestamp updatedAt) {
         this.partTimerWorkplaceId = partTimerWorkplaceId;
         this.totalWorkTimeOfMonth = totalWorkTimeOfMonth;
         this.workDateOfMonth = workDateOfMonth;
@@ -95,7 +86,8 @@ public class MyTotalWorkTimeDto {
     @Override
     public String toString() {
         return "MyTotalWorkTimeDto{" +
-                "partTimerWorkplaceId=" + partTimerWorkplaceId +
+                "id=" + id +
+                ", partTimerWorkplaceId=" + partTimerWorkplaceId +
                 ", totalWorkTimeOfMonth=" + totalWorkTimeOfMonth +
                 ", workDateOfMonth=" + workDateOfMonth +
                 ", date=" + workDateOfMonth +

@@ -5,7 +5,6 @@ import util.JDBCUtil;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 public class MyTotalWorkTimeDao {
     private final String TABLE_NAME = "MYTOTAL_WORKTIME";
@@ -17,14 +16,12 @@ public class MyTotalWorkTimeDao {
     private final String CREATED_AT = "created_at";
     private final String UPDATED_AT = "updated_at";
 
-    private final String ID_SEQUENCE = TABLE_NAME + "_seq.nextval";
-
     private final JDBCUtil JDBC_UTIL;
 
-    private final String insertQuery = "INSERT INTO " + TABLE_NAME + " VALUES (" + ID_SEQUENCE + ", ?, ?, ?, ?, ?, ?)";
-    private final String updateQuery = "UPDATE " + TABLE_NAME + " SET " + TOTAL_WORK_TIME_OF_MONTH + "=?, " + SALARY + "=NVL(" + SALARY + ", 0) + ?, " + UPDATED_AT + "=?" +
-            " WHERE " + WORK_DATE_OF_MONTH + "=? AND " + PARTTIMER_WORKPLACE_ID + "=?";
-    private final String findQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + WORK_DATE_OF_MONTH + "=? AND " + PARTTIMER_WORKPLACE_ID + "=?";
+    private final String insertQuery = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private final String updateQuery = "UPDATE " + TABLE_NAME + " SET " + TOTAL_WORK_TIME_OF_MONTH + "=?, " + SALARY + "=NVL(" + SALARY + ", 0) + ?" +
+            "WHERE " + WORK_DATE_OF_MONTH + "=?";
+    private final String findQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + WORK_DATE_OF_MONTH + "=?";
 
     public MyTotalWorkTimeDao() {
         JDBC_UTIL = new JDBCUtil();
@@ -39,18 +36,16 @@ public class MyTotalWorkTimeDao {
     }
 
     private boolean isNotMyTotalWorkTimeNull(MyTotalWorkTimeDto myTotalWorkTimeDto) {
-        if (findMyTotalWorkTImeByDateAndWorkplace(myTotalWorkTimeDto.getWorkDateOfMonth(), myTotalWorkTimeDto.getPartTimerWorkplaceId()) != null) {
-            System.out.println("not null");
+        if (findMyTotalWorkTImeByDate((Date) myTotalWorkTimeDto.getWorkDateOfMonth()) != null) {
             return true;
         }
 
         return false;
     }
 
-    public int insert(MyTotalWorkTimeDto myTotalWorkTimeDto) {
-        System.out.println("insert");
+    private int insert(MyTotalWorkTimeDto myTotalWorkTimeDto) {
         Object[] params = new Object[] {
-                myTotalWorkTimeDto.getPartTimerWorkplaceId(),
+                myTotalWorkTimeDto.getId(), myTotalWorkTimeDto.getPartTimerWorkplaceId(),
                 myTotalWorkTimeDto.getTotalWorkTimeOfMonth(), myTotalWorkTimeDto.getWorkDateOfMonth(),
                 myTotalWorkTimeDto.getSalary(), myTotalWorkTimeDto.getCreatedAt(), myTotalWorkTimeDto.getUpdatedAt()
         };
@@ -59,19 +54,16 @@ public class MyTotalWorkTimeDao {
     }
 
     private int update(MyTotalWorkTimeDto myTotalWorkTimeDto) {
-        System.out.println("update");
-        Object[] params = new Object[] { myTotalWorkTimeDto.getTotalWorkTimeOfMonth(), myTotalWorkTimeDto.getSalary(), new Timestamp(System.currentTimeMillis()), myTotalWorkTimeDto.getWorkDateOfMonth(), myTotalWorkTimeDto.getPartTimerWorkplaceId() };
+        Object[] params = new Object[] { myTotalWorkTimeDto.getTotalWorkTimeOfMonth(), myTotalWorkTimeDto.getSalary(), myTotalWorkTimeDto.getWorkDateOfMonth() };
 
         return executeInsertOrUpdateQuery(updateQuery, params);
     }
 
     private int executeInsertOrUpdateQuery(String query, Object[] params) {
         try {
-            System.out.println("insert start");
             JDBC_UTIL.setSqlAndParameters(query, params);
-            System.out.println("insert end");
             int result = JDBC_UTIL.executeUpdate();
-            System.out.println(result);
+
             return result;
         } catch (Exception e) {
             JDBC_UTIL.rollback();
@@ -84,8 +76,8 @@ public class MyTotalWorkTimeDao {
         return 0;
     }
 
-    public MyTotalWorkTimeDto findMyTotalWorkTImeByDateAndWorkplace(Date today, int partTimerWorkplaceId) {
-        Object[] params = new Object[] { today, partTimerWorkplaceId };
+    public MyTotalWorkTimeDto findMyTotalWorkTImeByDate(Date date) {
+        Object[] params = new Object[] { date };
 
         return executeSelectQuery(params);
     }

@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import controller.member.MemberController;
-import controller.post.PostController;
 import controller.worktime.WorkTimeController;
 
 import java.util.HashMap;
@@ -20,13 +19,13 @@ public class RequestMapping {
     	System.out.println("mapping 받음");
         // 각 uri에 대응되는 controller 객체를 생성 및 저장
         mappings.put("/", new ForwardController("index.jsp"));
-        //mappings.put("/member", new ForwardController("/member/loginForm.jsp"));
+        mappings.put("/member", new ForwardController("/member/loginForm.jsp"));
         mappings.put("/member/signin", new MemberController());
         mappings.put("/member/signup", new MemberController());
-        mappings.put("/member/signout", new MemberController());
         mappings.put("/member/update", new MemberController());
-        mappings.put("/member/update/page", new ForwardController("/member/mypage.jsp"));
-        mappings.put("/worktime/today", new WorkTimeController());
+        //mappings.put("/member/update", new MemberController());
+
+        mappings.put("/worktime", new WorkTimeController());
         
         // 회원 가입 폼 요청과 가입 요청 처리 병합 (폼에 커뮤니티 선택 메뉴 추가를 위함)
 ////      mappings.put("/user/register/form", new ForwardController("/user/registerForm.jsp"));
@@ -41,8 +40,6 @@ public class RequestMapping {
 //        mappings.put("/user/delete", new DeleteUserController());
 //
 //        // 커뮤니티 관련 request URI 추가
-        mappings.put("/post/update", new PostController());
-        mappings.put("/post/postin", new PostController());
 //        mappings.put("/community/list", new ListCommunityController());
 //        mappings.put("/community/view", new ViewCommunityController());
 //        mappings.put("/community/create/form", new ForwardController("/community/creationForm.jsp"));

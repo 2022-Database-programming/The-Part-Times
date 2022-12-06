@@ -81,16 +81,12 @@ public class MemberDao {
 			ResultSet rs = jdbcUtil.executeQuery();		// query 실행
 			if (rs.next()) {
 				MemberDto member = new MemberDto(
-						rs.getInt("id"),
 						rs.getString("member_id"),
 						rs.getString("password"),
 						rs.getString("name"),
 						rs.getDate("birth"),
 						rs.getString("phone_number"),
-						rs.getString("type"),
-						rs.getInt("is_active"),
-						rs.getTimestamp("created_at"),
-						rs.getTimestamp("updated_at"));
+						rs.getString("type"));
 				return member;
 			}
 		} catch (Exception ex) {
@@ -108,10 +104,10 @@ public class MemberDao {
 		String sql = "UPDATE member "
 				+ "SET phone_number=?, birth=?, updated_at=? "
 				+ "WHERE member_id=?";
-
-		Object[] param = new Object[] {member.getPhoneNumber(), member.getBirth(), new Timestamp(System.currentTimeMillis()), findmemberDto.getMemberId()};
-		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
-
+		
+			Object[] param = new Object[] {member.getPhoneNumber(), member.getBirth(), new Timestamp(System.currentTimeMillis()), findmemberDto.getMemberId()};
+			jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
+	
 		try {
 			int result = jdbcUtil.executeUpdate();	// update 문 실행
 			return result;

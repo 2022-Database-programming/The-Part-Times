@@ -16,11 +16,11 @@ public class RequestMapping {
     private Map<String, Controller> mappings = new HashMap<String, Controller>();
 
     public void initMapping() {
-        System.out.println("mapping 받음");
+    	System.out.println("mapping 받음");
         // 각 uri에 대응되는 controller 객체를 생성 및 저장
         mappings.put("/", new ForwardController("/index.jsp"));
         mappings.put("/member/signupForm", new ForwardController("/member/register.jsp"));
-        mappings.put("/member/signinForm", new ForwardController("/member/signinForm.jsp"));
+        mappings.put("/member/signinForm", new ForwardController("/member/loginForm.jsp"));
         mappings.put("/member/signin", new MemberController());
         mappings.put("/member/signup", new MemberController());
         mappings.put("/member/signout", new MemberController());

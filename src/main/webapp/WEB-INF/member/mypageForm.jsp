@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-    수정 완료 후 화면입니다.
+    내 정보를 수정하는 화면입니다.
 </body>
 </html>

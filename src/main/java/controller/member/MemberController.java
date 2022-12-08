@@ -30,7 +30,7 @@ public class MemberController implements Controller {
         }
 
         String memberId = memberSessionUtils.getLoginUserId(request.getSession());
-        System.out.println(memberId);
+        //System.out.println(memberId);
 
         if(request.getServletPath().equals("/member/update")) {    // 회원정보 관련 컨트롤러
             if (request.getMethod().equals("GET")) {
@@ -76,6 +76,7 @@ public class MemberController implements Controller {
                     // 세션에 사용자 이이디 저장
                     HttpSession session = request.getSession();
                     session.setAttribute(MemberSessionUtils.USER_SESSION_KEY, userId);
+                    System.out.println(userId);
 
                     return "redirect:/member/main.jsp";
                 } catch (Exception e) {

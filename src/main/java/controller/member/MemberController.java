@@ -26,7 +26,7 @@ public class MemberController implements Controller {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         /* 사용자가 로그아웃하지 않았으면 세션에서 아이디를 꺼내온다. */
         if (request.getSession() == null) {
-            return "로그아웃된 유저입니다.";
+            return "/error/logoutError.jsp";
         }
 
         String memberId = memberSessionUtils.getLoginUserId(request.getSession());
@@ -66,6 +66,8 @@ public class MemberController implements Controller {
                 String userId = request.getParameter("memberId");
                 String password = request.getParameter("password");
 
+                System.out.println(userId);
+
                 try {
                     // 모델에 로그인 처리를 위임
                     MemberManager manager = MemberManager.getInstance();
@@ -82,16 +84,12 @@ public class MemberController implements Controller {
                      */
                     request.setAttribute("loginFailed", true);
                     request.setAttribute("exception", e);
-                    return "/member/loginForm.jsp";
+                    return "/index.jsp";
                 }
             }
         }
 
         if (request.getServletPath().equals("/member/signup")) {    // 회원가입
-            if (request.getMethod().equals("GET")) {
-                return "/member/register.jsp";
-            }
-
             if (request.getMethod().equals("POST")) {
                 MemberDto member = new MemberDto(
                         request.getParameter("memberId"),
@@ -107,13 +105,13 @@ public class MemberController implements Controller {
                     MemberManager manager = MemberManager.getInstance();
                     manager.create(member);
 
-                    return "redirect:index.jsp";   // 성공 시 로그인 화면으로 이동하기
+                    return "redirect:/index.jsp";   // 성공 시 로그인 화면으로 이동하기
                 } catch (ExistingMemberException e) {   // 예외 발생 시 회원가입 form으로 forwarding
                     request.setAttribute("registerFailed", true);
                     request.setAttribute("exception", e);
                     request.setAttribute("member", member);
 
-                    return "registerForm.jsp";
+                    return "/member/register.jsp";
                 }
             }
         }
@@ -124,9 +122,9 @@ public class MemberController implements Controller {
                 session.removeAttribute(memberSessionUtils.USER_SESSION_KEY);
                 session.invalidate();
             }
-            return "index.jsp";
+            return "/index.jsp";
         }
 
-        return "/error/error.jsp";
+        return "/error/noRequestError.jsp";
     }
 }

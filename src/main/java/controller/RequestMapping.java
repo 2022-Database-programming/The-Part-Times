@@ -16,17 +16,19 @@ public class RequestMapping {
     private Map<String, Controller> mappings = new HashMap<String, Controller>();
 
     public void initMapping() {
-    	System.out.println("mapping 받음");
+        System.out.println("mapping 받음");
         // 각 uri에 대응되는 controller 객체를 생성 및 저장
-        mappings.put("/", new ForwardController("index.jsp"));
-        //mappings.put("/member", new ForwardController("/member/loginForm.jsp"));
+        mappings.put("/", new ForwardController("/index.jsp"));
+        mappings.put("/member/signupForm", new ForwardController("/member/register.jsp"));
+        mappings.put("/member/signinForm", new ForwardController("/member/signinForm.jsp"));
         mappings.put("/member/signin", new MemberController());
         mappings.put("/member/signup", new MemberController());
         mappings.put("/member/signout", new MemberController());
         mappings.put("/member/update", new MemberController());
-        mappings.put("/member/update/page", new ForwardController("/member/mypage.jsp"));
+        mappings.put("/member/updateForm", new ForwardController("/member/mypage.jsp"));
         mappings.put("/worktime/today", new WorkTimeController());
-        
+        mappings.put("/worktime/todayForm", new ForwardController("/worktime/workTimeForm.jsp"));
+
         // 회원 가입 폼 요청과 가입 요청 처리 병합 (폼에 커뮤니티 선택 메뉴 추가를 위함)
 ////      mappings.put("/user/register/form", new ForwardController("/user/registerForm.jsp"));
 ////      mappings.put("/user/register", new RegisterUserController());

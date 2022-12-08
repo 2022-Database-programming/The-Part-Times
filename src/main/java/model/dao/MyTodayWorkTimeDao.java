@@ -23,7 +23,7 @@ public class MyTodayWorkTimeDao {
 
     private final String insertQuery = "INSERT INTO " + TABLE_NAME + " VALUES (" + ID_SEQUENCE + ", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final String deleteQuery = "DELETE FROM " + TABLE_NAME + " WHERE " + ID + "=?";
-    private final String findQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + WORK_DATE + "=?";
+    private final String findQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + WORK_DATE + "=? AND " + MYTOTAL_WORKTIME_ID + "=?";
 
     private final JDBCUtil JDBC_UTIL;
     private final MyTotalWorkTimeDao MY_TOTAL_WORKTIME_DAO;
@@ -87,13 +87,13 @@ public class MyTodayWorkTimeDao {
         return -1;
     }
 
-    // 오늘 날짜로 찾기
-//    public MyTodayWorkTimeDto findMyWorkTimeByDate(Date date) {
-//        MyTotalWorkTimeDto myTotalWorkTimeDto = MY_TOTAL_WORKTIME_DAO.findMyTotalWorkTImeByDate(date);
-//        Object[] params = new Object[] { date };
-//
-//        return executeSelectQuery(params, myTotalWorkTimeDto);
-//    }
+    // 오늘 날짜와 이번달 근무 시간 번호로 찾기
+    public MyTodayWorkTimeDto findMyWorkTimeByDateAndTotalWorkTimeId(Date date, int partTimerWorkplaceId) {
+        MyTotalWorkTimeDto myTotalWorkTimeDto = MY_TOTAL_WORKTIME_DAO.findMyTotalWorkTImeByDateAndWorkplace(date, partTimerWorkplaceId);
+        Object[] params = new Object[] { date, myTotalWorkTimeDto.getId()};
+
+        return executeSelectQuery(params);
+    }
 
     private MyTodayWorkTimeDto executeSelectQuery(Object[] params) {
         try {

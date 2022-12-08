@@ -131,7 +131,7 @@ public class PartTimerWorkplaceDao {
         return false;
     }
 
-    public List<PartTimerWorkplaceDto> findAllWorkplace(int memberId, String userId) {
+    public List<PartTimerWorkplaceDto> findAllWorkplace(int memberId) {
 
         JDBC_UTIL.setSqlAndParameters(FIND_ALL_QUERY, new Object[] { memberId });
 

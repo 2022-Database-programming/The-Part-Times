@@ -66,6 +66,8 @@ public class MemberController implements Controller {
                 String userId = request.getParameter("memberId");
                 String password = request.getParameter("password");
 
+                System.out.println(userId);
+
                 try {
                     // 모델에 로그인 처리를 위임
                     MemberManager manager = MemberManager.getInstance();

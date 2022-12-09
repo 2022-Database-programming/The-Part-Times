@@ -2,9 +2,7 @@ package model.dao;
 
 import model.dto.WorkplaceDto;
 import util.JDBCUtil;
-
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class WorkplaceDao {
     private JDBCUtil jdbcUtil;

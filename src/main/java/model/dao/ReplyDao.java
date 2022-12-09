@@ -2,12 +2,9 @@ package model.dao;
 
 import model.dto.ReplyDto;
 import util.JDBCUtil;
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

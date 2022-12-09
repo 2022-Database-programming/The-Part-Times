@@ -1,10 +1,8 @@
 package model.dao;
 
 import model.dto.EmployerWorkplaceDto;
-import model.dto.PartTimerWorkplaceDto;
 import model.dto.WorkplaceDto;
 import util.JDBCUtil;
-
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;

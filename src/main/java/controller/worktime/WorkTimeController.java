@@ -1,39 +1,21 @@
 package controller.worktime;
 
 import controller.Controller;
-import controller.member.MemberController;
 import controller.member.MemberSessionUtils;
-import model.dao.PartTimerWorkplaceDao;
 import model.service.WorkTimeManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import test.MyTodayWorkTimeTest;
-import model.dao.MyTotalWorkTimeDao;
-import model.dao.MyTodayWorkTimeDao;
-import model.dao.MemberDao;
 import model.dto.MyTotalWorkTimeDto;
-import model.dto.MemberDto;
 import model.dto.TimeSettingDto;
-import model.dto.PartTimerWorkplaceDto;
 import model.dto.MyTodayWorkTimeDto;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.ArrayList;
 
 public class WorkTimeController implements Controller {
-    private final Logger log = LoggerFactory.getLogger(MemberController.class);
     private final MemberSessionUtils memberSessionUtils = new MemberSessionUtils();
     private final WorkTimeManager workTimeManager = WorkTimeManager.getInstance();
 
-
-    // TODO: 모든 dao 매니저 코드로 빼기
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         /* 사용자가 로그아웃하지 않았으면 세션에서 아이디를 꺼내온다. */

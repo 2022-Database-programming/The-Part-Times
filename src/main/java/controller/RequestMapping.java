@@ -31,8 +31,6 @@ public class RequestMapping {
         mappings.put("/worktime/todayForm", new ForwardController("/worktime/workTimeForm.jsp"));
         mappings.put("/post/update", new PostController());
         mappings.put("/post/create", new PostController());
-
-
     }
 
     public Controller findController(String uri) {

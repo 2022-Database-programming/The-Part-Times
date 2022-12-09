@@ -3,7 +3,9 @@ package model.dao;
 import model.dto.MyTodayWorkTimeDto;
 import model.dto.MyTotalWorkTimeDto;
 import util.JDBCUtil;
-import java.sql.*;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class MyTodayWorkTimeDao {
     private final String TABLE_NAME = "MYTODAYWORKTIME";

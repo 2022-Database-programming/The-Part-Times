@@ -3,10 +3,11 @@ package model.dao;
 import model.dto.MemberDto;
 import model.dto.MemberUpdateDto;
 
-import java.sql.*;
-import java.time.LocalDate;
-
 import util.JDBCUtil;
+
+import java.sql.Timestamp;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class MemberDao {
 	private JDBCUtil jdbcUtil = null;

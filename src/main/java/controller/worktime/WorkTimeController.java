@@ -23,7 +23,7 @@ public class WorkTimeController implements Controller {
             memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
         }
 
-        if (request.getServletPath().equals("/worktime/today")) {    // 오늘 일한 것 저장
+        if (request.getServletPath().equals("/worktime/today")) {
             if (request.getMethod().equals("POST")) {
                 int partTimerWorkplaceId = Integer.parseInt(request.getParameter("workplaceId"));
                 int minimumWage = Integer.parseInt(request.getParameter("minimumWage"));
@@ -49,10 +49,9 @@ public class WorkTimeController implements Controller {
                 WORK_TIME_MANAGER.create(myTodayWorkTimeDto, myTotalWorkTimeDto, partTimerWorkplaceId);
 
                 return "/worktime/worktimeResult.jsp";
-
             }
         }
 
-        return "/error/noRequestError.jsp";
+        return "redirect:/error/noRequestError.jsp";
     }
 }

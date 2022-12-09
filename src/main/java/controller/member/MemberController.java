@@ -4,6 +4,8 @@ import java.sql.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import controller.ForwardController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import controller.Controller;
@@ -20,18 +22,18 @@ public class MemberController implements Controller {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if (MEMBER_SESSION_UTILS.hasLogined(request.getSession())) {
-            memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+        if (!MEMBER_SESSION_UTILS.hasLogined(request.getSession())) {
+            return "redirect:/index.jsp";
         }
+
+        memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
 
         if(request.getServletPath().equals("/member/update")) {
             if (request.getMethod().equals("GET")) {
-                LOG.debug("UpdateForm Request : {}", memberId);
-
                 MemberDto member = MEMBER_MANAGER.findMember(memberId);
                 request.setAttribute("member", member);
 
-                return "/member/mypageForm.jsp";
+                return "/member/myPageForm.jsp";
             }
 
             if (request.getMethod().equals("POST")) {
@@ -44,14 +46,13 @@ public class MemberController implements Controller {
                         request.getParameter("type"));
 
                 LOG.debug("Update User : {}", updateUser);
-
                 MEMBER_MANAGER.update(updateUser);
 
                 return "redirect:/member/myPage.jsp";
             }
         }
 
-        if (request.getServletPath().equals("/member/signin")) {    // 로그인
+        if (request.getServletPath().equals("/member/signin")) {
             if (request.getMethod().equals("POST")) {
                 String userId = request.getParameter("memberId");
                 String password = request.getParameter("password");
@@ -71,7 +72,7 @@ public class MemberController implements Controller {
             }
         }
 
-        if (request.getServletPath().equals("/member/signup")) {    // 회원가입
+        if (request.getServletPath().equals("/member/signup")) {
             if (request.getMethod().equals("POST")) {
                 MemberDto member = new MemberDto(
                         request.getParameter("memberId"),
@@ -103,7 +104,7 @@ public class MemberController implements Controller {
                 session.removeAttribute(MEMBER_SESSION_UTILS.USER_SESSION_KEY);
                 session.invalidate();
             }
-            return "/index.jsp";
+            return "redirect:/index.jsp";
         }
 
         return "/error/noRequestError.jsp";

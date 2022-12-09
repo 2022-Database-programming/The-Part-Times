@@ -40,7 +40,7 @@ public class WorkTimeController implements Controller {
                 Timestamp createdAt = new Timestamp(System.currentTimeMillis());
                 Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
 
-                MyTotalWorkTimeDto myTotalWorkTimeDto = WORK_TIME_MANAGER.findMyWorkTimeByDateAndTotalWorkTimeId(today, partTimerWorkplaceId);
+                MyTotalWorkTimeDto myTotalWorkTimeDto = WORK_TIME_MANAGER.findMyWorkTimeByDateAndPartTimerWorkplaceId(today, partTimerWorkplaceId);
 
                 MyTodayWorkTimeDto myTodayWorkTimeDto = new MyTodayWorkTimeDto(
                         myTotalWorkTimeDto.getId(), timeSettingDto, today, minimumWage, createdAt, updatedAt

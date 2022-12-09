@@ -39,7 +39,7 @@ public class MyTotalWorkTimeDao {
     }
 
     private boolean isNotMyTotalWorkTimeNull(MyTotalWorkTimeDto myTotalWorkTimeDto) {
-        if (findMyTotalWorkTImeByDateAndWorkplace(myTotalWorkTimeDto.getWorkDateOfMonth(), myTotalWorkTimeDto.getPartTimerWorkplaceId()) != null) {
+        if (findMyTotalWorkTImeByDateAndPartTimerWorkplaceId(myTotalWorkTimeDto.getWorkDateOfMonth(), myTotalWorkTimeDto.getPartTimerWorkplaceId()) != null) {
             System.out.println("not null");
             return true;
         }
@@ -84,7 +84,7 @@ public class MyTotalWorkTimeDao {
         return 0;
     }
 
-    public MyTotalWorkTimeDto findMyTotalWorkTImeByDateAndWorkplace(Date today, int partTimerWorkplaceId) {
+    public MyTotalWorkTimeDto findMyTotalWorkTImeByDateAndPartTimerWorkplaceId(Date today, int partTimerWorkplaceId) {
         Object[] params = new Object[] { today, partTimerWorkplaceId };
 
         return executeSelectQuery(params);

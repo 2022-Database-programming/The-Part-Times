@@ -16,17 +16,6 @@ public class MemberDao {
 		jdbcUtil = new JDBCUtil();
 	}
 
-//	public int insertOrUpdate(MemberDto memberDto) throws SQLException {
-//		int result = -1;
-//		if(existedMember(memberDto.getMemberId())) {
-//			result = updateMember(memberDto);
-//		} else {
-//			result = insertMember(memberDto);
-//		}
-//		return result;
-//	}
-
-
 	//사용자 정보 확인 (회원가입시)
 	public boolean existedMember(String memberId) throws SQLException {
 		String sql = "SELECT count(*) FROM member WHERE member_id=?";
@@ -81,12 +70,18 @@ public class MemberDao {
 			ResultSet rs = jdbcUtil.executeQuery();		// query 실행
 			if (rs.next()) {
 				MemberDto member = new MemberDto(
+						rs.getInt("id"),
 						rs.getString("member_id"),
 						rs.getString("password"),
 						rs.getString("name"),
 						rs.getDate("birth"),
 						rs.getString("phone_number"),
-						rs.getString("type"));
+						rs.getString("type"),
+						rs.getInt("is_active"),
+						rs.getTimestamp("created_at"),
+						rs.getTimestamp("updated_at")
+				);
+
 				return member;
 			}
 		} catch (Exception ex) {

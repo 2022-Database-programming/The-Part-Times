@@ -82,9 +82,9 @@ public class ReplyDao {
 	//댓글 수정
 	public int updateReply(ReplyDto replyDto) throws SQLException {
 		ReplyDto findReplyDto = findReply(replyDto.getId());
-		String sql = "UPDATE reply " + "SET content=?, updated_at=? " + "WHERE id=?";
+		String sql = "UPDATE reply " + "SET content=?, likes=?, updated_at=? " + "WHERE id=?";
 
-		Object[] param = new Object[] {replyDto.getContent(), new Timestamp(System.currentTimeMillis()),findReplyDto.getId()};
+		Object[] param = new Object[] {replyDto.getContent(), replyDto.getLikes(), new Timestamp(System.currentTimeMillis()),findReplyDto.getId()};;
 		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
 
 		try {

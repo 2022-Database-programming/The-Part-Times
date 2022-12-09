@@ -43,7 +43,18 @@ public class PostDto {
 		this.updatedAt = updatedAt;
 	}
 
-	public int getId() {
+    public PostDto(int postId, int memberId, int isAnonymous, String type, String title, String content, int likes, int views) {
+        this.id = postId;
+        this.memberId = memberId;
+        this.isAnonymous = isAnonymous;
+        this.type = type;
+        this.title = title;
+        this.content = content;
+        this.likes = likes;
+        this.views = views;
+    }
+
+    public int getId() {
         return id;
     }
 

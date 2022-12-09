@@ -1,6 +1,5 @@
 package model.dto;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 
 public class PartTimerWorkplaceDto {

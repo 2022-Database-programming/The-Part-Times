@@ -2,7 +2,6 @@ package model.service;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import model.dto.PostDto;
 import model.exception.PostListNotFoundException;
 import model.exception.PostNotFoundException;

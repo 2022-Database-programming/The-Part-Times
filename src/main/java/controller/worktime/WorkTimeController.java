@@ -19,9 +19,11 @@ public class WorkTimeController implements Controller {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if (MEMBER_SESSION_UTILS.hasLogined(request.getSession())) {
-            memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+        if (!MEMBER_SESSION_UTILS.hasLogined(request.getSession())) {
+            return "redirect:/index.jsp";
         }
+
+        memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
 
         if (request.getServletPath().equals("/worktime/today")) {
             if (request.getMethod().equals("POST")) {

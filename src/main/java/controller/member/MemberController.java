@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import controller.ForwardController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import controller.Controller;
@@ -22,33 +21,38 @@ public class MemberController implements Controller {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if (!MEMBER_SESSION_UTILS.hasLogined(request.getSession())) {
-            return "redirect:/index.jsp";
-        }
-
-        memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
-
         if(request.getServletPath().equals("/member/update")) {
             if (request.getMethod().equals("GET")) {
-                MemberDto member = MEMBER_MANAGER.findMember(memberId);
-                request.setAttribute("member", member);
+                if (MEMBER_SESSION_UTILS.hasLogined(request.getSession())) {
+                    memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+                    MemberDto member = MEMBER_MANAGER.findMember(memberId);
+                    request.setAttribute("member", member);
 
-                return "/member/myPageForm.jsp";
+                    return "/member/myPageForm.jsp";
+                }
+
+                return "redirect:/index.jsp";
             }
 
             if (request.getMethod().equals("POST")) {
-                MemberUpdateDto updateUser = new MemberUpdateDto(
-                        memberId,
-                        request.getParameter("password"),
-                        request.getParameter("name"),
-                        Date.valueOf(request.getParameter("birth")),
-                        request.getParameter("phoneNumber"),
-                        request.getParameter("type"));
+                if (MEMBER_SESSION_UTILS.hasLogined(request.getSession())) {
+                    memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
 
-                LOG.debug("Update User : {}", updateUser);
-                MEMBER_MANAGER.update(updateUser);
+                    MemberUpdateDto updateUser = new MemberUpdateDto(
+                            memberId,
+                            request.getParameter("password"),
+                            request.getParameter("name"),
+                            Date.valueOf(request.getParameter("birth")),
+                            request.getParameter("phoneNumber"),
+                            request.getParameter("type"));
 
-                return "redirect:/member/myPage.jsp";
+                    LOG.debug("Update User : {}", updateUser);
+                    MEMBER_MANAGER.update(updateUser);
+
+                    return "redirect:/member/myPage.jsp";
+                }
+
+                return "redirect:/index.jsp";
             }
         }
 
@@ -74,6 +78,7 @@ public class MemberController implements Controller {
 
         if (request.getServletPath().equals("/member/signup")) {
             if (request.getMethod().equals("POST")) {
+                System.out.println("회원가입 요청");
                 MemberDto member = new MemberDto(
                         request.getParameter("memberId"),
                         request.getParameter("password"),
@@ -87,7 +92,7 @@ public class MemberController implements Controller {
                 try {
                     MEMBER_MANAGER.create(member);
 
-                    return "/index.jsp";
+                    return "redirect:/index.jsp";
                 } catch (ExistingMemberException e) {
                     request.setAttribute("registerFailed", true);
                     request.setAttribute("exception", e);
@@ -107,6 +112,6 @@ public class MemberController implements Controller {
             return "redirect:/index.jsp";
         }
 
-        return "/error/noRequestError.jsp";
+        return "redirect:/error/noRequestError.jsp";
     }
 }

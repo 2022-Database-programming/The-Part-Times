@@ -34,7 +34,7 @@ public class WorkTimeManager {
         return myTodayWorkTimeDao.insert(myTodayWorkTimeDto, myTotalWorkTimeDto, partTimerWorkplaceId);
     }
 
-    public MyTotalWorkTimeDto findMyTotalWorkTImeByDateAndWorkplace(Date today, int partTimerWorkplaceId) {
+    public MyTotalWorkTimeDto findMyWorkTimeByDateAndTotalWorkTimeId(Date today, int partTimerWorkplaceId) {
         // 데이터 트래킹 필드
         Timestamp createdAt = new Timestamp(System.currentTimeMillis());
         Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
@@ -50,7 +50,7 @@ public class WorkTimeManager {
 
         // insert한 값으로 다시 한 번 찾아준다. id 값을 받아오기 위함
         // TODO: 향후 메소드 분리 예정
-        myTotalWorkTimeDto = myTotalWorkTimeDao.findMyTotalWorkTImeByDateAndWorkplace(today, partTimerWorkplaceId);
+        myTotalWorkTimeDto = myTotalWorkTimeDao.findMyWorkTimeByDateAndTotalWorkTimeId(today, partTimerWorkplaceId);
 
         return myTotalWorkTimeDto;
     }

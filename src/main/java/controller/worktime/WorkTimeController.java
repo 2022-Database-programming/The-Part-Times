@@ -2,19 +2,23 @@ package controller.worktime;
 
 import controller.Controller;
 import controller.member.MemberSessionUtils;
+import model.dto.*;
+import model.service.MemberManager;
+import model.service.PartTimerWorkplaceManager;
 import model.service.WorkTimeManager;
-import model.dto.MyTotalWorkTimeDto;
-import model.dto.TimeSettingDto;
-import model.dto.MyTodayWorkTimeDto;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.List;
 
 public class WorkTimeController implements Controller {
     private final MemberSessionUtils MEMBER_SESSION_UTILS = new MemberSessionUtils();
     private final WorkTimeManager WORK_TIME_MANAGER = WorkTimeManager.getInstance();
+    private final MemberManager MEMBER_MANAGER = MemberManager.getInstance();
+    private final PartTimerWorkplaceManager PART_TIMER_WORKPLACE_MANAGER = PartTimerWorkplaceManager.getInstance();
     private String memberId;
 
     @Override
@@ -24,8 +28,16 @@ public class WorkTimeController implements Controller {
         }
 
         memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+        MemberDto member = MEMBER_MANAGER.findMember(memberId);
 
         if (request.getServletPath().equals("/worktime/today")) {
+            if (request.getMethod().equals("GET")) {
+                List<PartTimerWorkplaceDto> myWorkplaces = PART_TIMER_WORKPLACE_MANAGER.findAllPartTimerWorkplace(member.getId());
+                request.setAttribute("myWorkplaces", myWorkplaces);
+
+                return "/worktime/workTime.jsp";
+            }
+
             if (request.getMethod().equals("POST")) {
                 int partTimerWorkplaceId = Integer.parseInt(request.getParameter("workplaceId"));
                 int minimumWage = Integer.parseInt(request.getParameter("minimumWage"));
@@ -50,7 +62,9 @@ public class WorkTimeController implements Controller {
 
                 WORK_TIME_MANAGER.create(myTodayWorkTimeDto, myTotalWorkTimeDto, partTimerWorkplaceId);
 
-                return "/worktime/worktimeResult.jsp";
+                request.setAttribute("todayWorkTime", myTodayWorkTimeDto);
+
+                return "/worktime/worktime.jsp";
             }
         }
 

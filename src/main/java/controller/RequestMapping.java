@@ -17,8 +17,9 @@ public class RequestMapping {
         mappings.put("/member/signup", new MemberController());
         mappings.put("/member/signout", new MemberController());
         mappings.put("/member/update", new MemberController());
+
         mappings.put("/worktime/today", new WorkTimeController());
-        mappings.put("/worktime/todayForm", new ForwardController("/worktime/workTimeForm.jsp"));
+
         mappings.put("/post/update", new PostController());
         mappings.put("/post/create", new PostController());
     }

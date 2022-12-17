@@ -1,8 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel=stylesheet href="<c:url value='/css/salary-calculation.css' />" type="text/css">
-<script>
-</script>
 <div class="calculation">
 	<h2 class="time_title">근무 시간 계산기</h2>
     <div class="inputValue">

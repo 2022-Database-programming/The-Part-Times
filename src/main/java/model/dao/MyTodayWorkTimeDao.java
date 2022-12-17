@@ -6,6 +6,7 @@ import util.JDBCUtil;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,15 +55,24 @@ public class MyTodayWorkTimeDao {
     }
 
     private int saveMyTotalWorkTime(MyTodayWorkTimeDto myTodayWorkTimeDto, MyTotalWorkTimeDto myTotalWorkTimeDto) throws SQLException {
-        System.out.println("total work time save start...");
         String[] times = String.valueOf(myTodayWorkTimeDto.getTotalWorkTimeOfDay()).split(":");
+        String[] existedTimes = String.valueOf(myTotalWorkTimeDto.getTotalWorkTimeOfMonth()).split(":");
+
         int salary = Integer.valueOf(times[0]) * myTodayWorkTimeDto.getMinimumWage();
 
         if (Integer.valueOf(times[1]) == 30) {
             salary += myTodayWorkTimeDto.getMinimumWage() / 2;
         }
 
+        int totalHour = Integer.parseInt(times[0]) + Integer.parseInt(existedTimes[0]);
+        int totalMinute = Integer.parseInt(times[1]) + Integer.parseInt(existedTimes[1]);
+
+        Time resultAddTime = new Time(
+                totalHour, totalMinute, 0
+        );
+
         myTotalWorkTimeDto.setSalary(salary);
+        myTotalWorkTimeDto.setTotalWorkTimeOfMonth(resultAddTime);
 
         return MY_TOTAL_WORKTIME_DAO.insertOrUpdate(myTotalWorkTimeDto);
     }

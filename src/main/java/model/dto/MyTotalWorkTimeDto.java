@@ -44,6 +44,10 @@ public class MyTotalWorkTimeDto {
     public Time getTotalWorkTimeOfMonth() {
         return totalWorkTimeOfMonth;
     }
+
+    public void setTotalWorkTimeOfMonth(Time totalWorkTimeOfMonth) {
+        this.totalWorkTimeOfMonth = totalWorkTimeOfMonth;
+    }
     public Date getWorkDateOfMonth() {
         return workDateOfMonth;
     }

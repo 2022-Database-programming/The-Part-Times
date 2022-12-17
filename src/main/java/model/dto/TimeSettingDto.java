@@ -35,8 +35,6 @@ public class TimeSettingDto {
         this.totalBreakMinute = breakFinishMinute - breakStartMinute;
         this.totalWorkHour = (workFinishHour - workStartHour) - totalBreakHour;
         this.totalWorkMinute = (workFinishMinute - workStartMinute) - totalBreakMinute;
-
-
         this.workStartTime = new Time(workStartHour, workStartMinute, 0);
         this.workFinishTime = new Time(workFinishHour, workFinishMinute, 0);
         this.breakStartTime = new Time(breakStartHour, breakStartMinute, 0);
@@ -48,23 +46,18 @@ public class TimeSettingDto {
     public Time getWorkStartTime() {
         return workStartTime;
     }
-
     public Time getWorkFinishTime() {
         return workFinishTime;
     }
-
     public Time getBreakStartTime() {
         return breakStartTime;
     }
-
     public Time getBreakFinishTime() {
         return breakFinishTime;
     }
-
     public Time getTotalWorkTime() {
         return totalWorkTime;
     }
-
     public Time getTotalBreakTime() {
         return totalBreakTime;
     }

@@ -91,7 +91,7 @@ public class MyTodayWorkTimeDao {
 
     // 오늘 날짜와 이번달 근무 시간 번호로 찾기
     public MyTodayWorkTimeDto findMyWorkTimeByDateAndTotalWorkTimeId(Date date, int partTimerWorkplaceId) {
-        MyTotalWorkTimeDto myTotalWorkTimeDto = MY_TOTAL_WORKTIME_DAO.findMyTotalWorkTImeByDateAndWorkplace(date, partTimerWorkplaceId);
+        MyTotalWorkTimeDto myTotalWorkTimeDto = MY_TOTAL_WORKTIME_DAO.findMyTotalWorkTImeByDateAndPartTimerWorkplaceId(date, partTimerWorkplaceId);
         Object[] params = new Object[] { date, myTotalWorkTimeDto.getId()};
 
         return executeSelectQuery(params);

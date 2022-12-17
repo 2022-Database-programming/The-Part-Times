@@ -5,12 +5,8 @@ import java.sql.Timestamp;
 import java.sql.Date;
 
 public class MyTotalWorkTimeDto {
-    // Primary key field
     private int id;
-
-    // Foreign key field
     private int partTimerWorkplaceId;
-
     private Time totalWorkTimeOfMonth;
     private Date workDateOfMonth;
     private int salary;
@@ -39,55 +35,33 @@ public class MyTotalWorkTimeDto {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
     public int getPartTimerWorkplaceId() {
         return partTimerWorkplaceId;
     }
-
-    public void setPartTimerWorkplaceId(int partTimerWorkplaceId) {
-        this.partTimerWorkplaceId = partTimerWorkplaceId;
-    }
-
     public Time getTotalWorkTimeOfMonth() {
         return totalWorkTimeOfMonth;
     }
-
-    public void setTotalWorkTimeOfMonth(Time totalWorkTimeOfMonth) {
-        this.totalWorkTimeOfMonth = totalWorkTimeOfMonth;
-    }
-
     public Date getWorkDateOfMonth() {
         return workDateOfMonth;
     }
-
-    public void setWorkDateOfMonth(Date workDateOfMonth) {
-        this.workDateOfMonth = workDateOfMonth;
-    }
-
     public int getSalary() {
         return salary;
     }
-
     public void setSalary(int salary) {
         this.salary = salary;
     }
-
     public Timestamp getCreatedAt() {
         return createdAt;
     }
-
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
-
     public Timestamp getUpdatedAt() {
         return updatedAt;
     }
-
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }

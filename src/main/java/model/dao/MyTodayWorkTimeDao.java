@@ -2,10 +2,14 @@ package model.dao;
 
 import model.dto.MyTodayWorkTimeDto;
 import model.dto.MyTotalWorkTimeDto;
+import model.dto.PartTimerWorkplaceDto;
 import util.JDBCUtil;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MyTodayWorkTimeDao {
     private final String TABLE_NAME = "MYTODAYWORKTIME";
@@ -23,9 +27,9 @@ public class MyTodayWorkTimeDao {
     private final String UPDATED_AT = "updated_at";
     private final String ID_SEQUENCE = TABLE_NAME + "_seq.nextval";
 
-    private final String insertQuery = "INSERT INTO " + TABLE_NAME + " VALUES (" + ID_SEQUENCE + ", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    private final String deleteQuery = "DELETE FROM " + TABLE_NAME + " WHERE " + ID + "=?";
-    private final String findQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + WORK_DATE + "=? AND " + MYTOTAL_WORKTIME_ID + "=?";
+    private final String INSERT_QUERY = "INSERT INTO " + TABLE_NAME + " VALUES (" + ID_SEQUENCE + ", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private final String DELETE_QUERY = "DELETE FROM " + TABLE_NAME + " WHERE " + ID + "=?";
+    private final String SELECT_BY_DATE_AND_WORKTIME = "SELECT * FROM " + TABLE_NAME + " WHERE " + WORK_DATE + "=? AND " + MYTOTAL_WORKTIME_ID + "=?";
 
     private final JDBCUtil JDBC_UTIL;
     private final MyTotalWorkTimeDao MY_TOTAL_WORKTIME_DAO;
@@ -48,7 +52,7 @@ public class MyTodayWorkTimeDao {
                 myTodayWorkTimeDto.getWorkDate(), myTodayWorkTimeDto.getCreatedAt(), myTodayWorkTimeDto.getUpdatedAt()
         };
 
-        return executeInsertOrDelete(insertQuery, params);
+        return executeInsertOrDelete(INSERT_QUERY, params);
     }
 
     private int saveMyTotalWorkTime(MyTodayWorkTimeDto myTodayWorkTimeDto, MyTotalWorkTimeDto myTotalWorkTimeDto) throws SQLException {
@@ -69,7 +73,7 @@ public class MyTodayWorkTimeDao {
     public int delete(int id) {
         Object[] params = new Object[] { id };
 
-        return executeInsertOrDelete(deleteQuery, params);
+        return executeInsertOrDelete(DELETE_QUERY, params);
     }
 
     private int executeInsertOrDelete(String query, Object[] params) {
@@ -89,7 +93,6 @@ public class MyTodayWorkTimeDao {
         return -1;
     }
 
-    // 오늘 날짜와 이번달 근무 시간 번호로 찾기
     public MyTodayWorkTimeDto findMyWorkTimeByDateAndTotalWorkTimeId(Date date, int partTimerWorkplaceId) {
         MyTotalWorkTimeDto myTotalWorkTimeDto = MY_TOTAL_WORKTIME_DAO.findMyTotalWorkTImeByDateAndPartTimerWorkplaceId(date, partTimerWorkplaceId);
         Object[] params = new Object[] { date, myTotalWorkTimeDto.getId()};
@@ -99,7 +102,7 @@ public class MyTodayWorkTimeDao {
 
     private MyTodayWorkTimeDto executeSelectQuery(Object[] params) {
         try {
-            JDBC_UTIL.setSqlAndParameters(findQuery, params);
+            JDBC_UTIL.setSqlAndParameters(SELECT_BY_DATE_AND_WORKTIME, params);
             ResultSet resultSet = JDBC_UTIL.executeQuery();
 
             if (resultSet.next()) {

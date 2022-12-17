@@ -54,7 +54,7 @@ public class WorkTimeController implements Controller {
                 Timestamp createdAt = new Timestamp(System.currentTimeMillis());
                 Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
 
-                MyTotalWorkTimeDto myTotalWorkTimeDto = WORK_TIME_MANAGER.findMyWorkTimeByDateAndPartTimerWorkplaceId(today, partTimerWorkplaceId);
+                MyTotalWorkTimeDto myTotalWorkTimeDto = WORK_TIME_MANAGER.findMyTotalWorkTimeByDateAndTotalWorkTimeId(today, partTimerWorkplaceId);
 
                 MyTodayWorkTimeDto myTodayWorkTimeDto = new MyTodayWorkTimeDto(
                         myTotalWorkTimeDto.getId(), timeSettingDto, today, minimumWage, createdAt, updatedAt
@@ -65,6 +65,20 @@ public class WorkTimeController implements Controller {
                 request.setAttribute("todayWorkTime", myTodayWorkTimeDto);
 
                 return "/worktime/worktime.jsp";
+            }
+        }
+
+        if (request.getServletPath().equals("/worktime/day")) {
+            if (request.getMethod().equals("GET")) {
+                Date date = Date.valueOf(request.getParameter("today"));
+                // partTimerWorkplaceId List
+                List<Integer> partTimerWorkplaceIds = WORK_TIME_MANAGER.findAllPartTimerWorkplaceIdByMemberId(member.getId());
+
+                // myTotalWorkTimeId List
+                List<Integer> myTotalWorkTimeIds = WORK_TIME_MANAGER.findAllTotalWorkTimeIdByPartTimerWorkplaceIdAndWorkDate(date, partTimerWorkplaceIds);
+
+                // myTodayWorkTimeDto List
+                List<MyTodayWorkTimeDto> myTodayWorkTimes = WORK_TIME_MANAGER.findAllMyTodayWorkTimeByDateAndTotalWorkTime(date, myTotalWorkTimeIds);
             }
         }
 

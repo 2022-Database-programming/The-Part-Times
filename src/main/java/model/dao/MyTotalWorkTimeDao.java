@@ -11,7 +11,8 @@ public class MyTotalWorkTimeDao {
     private final String TABLE_NAME = "MYTOTAL_WORKTIME";
     private final String ID = "id";
     private final String PARTTIMER_WORKPLACE_ID = "parttimer_workplace_id";
-    private final String TOTAL_WORK_TIME_OF_MONTH = "total_work_time_of_month";
+    private final String TOTAL_WORK_HOUR_OF_MONTH = "total_work_hour_of_month";
+    private final String TOTAL_WORK_MINUTE_OF_MONTH = "total_work_minute_of_month";
     private final String WORK_DATE_OF_MONTH = "work_date_of_month";
     private final String SALARY = "salary";
     private final String CREATED_AT = "created_at";
@@ -21,8 +22,10 @@ public class MyTotalWorkTimeDao {
 
     private final JDBCUtil JDBC_UTIL;
 
-    private final String insertQuery = "INSERT INTO " + TABLE_NAME + " VALUES (" + ID_SEQUENCE + ", ?, ?, ?, ?, ?, ?)";
-    private final String updateQuery = "UPDATE " + TABLE_NAME + " SET " + TOTAL_WORK_TIME_OF_MONTH + "=?, " + SALARY + "=NVL(" + SALARY + ", 0) + ?, " + UPDATED_AT + "=?" +
+    private final String insertQuery = "INSERT INTO " + TABLE_NAME + " VALUES (" + ID_SEQUENCE + ", ?, ?, ?, ?, ?, ?, ?)";
+    private final String updateQuery = "UPDATE " + TABLE_NAME + " SET " + TOTAL_WORK_HOUR_OF_MONTH + "=NVL( " + TOTAL_WORK_HOUR_OF_MONTH + ", 0) + ?, "
+            + TOTAL_WORK_MINUTE_OF_MONTH + "=NVL( " + TOTAL_WORK_MINUTE_OF_MONTH + ", 0) + ?, "
+            + SALARY + "=NVL(" + SALARY + ", 0) + ?, " + UPDATED_AT + "=?" +
             " WHERE " + WORK_DATE_OF_MONTH + "=? AND " + PARTTIMER_WORKPLACE_ID + "=?";
     private final String findQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + WORK_DATE_OF_MONTH + "=? AND " + PARTTIMER_WORKPLACE_ID + "=?";
 
@@ -51,8 +54,8 @@ public class MyTotalWorkTimeDao {
         System.out.println("insert");
         Object[] params = new Object[] {
                 myTotalWorkTimeDto.getPartTimerWorkplaceId(),
-                myTotalWorkTimeDto.getTotalWorkTimeOfMonth(), myTotalWorkTimeDto.getWorkDateOfMonth(),
-                myTotalWorkTimeDto.getSalary(), myTotalWorkTimeDto.getCreatedAt(), myTotalWorkTimeDto.getUpdatedAt()
+                myTotalWorkTimeDto.getTotalWorkHourOfMonth(), myTotalWorkTimeDto.getWorkDateOfMonth(), myTotalWorkTimeDto.getSalary(),
+                myTotalWorkTimeDto.getCreatedAt(), myTotalWorkTimeDto.getUpdatedAt(), myTotalWorkTimeDto.getTotalWorkMinuteOfMonth()
         };
 
         return executeInsertOrUpdateQuery(insertQuery, params);
@@ -60,7 +63,9 @@ public class MyTotalWorkTimeDao {
 
     private int update(MyTotalWorkTimeDto myTotalWorkTimeDto) {
         System.out.println("update");
-        Object[] params = new Object[] { myTotalWorkTimeDto.getTotalWorkTimeOfMonth(), myTotalWorkTimeDto.getSalary(), new Timestamp(System.currentTimeMillis()), myTotalWorkTimeDto.getWorkDateOfMonth(), myTotalWorkTimeDto.getPartTimerWorkplaceId() };
+        Object[] params = new Object[] { myTotalWorkTimeDto.getTotalWorkHourOfMonth(), myTotalWorkTimeDto.getTotalWorkMinuteOfMonth(),
+                myTotalWorkTimeDto.getSalary(), new Timestamp(System.currentTimeMillis()),
+                myTotalWorkTimeDto.getWorkDateOfMonth(), myTotalWorkTimeDto.getPartTimerWorkplaceId() };
 
         return executeInsertOrUpdateQuery(updateQuery, params);
     }
@@ -96,9 +101,8 @@ public class MyTotalWorkTimeDao {
             ResultSet resultSet = JDBC_UTIL.executeQuery();
 
             if (resultSet.next()) {
-                System.out.println("값이 있지롱");
                 MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDto (
-                        resultSet.getInt(ID), resultSet.getInt(PARTTIMER_WORKPLACE_ID), resultSet.getTime(TOTAL_WORK_TIME_OF_MONTH),
+                        resultSet.getInt(ID), resultSet.getInt(PARTTIMER_WORKPLACE_ID), resultSet.getInt(TOTAL_WORK_HOUR_OF_MONTH), resultSet.getInt(TOTAL_WORK_MINUTE_OF_MONTH),
                         resultSet.getDate(WORK_DATE_OF_MONTH), resultSet.getInt(SALARY), resultSet.getTimestamp(CREATED_AT), resultSet.getTimestamp(UPDATED_AT)
                 );
 
@@ -110,7 +114,6 @@ public class MyTotalWorkTimeDao {
             JDBC_UTIL.close();
         }
 
-        System.out.println("값이 없지롱");
         return null;
     }
 

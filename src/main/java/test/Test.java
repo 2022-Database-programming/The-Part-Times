@@ -43,7 +43,7 @@ public class Test {
 
         // 없으면 하나 만들어준다.
         if (myTotalWorkTimeDto == null) {
-            myTotalWorkTimeDto = new MyTotalWorkTimeDto(partTimerWorkplaceId, new Time(0, 0, 0),
+            myTotalWorkTimeDto = new MyTotalWorkTimeDto(partTimerWorkplaceId, 0, 0,
                     workDate, 0, createdAt, updatedAt);
             myTotalWorkTimeDao.insert(myTotalWorkTimeDto);
         }

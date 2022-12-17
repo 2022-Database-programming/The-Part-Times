@@ -59,6 +59,8 @@ public class WorkTimeController implements Controller {
 
                 MyTotalWorkTimeDto myTotalWorkTimeDto = WORK_TIME_MANAGER.findMyTotalWorkTimeByDateAndTotalWorkTimeId(today, partTimerWorkplaceId);
 
+                System.out.println(myTotalWorkTimeDto);
+
                 MyTodayWorkTimeDto myTodayWorkTimeDto = new MyTodayWorkTimeDto(
                         myTotalWorkTimeDto.getId(), timeSettingDto, today, minimumWage, createdAt, updatedAt
                 );

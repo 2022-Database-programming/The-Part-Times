@@ -56,7 +56,6 @@ public class MyTodayWorkTimeDao {
 
     private int saveMyTotalWorkTime(MyTodayWorkTimeDto myTodayWorkTimeDto, MyTotalWorkTimeDto myTotalWorkTimeDto) throws SQLException {
         String[] times = String.valueOf(myTodayWorkTimeDto.getTotalWorkTimeOfDay()).split(":");
-        String[] existedTimes = String.valueOf(myTotalWorkTimeDto.getTotalWorkTimeOfMonth()).split(":");
 
         int salary = Integer.valueOf(times[0]) * myTodayWorkTimeDto.getMinimumWage();
 
@@ -64,15 +63,9 @@ public class MyTodayWorkTimeDao {
             salary += myTodayWorkTimeDto.getMinimumWage() / 2;
         }
 
-        int totalHour = Integer.parseInt(times[0]) + Integer.parseInt(existedTimes[0]);
-        int totalMinute = Integer.parseInt(times[1]) + Integer.parseInt(existedTimes[1]);
-
-        Time resultAddTime = new Time(
-                totalHour, totalMinute, 0
-        );
-
         myTotalWorkTimeDto.setSalary(salary);
-        myTotalWorkTimeDto.setTotalWorkTimeOfMonth(resultAddTime);
+        myTotalWorkTimeDto.setTotalWorkHourOfMonth(Integer.parseInt(times[0]));
+        myTotalWorkTimeDto.setTotalWorkMinuteOfMonth(Integer.parseInt(times[1]));
 
         return MY_TOTAL_WORKTIME_DAO.insertOrUpdate(myTotalWorkTimeDto);
     }

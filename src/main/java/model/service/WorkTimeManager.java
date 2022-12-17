@@ -45,15 +45,17 @@ public class WorkTimeManager {
 
         MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDao().findMyTotalWorkTimeByDateAndPartTimerWorkplaceId(today, partTimerWorkplaceId);
 
+        System.out.println("생성 전 " + myTotalWorkTimeDto);
+
         if (myTotalWorkTimeDto == null) {
             myTotalWorkTimeDto = createMyTotalWorkTime(partTimerWorkplaceId, today, createdAt, updatedAt);
         }
-
+        System.out.println("생성 후 " + myTotalWorkTimeDto);
         return myTotalWorkTimeDto;
     }
 
     private MyTotalWorkTimeDto createMyTotalWorkTime(int partTimerWorkplaceId, Date today, Timestamp createdAt, Timestamp updatedAt) {
-        MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDto(partTimerWorkplaceId, new Time(0, 0, 0),
+        MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDto(partTimerWorkplaceId, 0, 0,
                 today, 0, createdAt, updatedAt);
         myTotalWorkTimeDao.insert(myTotalWorkTimeDto);
 
@@ -63,7 +65,7 @@ public class WorkTimeManager {
     }
 
     public HashMap<Integer, List<MyTodayWorkTimeDto>> findAllMyTodayWorkTimeByDateAndTotalWorkTime(Date today, List<Integer> totalWorkTimeIds) {
-        List<MyTodayWorkTimeDto> myTodayWorkTimes = new ArrayList<>();
+        List<MyTodayWorkTimeDto> myTodayWorkTimes;
         HashMap<Integer, List<MyTodayWorkTimeDto>> myTodayWorkTimesMap = new HashMap<>();
 
         System.out.println(totalWorkTimeIds);

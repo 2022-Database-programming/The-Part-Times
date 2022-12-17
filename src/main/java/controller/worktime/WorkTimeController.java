@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 public class WorkTimeController implements Controller {
@@ -28,7 +29,9 @@ public class WorkTimeController implements Controller {
         }
 
         memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+        System.out.println(memberId);
         MemberDto member = MEMBER_MANAGER.findMember(memberId);
+        System.out.println(member.getId());
 
         if (request.getServletPath().equals("/worktime/today")) {
             if (request.getMethod().equals("GET")) {
@@ -70,15 +73,24 @@ public class WorkTimeController implements Controller {
 
         if (request.getServletPath().equals("/worktime/day")) {
             if (request.getMethod().equals("GET")) {
+                System.out.println(request.getParameter("today"));
                 Date date = Date.valueOf(request.getParameter("today"));
+
                 // partTimerWorkplaceId List
                 List<Integer> partTimerWorkplaceIds = WORK_TIME_MANAGER.findAllPartTimerWorkplaceIdByMemberId(member.getId());
+                System.out.println("Controller-------------------" + partTimerWorkplaceIds);
 
                 // myTotalWorkTimeId List
                 List<Integer> myTotalWorkTimeIds = WORK_TIME_MANAGER.findAllTotalWorkTimeIdByPartTimerWorkplaceIdAndWorkDate(date, partTimerWorkplaceIds);
 
-                // myTodayWorkTimeDto List
-                List<MyTodayWorkTimeDto> myTodayWorkTimes = WORK_TIME_MANAGER.findAllMyTodayWorkTimeByDateAndTotalWorkTime(date, myTotalWorkTimeIds);
+                // myTodayWorkTime Map
+                HashMap<Integer, List<MyTodayWorkTimeDto>> myTodayWorkTimes = WORK_TIME_MANAGER.findAllMyTodayWorkTimeByDateAndTotalWorkTime(date, myTotalWorkTimeIds);
+
+                System.out.println(myTodayWorkTimes);
+
+                request.setAttribute("myTodayWorkTime", myTodayWorkTimes);
+
+                return "/worktime/main.jsp";
             }
         }
 

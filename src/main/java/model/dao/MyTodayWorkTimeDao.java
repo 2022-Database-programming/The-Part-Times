@@ -2,14 +2,12 @@ package model.dao;
 
 import model.dto.MyTodayWorkTimeDto;
 import model.dto.MyTotalWorkTimeDto;
-import model.dto.PartTimerWorkplaceDto;
 import util.JDBCUtil;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class MyTodayWorkTimeDao {
     private final String TABLE_NAME = "MYTODAYWORKTIME";
@@ -93,19 +91,19 @@ public class MyTodayWorkTimeDao {
         return -1;
     }
 
-    public MyTodayWorkTimeDto findMyWorkTimeByDateAndTotalWorkTimeId(Date date, int partTimerWorkplaceId) {
-        MyTotalWorkTimeDto myTotalWorkTimeDto = MY_TOTAL_WORKTIME_DAO.findMyTotalWorkTImeByDateAndPartTimerWorkplaceId(date, partTimerWorkplaceId);
-        Object[] params = new Object[] { date, myTotalWorkTimeDto.getId()};
+    public List<MyTodayWorkTimeDto> findMyWorkTimeByDateAndTotalWorkTimeId(Date date, int totalWorkTimeId) {
+        Object[] params = new Object[] { date, totalWorkTimeId };
 
         return executeSelectQuery(params);
     }
 
-    private MyTodayWorkTimeDto executeSelectQuery(Object[] params) {
+    private List<MyTodayWorkTimeDto> executeSelectQuery(Object[] params) {
+        List<MyTodayWorkTimeDto> myTodayWorkTimes = new ArrayList<>();
         try {
             JDBC_UTIL.setSqlAndParameters(SELECT_BY_DATE_AND_WORKTIME, params);
             ResultSet resultSet = JDBC_UTIL.executeQuery();
 
-            if (resultSet.next()) {
+            while(resultSet.next()) {
                 MyTodayWorkTimeDto myTodayWorkTimeDto = new MyTodayWorkTimeDto(
                         resultSet.getInt(ID), resultSet.getInt(MYTOTAL_WORKTIME_ID), resultSet.getTime(WORK_START_TIME),
                         resultSet.getTime(WORK_FINISH_TIME), resultSet.getTime(BREAK_START_TIME), resultSet.getTime(BREAK_FINISH_TIME),
@@ -113,8 +111,11 @@ public class MyTodayWorkTimeDao {
                         resultSet.getDate(WORK_DATE), resultSet.getInt(MINIMUM_WAGE), resultSet.getTimestamp(CREATED_AT), resultSet.getTimestamp(UPDATED_AT)
                 );
 
-                return myTodayWorkTimeDto;
+                myTodayWorkTimes.add(myTodayWorkTimeDto);
             }
+
+
+            return myTodayWorkTimes;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

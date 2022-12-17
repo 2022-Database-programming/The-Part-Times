@@ -39,7 +39,7 @@ public class MyTotalWorkTimeDao {
     }
 
     private boolean isNotMyTotalWorkTimeNull(MyTotalWorkTimeDto myTotalWorkTimeDto) {
-        if (findMyTotalWorkTImeByDateAndPartTimerWorkplaceId(myTotalWorkTimeDto.getWorkDateOfMonth(), myTotalWorkTimeDto.getPartTimerWorkplaceId()) != null) {
+        if (findMyTotalWorkTimeByDateAndPartTimerWorkplaceId(myTotalWorkTimeDto.getWorkDateOfMonth(), myTotalWorkTimeDto.getPartTimerWorkplaceId()) != null) {
             System.out.println("not null");
             return true;
         }
@@ -84,7 +84,7 @@ public class MyTotalWorkTimeDao {
         return 0;
     }
 
-    public MyTotalWorkTimeDto findMyTotalWorkTImeByDateAndPartTimerWorkplaceId(Date today, int partTimerWorkplaceId) {
+    public MyTotalWorkTimeDto findMyTotalWorkTimeByDateAndPartTimerWorkplaceId(Date today, int partTimerWorkplaceId) {
         Object[] params = new Object[] { today, partTimerWorkplaceId };
 
         return executeSelectQuery(params);
@@ -96,6 +96,7 @@ public class MyTotalWorkTimeDao {
             ResultSet resultSet = JDBC_UTIL.executeQuery();
 
             if (resultSet.next()) {
+                System.out.println("값이 있지롱");
                 MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDto (
                         resultSet.getInt(ID), resultSet.getInt(PARTTIMER_WORKPLACE_ID), resultSet.getTime(TOTAL_WORK_TIME_OF_MONTH),
                         resultSet.getDate(WORK_DATE_OF_MONTH), resultSet.getInt(SALARY), resultSet.getTimestamp(CREATED_AT), resultSet.getTimestamp(UPDATED_AT)
@@ -109,6 +110,7 @@ public class MyTotalWorkTimeDao {
             JDBC_UTIL.close();
         }
 
+        System.out.println("값이 없지롱");
         return null;
     }
 

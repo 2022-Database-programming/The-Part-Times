@@ -39,7 +39,7 @@ public class Test {
 
         // 찾은 근무지 저장 테이블을 기반으로 이번달 토탈 워크타임 데이터를 찾는다. (외래키 찾기)
         Date today = Date.valueOf(LocalDate.now());
-        MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDao().findMyTotalWorkTImeByDateAndPartTimerWorkplaceId(today, partTimerWorkplaceId);
+        MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDao().findMyTotalWorkTimeByDateAndPartTimerWorkplaceId(today, partTimerWorkplaceId);
 
         // 없으면 하나 만들어준다.
         if (myTotalWorkTimeDto == null) {
@@ -49,7 +49,7 @@ public class Test {
         }
 
         // totalWorkTime의 id까지 가져오기 위해 객체를 모두 찾아준다.
-        MyTotalWorkTimeDto myTotalWorkTimeDtoWithId = myTotalWorkTimeDao.findMyTotalWorkTImeByDateAndPartTimerWorkplaceId(today, partTimerWorkplaceId);
+        MyTotalWorkTimeDto myTotalWorkTimeDtoWithId = myTotalWorkTimeDao.findMyTotalWorkTimeByDateAndPartTimerWorkplaceId(today, partTimerWorkplaceId);
 
         // 오늘 일한 시간
         TimeSettingDto timeSettingDto = new TimeSettingDto(13, 0, 16, 0, 15, 0, 15, 30);

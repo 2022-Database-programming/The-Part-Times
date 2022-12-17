@@ -19,6 +19,7 @@ public class RequestMapping {
         mappings.put("/member/update", new MemberController());
 
         mappings.put("/worktime/today", new WorkTimeController());
+        mappings.put("/worktime/day", new WorkTimeController());
 
         mappings.put("/post/update", new PostController());
         mappings.put("/post/create", new PostController());

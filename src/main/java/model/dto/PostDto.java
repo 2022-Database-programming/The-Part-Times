@@ -27,8 +27,18 @@ public class PostDto {
 		this.likes = likes;
 		this.views = views;
 	}
+    
 
-    public PostDto(int id, int memberId, int isAnonymous, String type, String title, String content, int likes,
+    public PostDto(int memberId, int isAnonymous, String type, String title, String content) {
+		super();
+		this.memberId = memberId;
+		this.isAnonymous = isAnonymous;
+		this.type = type;
+		this.title = title;
+		this.content = content;
+	}
+
+	public PostDto(int id, int memberId, int isAnonymous, String type, String title, String content, int likes,
 			int views, Timestamp createdAt, Timestamp updatedAt) {
 		super();
 		this.id = id;

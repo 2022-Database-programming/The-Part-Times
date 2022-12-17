@@ -6,6 +6,7 @@ public class ReplyDto {
     private int id;
     private int postId;
     private int replyId;
+    private int memberId;
     private int isAnonymous;
     private String content;
     private int likes;

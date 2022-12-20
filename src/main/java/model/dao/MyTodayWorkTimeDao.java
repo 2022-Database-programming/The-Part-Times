@@ -6,7 +6,6 @@ import util.JDBCUtil;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,10 +37,8 @@ public class MyTodayWorkTimeDao {
         MY_TOTAL_WORKTIME_DAO = new MyTotalWorkTimeDao();
     }
 
-    // 오늘 근무한 시간 저장
     public int insert(MyTodayWorkTimeDto myTodayWorkTimeDto, MyTotalWorkTimeDto myTotalWorkTimeDto, int partTimerWorkPlaceId) throws SQLException {
         saveMyTotalWorkTime(myTodayWorkTimeDto, myTotalWorkTimeDto);
-        System.out.println(myTotalWorkTimeDto.getId());
 
         Object[] params = new Object[] {
                 myTotalWorkTimeDto.getId(),
@@ -70,7 +67,6 @@ public class MyTodayWorkTimeDao {
         return MY_TOTAL_WORKTIME_DAO.insertOrUpdate(myTotalWorkTimeDto);
     }
 
-    // 오늘 근무 시간 삭제
     public int delete(int id) {
         Object[] params = new Object[] { id };
 
@@ -116,7 +112,6 @@ public class MyTodayWorkTimeDao {
 
                 myTodayWorkTimes.add(myTodayWorkTimeDto);
             }
-
 
             return myTodayWorkTimes;
         } catch (Exception e) {

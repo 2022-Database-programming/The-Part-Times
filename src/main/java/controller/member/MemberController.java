@@ -30,8 +30,7 @@ public class MemberController implements Controller {
 
                     return "/member/myPageForm.jsp";
                 }
-
-                return "redirect:/index.jsp";
+                return "redirect:/";
             }
 
             if (request.getMethod().equals("POST")) {
@@ -52,7 +51,7 @@ public class MemberController implements Controller {
                     return "redirect:/member/myPage.jsp";
                 }
 
-                return "redirect:/index.jsp";
+                return "redirect:/";
             }
         }
 
@@ -78,7 +77,6 @@ public class MemberController implements Controller {
 
         if (request.getServletPath().equals("/member/signup")) {
             if (request.getMethod().equals("POST")) {
-                System.out.println("회원가입 요청");
                 MemberDto member = new MemberDto(
                         request.getParameter("memberId"),
                         request.getParameter("password"),
@@ -92,7 +90,7 @@ public class MemberController implements Controller {
                 try {
                     MEMBER_MANAGER.create(member);
 
-                    return "redirect:/index.jsp";
+                    return "redirect:/";
                 } catch (ExistingMemberException e) {
                     request.setAttribute("registerFailed", true);
                     request.setAttribute("exception", e);
@@ -103,15 +101,15 @@ public class MemberController implements Controller {
             }
         }
 
-        if (request.getServletPath().equals("/member/signout")) {   // 로그아웃
+        if (request.getServletPath().equals("/member/signout")) {
             if (request.getMethod().equals("POST")) {
                 HttpSession session = request.getSession();
                 session.removeAttribute(MEMBER_SESSION_UTILS.USER_SESSION_KEY);
                 session.invalidate();
             }
-            return "redirect:/index.jsp";
+            return "redirect:/";
         }
 
-        return "redirect:/error/noRequestError.jsp";
+        return "redirect:/error/noRequestError";
     }
 }

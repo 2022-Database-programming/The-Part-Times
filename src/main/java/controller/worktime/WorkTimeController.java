@@ -25,20 +25,18 @@ public class WorkTimeController implements Controller {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (!MEMBER_SESSION_UTILS.hasLogined(request.getSession())) {
-            return "redirect:/index.jsp";
+            return "redirect:/";
         }
 
         memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
-        System.out.println(memberId);
         MemberDto member = MEMBER_MANAGER.findMember(memberId);
-        System.out.println(member.getId());
 
         if (request.getServletPath().equals("/worktime/today")) {
             if (request.getMethod().equals("GET")) {
                 List<PartTimerWorkplaceDto> myWorkplaces = PART_TIMER_WORKPLACE_MANAGER.findAllPartTimerWorkplace(member.getId());
                 request.setAttribute("myWorkplaces", myWorkplaces);
 
-                return "/worktime/workTime.jsp";
+                return "/worktime/worktime.jsp";
             }
 
             if (request.getMethod().equals("POST")) {
@@ -59,8 +57,6 @@ public class WorkTimeController implements Controller {
 
                 MyTotalWorkTimeDto myTotalWorkTimeDto = WORK_TIME_MANAGER.findMyTotalWorkTimeByDateAndTotalWorkTimeId(today, partTimerWorkplaceId);
 
-                System.out.println(myTotalWorkTimeDto);
-
                 MyTodayWorkTimeDto myTodayWorkTimeDto = new MyTodayWorkTimeDto(
                         myTotalWorkTimeDto.getId(), timeSettingDto, today, minimumWage, createdAt, updatedAt
                 );
@@ -75,24 +71,18 @@ public class WorkTimeController implements Controller {
 
         if (request.getServletPath().equals("/worktime/day")) {
             if (request.getMethod().equals("GET")) {
-                System.out.println(request.getParameter("today"));
                 Date date = Date.valueOf(request.getParameter("today"));
 
                 // partTimerWorkplaceId List
                 List<Integer> partTimerWorkplaceIds = WORK_TIME_MANAGER.findAllPartTimerWorkplaceIdByMemberId(member.getId());
-                System.out.println("Controller-------------------" + partTimerWorkplaceIds);
-
                 // myTotalWorkTimeId List
                 List<Integer> myTotalWorkTimeIds = WORK_TIME_MANAGER.findAllTotalWorkTimeIdByPartTimerWorkplaceIdAndWorkDate(date, partTimerWorkplaceIds);
-
                 // myTodayWorkTime Map
                 HashMap<Integer, List<MyTodayWorkTimeDto>> myTodayWorkTimes = WORK_TIME_MANAGER.findAllMyTodayWorkTimeByDateAndTotalWorkTime(date, myTotalWorkTimeIds);
 
-                System.out.println(myTodayWorkTimes);
-
                 request.setAttribute("myTodayWorkTime", myTodayWorkTimes);
 
-                return "/worktime/main.jsp";
+                return "/member/main.jsp";
             }
         }
 

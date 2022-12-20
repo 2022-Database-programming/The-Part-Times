@@ -6,10 +6,8 @@ import model.dao.MyTotalWorkTimeDao;
 import model.dto.MyTodayWorkTimeDto;
 import model.dto.MyTotalWorkTimeDto;
 import model.dto.PartTimerWorkplaceDto;
-
 import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,12 +43,10 @@ public class WorkTimeManager {
 
         MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDao().findMyTotalWorkTimeByDateAndPartTimerWorkplaceId(today, partTimerWorkplaceId);
 
-        System.out.println("생성 전 " + myTotalWorkTimeDto);
-
         if (myTotalWorkTimeDto == null) {
             myTotalWorkTimeDto = createMyTotalWorkTime(partTimerWorkplaceId, today, createdAt, updatedAt);
         }
-        System.out.println("생성 후 " + myTotalWorkTimeDto);
+
         return myTotalWorkTimeDto;
     }
 
@@ -68,8 +64,6 @@ public class WorkTimeManager {
         List<MyTodayWorkTimeDto> myTodayWorkTimes;
         HashMap<Integer, List<MyTodayWorkTimeDto>> myTodayWorkTimesMap = new HashMap<>();
 
-        System.out.println(totalWorkTimeIds);
-
         for (int i = 0; i < totalWorkTimeIds.size(); i++) {
             myTodayWorkTimes = myTodayWorkTimeDao.findMyWorkTimeByDateAndTotalWorkTimeId(today, totalWorkTimeIds.get(i));
             myTodayWorkTimesMap.put(totalWorkTimeIds.get(i), myTodayWorkTimes);
@@ -83,11 +77,10 @@ public class WorkTimeManager {
 
         for (int i = 0; i < partTimerWorkplaceIds.size(); i++) {
             MyTotalWorkTimeDto myTotalWorkTimeDto = myTotalWorkTimeDao.findMyTotalWorkTimeByDateAndPartTimerWorkplaceId(today, partTimerWorkplaceIds.get(i));
-            System.out.println(myTotalWorkTimeDto);
 
-            if (myTotalWorkTimeDto == null) continue;
-
-            myTotalWorkTimeIds.add(myTotalWorkTimeDto.getId());
+            if (myTotalWorkTimeDto != null) {
+                myTotalWorkTimeIds.add(myTotalWorkTimeDto.getId());
+            }
         }
 
         return myTotalWorkTimeIds;
@@ -95,7 +88,6 @@ public class WorkTimeManager {
 
     public List<Integer> findAllPartTimerWorkplaceIdByMemberId(int memberId) {
         List<PartTimerWorkplaceDto> partTimerWorkplaces = partTimerWorkplaceDao.findAllWorkplace(memberId);
-        System.out.println("findAllPartTimerWorkplaceId-------------------" + partTimerWorkplaces);
 
         List<Integer> partTimerWorkplaceIds = initPartTimerWorkplaceIds(partTimerWorkplaces);
 
@@ -107,7 +99,6 @@ public class WorkTimeManager {
 
         for (int i = 0; i < partTimerWorkplaces.size(); i++) {
             partTimerWorkplaceIds.add(partTimerWorkplaces.get(i).getId());
-            System.out.println("initPartTimer-------------------" + partTimerWorkplaces.get(i));
         }
 
         return partTimerWorkplaceIds;

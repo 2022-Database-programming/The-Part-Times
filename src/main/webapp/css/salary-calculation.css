@@ -1,6 +1,6 @@
 @charset "EUC-KR";
 
-    	/*ÆùÆ®Àû¿ë*/
+    	/*í°íŠ¸ì ìš©*/
     	@font-face {
             font-family: 'GmarketSansLight';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
@@ -26,30 +26,30 @@
             font-family: 'GmarketSansMedium';
         }
 		
-		/*±Ù¹« ½Ã°£ °è»ê±â Á¦¸ñ*/
+		/*ê·¼ë¬´ ì‹œê°„ ê³„ì‚°ê¸° ì œëª©*/
 		.time_title{
 			text-align: center;
 			padding-top: 6%;
 		}
 		
-		/*ÀÔ·Â¹Ú½º*/
+		/*ì…ë ¥ë°•ìŠ¤*/
 		.inputValue{
 			height: 60%;
 			width: 50%;	
 			float: left; 
-			margin-left: 1%;
+			margin-left: 0%;
 			border: none; 
 		}
 		
-		/*½Ã°£ÀÔ·Â*/
+		/*ì‹œê°„ ì…ë ¥ title*/
 		.inputTime {
 			width: 73%;
 			font-size: 22px;
-			padding-top: 8%;
-			margin-left: 26%;
+			padding-top: 5%;
+			margin-left: 23%;
 		}
 		
-		/*½Ã°£ ÀÔ·Â*/
+		/*ì‹œê°„ ì…ë ¥*/
 		.h_inputBox{
 			height: 10%;
 			width: 10%;
@@ -60,7 +60,7 @@
 			font-size: 15px;
 		}
 		
-		/*ºĞ ÀÔ·Â*/
+		/*ë¶„ ì…ë ¥*/
 		.m_inputBox{
 			height: 10%;
 			width: 20%;
@@ -71,16 +71,32 @@
 			font-size: 15px;
 		}
 		
-		/*½Ã±ŞÀÔ·Â*/
+		/*ê·¼ë¬´ ì¼ìˆ˜*/
+		.inputDay{
+			font-size: 22px;
+			margin-top: 5%;
+			margin-left: 23%;
+		}
+		.day_inputBox{
+			height: 10%;
+			width: 15%;
+			margin-left: 3%;
+			padding-left:5%;
+			border:1.5px solid #89a6d6;
+			border-radius: 8px;
+			font-size: 15px;
+		}
+		
+		/*ì‹œê¸‰ì…ë ¥*/
 		.inputSalary{
 			font-size: 22px;
-			margin-top: 8%;
-			margin-left: 35%;
+			margin-top: 5%;
+			margin-left: 23%;
 		}
 		
 		.salary_inputBox{
 			height: 10%;
-			width: 74%;
+			width: 65%;
 			margin-left: 1%;
 			padding-left: 5%;
 			border:1.5px solid #89a6d6;
@@ -88,11 +104,11 @@
 			font-size: 15px;
 		}
 		
-		/*ÁÖÈŞ¼ö´ç ¿©ºÎ Ã¼Å©*/
+		/*ì£¼íœ´ìˆ˜ë‹¹ ì—¬ë¶€ ì²´í¬*/
 		.check_week_salary{
 			font-size: 22px;
-			margin-top: 6%;
-			margin-left: 19%;
+			margin-top: 5%;
+			margin-left: 23%;
 		}
 		
 		.weekSalary_inputBox{
@@ -102,7 +118,7 @@
 			border:1.5px solid #89a6d6;
 		}
 		
-		/*±¸ºĞ¼±*/
+		/*êµ¬ë¶„ì„ */
 		.line{
 			border: none; 
 			float: left; 
@@ -116,7 +132,7 @@
 			background-color:#000;
 		}
 		
-		/*°è»ê °á°ú*/
+		/*ê³„ì‚° ê²°ê³¼*/
 		.calResult{
 			height: 60%;
 			width: 35%;
@@ -136,7 +152,7 @@
 			font-size: 50px;
 		}
 		
-		/*°è»ê¹öÆ°*/
+		/*ê³„ì‚°ë²„íŠ¼*/
 		.calButton {
         	font-family: 'GmarketSansMedium';
             width: 40%;

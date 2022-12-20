@@ -37,25 +37,26 @@ public class WorkTimeManager {
         return myTodayWorkTimeDao.insert(myTodayWorkTimeDto, myTotalWorkTimeDto, partTimerWorkplaceId);
     }
 
-    public MyTotalWorkTimeDto findMyTotalWorkTimeByDateAndTotalWorkTimeId(Date today, int partTimerWorkplaceId) {
+    public MyTotalWorkTimeDto findMyTotalWorkTimeByDateAndTotalWorkTimeId(String month, int partTimerWorkplaceId) {
         Timestamp createdAt = new Timestamp(System.currentTimeMillis());
         Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
 
-        MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDao().findMyTotalWorkTimeByDateAndPartTimerWorkplaceId(today, partTimerWorkplaceId);
+        MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDao().findMyTotalWorkTimeByDateAndPartTimerWorkplaceId(month, partTimerWorkplaceId);
 
         if (myTotalWorkTimeDto == null) {
-            myTotalWorkTimeDto = createMyTotalWorkTime(partTimerWorkplaceId, today, createdAt, updatedAt);
+            myTotalWorkTimeDto = createMyTotalWorkTime(partTimerWorkplaceId, month, createdAt, updatedAt);
         }
 
         return myTotalWorkTimeDto;
     }
 
-    private MyTotalWorkTimeDto createMyTotalWorkTime(int partTimerWorkplaceId, Date today, Timestamp createdAt, Timestamp updatedAt) {
+    private MyTotalWorkTimeDto createMyTotalWorkTime(int partTimerWorkplaceId, String month, Timestamp createdAt, Timestamp updatedAt) {
         MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDto(partTimerWorkplaceId, 0, 0,
-                today, 0, createdAt, updatedAt);
+                month, 0, createdAt, updatedAt);
+
         myTotalWorkTimeDao.insert(myTotalWorkTimeDto);
 
-        myTotalWorkTimeDto = myTotalWorkTimeDao.findMyTotalWorkTimeByDateAndPartTimerWorkplaceId(today, partTimerWorkplaceId);
+        myTotalWorkTimeDto = myTotalWorkTimeDao.findMyTotalWorkTimeByDateAndPartTimerWorkplaceId(month, partTimerWorkplaceId);
 
         return myTotalWorkTimeDto;
     }
@@ -72,11 +73,11 @@ public class WorkTimeManager {
         return myTodayWorkTimesMap;
     }
 
-    public List<Integer> findAllTotalWorkTimeIdByPartTimerWorkplaceIdAndWorkDate(Date today, List<Integer> partTimerWorkplaceIds) {
+    public List<Integer> findAllTotalWorkTimeIdByPartTimerWorkplaceIdAndWorkDate(String month, List<Integer> partTimerWorkplaceIds) {
         List<Integer> myTotalWorkTimeIds = new ArrayList<>();
 
         for (int i = 0; i < partTimerWorkplaceIds.size(); i++) {
-            MyTotalWorkTimeDto myTotalWorkTimeDto = myTotalWorkTimeDao.findMyTotalWorkTimeByDateAndPartTimerWorkplaceId(today, partTimerWorkplaceIds.get(i));
+            MyTotalWorkTimeDto myTotalWorkTimeDto = myTotalWorkTimeDao.findMyTotalWorkTimeByDateAndPartTimerWorkplaceId(month, partTimerWorkplaceIds.get(i));
 
             if (myTotalWorkTimeDto != null) {
                 myTotalWorkTimeIds.add(myTotalWorkTimeDto.getId());

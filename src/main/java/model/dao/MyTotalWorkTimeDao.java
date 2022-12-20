@@ -2,7 +2,6 @@ package model.dao;
 
 import model.dto.MyTotalWorkTimeDto;
 import util.JDBCUtil;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -83,8 +82,8 @@ public class MyTotalWorkTimeDao {
         return 0;
     }
 
-    public MyTotalWorkTimeDto findMyTotalWorkTimeByDateAndPartTimerWorkplaceId(Date today, int partTimerWorkplaceId) {
-        Object[] params = new Object[] { today, partTimerWorkplaceId };
+    public MyTotalWorkTimeDto findMyTotalWorkTimeByDateAndPartTimerWorkplaceId(String month, int partTimerWorkplaceId) {
+        Object[] params = new Object[] { month, partTimerWorkplaceId };
 
         return executeSelectQuery(params);
     }
@@ -97,7 +96,7 @@ public class MyTotalWorkTimeDao {
             if (resultSet.next()) {
                 MyTotalWorkTimeDto myTotalWorkTimeDto = new MyTotalWorkTimeDto (
                         resultSet.getInt(ID), resultSet.getInt(PARTTIMER_WORKPLACE_ID), resultSet.getInt(TOTAL_WORK_HOUR_OF_MONTH), resultSet.getInt(TOTAL_WORK_MINUTE_OF_MONTH),
-                        resultSet.getDate(WORK_DATE_OF_MONTH), resultSet.getInt(SALARY), resultSet.getTimestamp(CREATED_AT), resultSet.getTimestamp(UPDATED_AT)
+                        resultSet.getString(WORK_DATE_OF_MONTH), resultSet.getInt(SALARY), resultSet.getTimestamp(CREATED_AT), resultSet.getTimestamp(UPDATED_AT)
                 );
 
                 return myTotalWorkTimeDto;

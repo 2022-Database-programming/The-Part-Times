@@ -52,10 +52,11 @@ public class WorkTimeController implements Controller {
                 int breakFinishMinute = Integer.parseInt(request.getParameter("breakFinishMinute"));
                 TimeSettingDto timeSettingDto = new TimeSettingDto(workStartHour, workStartMinute, workFinishHour, workFinishMinute, breakStartHour, breakStartMinute, breakFinishHour, breakFinishMinute);
                 Date today = Date.valueOf(LocalDate.now());
+                String month = String.valueOf(today).substring(0, 7);
                 Timestamp createdAt = new Timestamp(System.currentTimeMillis());
                 Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
 
-                MyTotalWorkTimeDto myTotalWorkTimeDto = WORK_TIME_MANAGER.findMyTotalWorkTimeByDateAndTotalWorkTimeId(today, partTimerWorkplaceId);
+                MyTotalWorkTimeDto myTotalWorkTimeDto = WORK_TIME_MANAGER.findMyTotalWorkTimeByDateAndTotalWorkTimeId(month, partTimerWorkplaceId);
 
                 MyTodayWorkTimeDto myTodayWorkTimeDto = new MyTodayWorkTimeDto(
                         myTotalWorkTimeDto.getId(), timeSettingDto, today, minimumWage, createdAt, updatedAt
@@ -71,14 +72,17 @@ public class WorkTimeController implements Controller {
 
         if (request.getServletPath().equals("/worktime/day")) {
             if (request.getMethod().equals("GET")) {
-                Date date = Date.valueOf(request.getParameter("today"));
+                Date today = Date.valueOf(request.getParameter("today"));
+                String month = String.valueOf(today).substring(0, 7);
 
                 // partTimerWorkplaceId List
                 List<Integer> partTimerWorkplaceIds = WORK_TIME_MANAGER.findAllPartTimerWorkplaceIdByMemberId(member.getId());
                 // myTotalWorkTimeId List
-                List<Integer> myTotalWorkTimeIds = WORK_TIME_MANAGER.findAllTotalWorkTimeIdByPartTimerWorkplaceIdAndWorkDate(date, partTimerWorkplaceIds);
+                List<Integer> myTotalWorkTimeIds = WORK_TIME_MANAGER.findAllTotalWorkTimeIdByPartTimerWorkplaceIdAndWorkDate(month, partTimerWorkplaceIds);
                 // myTodayWorkTime Map
-                HashMap<Integer, List<MyTodayWorkTimeDto>> myTodayWorkTimes = WORK_TIME_MANAGER.findAllMyTodayWorkTimeByDateAndTotalWorkTime(date, myTotalWorkTimeIds);
+                HashMap<Integer, List<MyTodayWorkTimeDto>> myTodayWorkTimes = WORK_TIME_MANAGER.findAllMyTodayWorkTimeByDateAndTotalWorkTime(today, myTotalWorkTimeIds);
+
+                System.out.println(myTodayWorkTimes);
 
                 request.setAttribute("myTodayWorkTime", myTodayWorkTimes);
 

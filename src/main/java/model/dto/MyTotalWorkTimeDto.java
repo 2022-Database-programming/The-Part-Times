@@ -8,12 +8,12 @@ public class MyTotalWorkTimeDto {
     private int partTimerWorkplaceId;
     private int totalWorkHourOfMonth;
     private int totalWorkMinuteOfMonth;
-    private Date workDateOfMonth;
+    private String workDateOfMonth;
     private int salary;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public MyTotalWorkTimeDto(int id, int partTimerWorkplaceId, int totalWorkHourOfMonth, int totalWorkMinuteOfMonth, Date workDateOfMonth, int salary, Timestamp createdAt, Timestamp updatedAt) {
+    public MyTotalWorkTimeDto(int id, int partTimerWorkplaceId, int totalWorkHourOfMonth, int totalWorkMinuteOfMonth, String workDateOfMonth, int salary, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.partTimerWorkplaceId = partTimerWorkplaceId;
         this.totalWorkHourOfMonth = totalWorkHourOfMonth;
@@ -24,7 +24,7 @@ public class MyTotalWorkTimeDto {
         this.updatedAt = updatedAt;
     }
 
-    public MyTotalWorkTimeDto(int partTimerWorkplaceId, int totalWorkHourOfMonth, int totalWorkMinuteOfMonth, Date workDateOfMonth, int salary, Timestamp createdAt, Timestamp updatedAt) {
+    public MyTotalWorkTimeDto(int partTimerWorkplaceId, int totalWorkHourOfMonth, int totalWorkMinuteOfMonth, String workDateOfMonth, int salary, Timestamp createdAt, Timestamp updatedAt) {
         this.partTimerWorkplaceId = partTimerWorkplaceId;
         this.totalWorkHourOfMonth = totalWorkHourOfMonth;
         this.totalWorkMinuteOfMonth = totalWorkMinuteOfMonth;
@@ -66,11 +66,11 @@ public class MyTotalWorkTimeDto {
         this.totalWorkMinuteOfMonth = totalWorkMinuteOfMonth;
     }
 
-    public Date getWorkDateOfMonth() {
+    public String getWorkDateOfMonth() {
         return workDateOfMonth;
     }
 
-    public void setWorkDateOfMonth(Date workDateOfMonth) {
+    public void setWorkDateOfMonth(String workDateOfMonth) {
         this.workDateOfMonth = workDateOfMonth;
     }
 

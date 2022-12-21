@@ -1,4 +1,4 @@
-:<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -24,7 +24,6 @@
                     const idx = Array.from(document.querySelectorAll('a')).indexOf(e.target);
                     console.log(idx);
                     contentPageList[idx].classList.remove('disable');
-
                 });
             }
         });
@@ -48,16 +47,17 @@
         });
     });
     </script>
+
     <link href="<c:url value='/css/reset.css' />" rel="stylesheet">
     <link href="<c:url value='/css/common.css' />" rel="stylesheet">
 
     <style>
         html, body {
             font-family: 'GmarketSansLight';
+            min-width: 1200px;
+            margin: 0;
             width: 100%;
             height: 100%;
-            min-width: 1012px;
-            margin: 0;
         }
 
         a, a:hover {
@@ -66,7 +66,6 @@
         }
 
         li.active {
-            /*            text-decoration: underline;*/
             font-family: 'GmarketSansMedium';
         }
 
@@ -75,32 +74,39 @@
             height: 100%;
         }
 
-        #menuList {
-            position: absolute;
-            bottom: 15px;
-
+        #menuLogo {
+            width: 150px;
+            height: 130px;
+            margin-right: 30px;
         }
+
+        #menuBox {
+            width: 100%;
+            height: 130px;
+            background-color: #89a6d6;
+            display: flex;
+            justify-content : center;
+        }
+
+        #menuList {
+            align-self: flex-end;
+            margin-bottom: 20px;
+        }
+
         #menuList > li {
             display: inline;
             margin-right: 20px;
         }
 
-        #menuBox {
-            position: relative;
-            width: 100%;
-            height: 100px;
-            background-color: #89a6d6;
-            text-align: center;
-            float: top;
-            display: flex;
-            justify-content : center;
+        #profileBox {
+            width: 270px;
+            height: 60px;
         }
 
         #side_title_box {
             display: inline-block;
             width: 150px;
             flex-wrap: wrap;
-
         }
 
         #sideBox {
@@ -109,13 +115,12 @@
             width: 20%;
             height: 100%;
             min-width: 225px;
-
         }
 
         #main_container {
             display: flex;
             width: 100%;
-            height: calc(100% - 100px);
+            height: calc(100% - 130px);
         }
 
         #side_title {
@@ -142,30 +147,27 @@
         /** content.html **/
 
         #content_container {
-            position: relative;
             width: 100%;
             height: 100%;
         }
-
-
     </style>
-
-
 
 </head>
 <body>
 <div id="container">
     <div id="menuBox">
+        <img id="menuLogo" src="<c:url value='/images/menu_logo.png' />">
         <ul id="menuList">
             <li id="menu_main" class="menu active"><a class="top_navbar_menu" href="#">Main</a></li>
             <li id="menu_record_work_time" class="menu"><a class="top_navbar_menu" href="#">Record Work Time</a></li>
             <li id="menu_salary_calculation" class="menu"><a class="top_navbar_menu" href="#">Salary Calculation</a></li>
             <li id="menu_community_board" class="menu"><a class="top_navbar_menu" href="#">Community Board</a></li>
+            <li id="menu_my_page" class="menu"><a class="top_navbar_menu" href="#">My Page</a></li>
         </ul>
 
-        <div>
-            <i class="fas fa-user"></i>
-        </div>
+<%--        <div id="profileBox">--%>
+<%--            <i class="fas fa-user"></i>--%>
+<%--        </div>--%>
     </div>
     <div id="main_container">
         <div id="sideBox">
@@ -187,7 +189,9 @@
             <div class="contents disable">
                 <div data-include-path="<c:url value='/content/community-board.jsp' />"></div>
             </div>
-
+            <div class="contents disable">
+                <div data-include-path="<c:url value='/content/mypageForm.jsp' />"></div>
+            </div>
         </div>
     </div>
 </div>

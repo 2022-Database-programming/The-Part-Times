@@ -51,7 +51,7 @@ public class MemberController implements Controller {
                 MemberManager manager = MemberManager.getInstance();
                 manager.update(updateUser);
 
-                return "redirect:/member/myPage.jsp";
+                return "redirect:/member/mypage.jsp";
             }
         }
 

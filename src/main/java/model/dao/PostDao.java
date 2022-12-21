@@ -98,7 +98,8 @@ public class PostDao {
 
 	//게시글 조회
 	public PostDto findPost(int id) throws SQLException {
-		String selectSql = "SELECT * " + "FROM post " + "WHERE id=?";
+		String selectSql = "SELECT p.id, p.member_id, is_anonymous, p.type, title, content, likes, views, p.created_at, p.updated_at, m.name AS name " 
+							+ "FROM post p LEFT OUTER JOIN member m ON p.member_id = m.id " + "WHERE id=?";
 		PostDto post = null;
 		
 		jdbcUtil.setSqlAndParameters(selectSql, new Object[] { id });	// JDBCUtil에 query문과 매개 변수 설정
@@ -116,11 +117,12 @@ public class PostDao {
 						rs.getInt("likes"),
 						rs.getInt("views"),
 						rs.getTimestamp("created_at"),
-						rs.getTimestamp("updated_at")
+						rs.getTimestamp("updated_at"),
+						rs.getString("name")
 				);
 			} 
 			
-			if(post != null && addViews(post) != 0) {
+			if(post != null && addViews(post) != 0) { // 조회수
 				jdbcUtil.setSqlAndParameters(selectSql, new Object[] { id });
 				ResultSet result = jdbcUtil.executeQuery();
 				if (result.next()) {
@@ -134,7 +136,8 @@ public class PostDao {
 							result.getInt("likes"),
 							result.getInt("views"),
 							result.getTimestamp("created_at"),
-							result.getTimestamp("updated_at")
+							result.getTimestamp("updated_at"),
+							result.getString("name")
 					);
 				} 
 			}
@@ -169,7 +172,8 @@ public class PostDao {
 
 	//게시글 전체 조회
 	public List<PostDto> findAllPost() throws SQLException {
-		String sql = "SELECT * " + "FROM post " + "ORDER BY created_at DESC";
+		String sql = "SELECT p.id, p.member_id, is_anonymous, p.type, title, content, likes, views, p.created_at, p.updated_at, m.name AS name " 
+				+ "FROM post p LEFT OUTER JOIN member m ON p.member_id = m.id " + "ORDER BY created_at DESC";
 
 		jdbcUtil.setSqlAndParameters(sql, null);
 
@@ -187,7 +191,8 @@ public class PostDao {
 						rs.getInt("likes"),
 						rs.getInt("views"),
 						rs.getTimestamp("created_at"),
-						rs.getTimestamp("updated_at"));
+						rs.getTimestamp("updated_at"),
+						rs.getString("name"));
 				postList.add(post);
 			}
 			
@@ -205,7 +210,8 @@ public class PostDao {
 	public List<PostDto> getList(int pageNum, int amount) {
 		List<PostDto> postList = new ArrayList<>();
 		
-		String sql = "SELECT * " + "FROM (SELECT ROWNUM RN, a.* FROM (SELECT * FROM post ORDER BY created_at DESC) a) "
+		String sql = "SELECT p.id, p.member_id, is_anonymous, p.type, title, content, likes, views, p.created_at, p.updated_at, m.name AS name " + 
+					"FROM (SELECT ROWNUM RN, a.* FROM (SELECT * FROM post ORDER BY created_at DESC) a) p LEFT OUTER JOIN member m ON p.member_id = m.id "
 					+ "WHERE RN > ? AND RN <= ?";
 		
 		jdbcUtil.setSqlAndParameters(sql, new Object[] { ((pageNum - 1) * amount), (pageNum * amount)});
@@ -223,7 +229,8 @@ public class PostDao {
 						rs.getInt("likes"),
 						rs.getInt("views"),
 						rs.getTimestamp("created_at"),
-						rs.getTimestamp("updated_at"));
+						rs.getTimestamp("updated_at"),
+						rs.getString("name"));
 				postList.add(post);
 			}
 			return postList;

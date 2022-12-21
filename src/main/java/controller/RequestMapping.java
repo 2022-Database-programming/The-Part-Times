@@ -33,6 +33,7 @@ public class RequestMapping {
         mappings.put("/post/update", new PostController());
         mappings.put("/post/delete", new PostController());
         mappings.put("/post/create", new PostController());
+        
     }
 
     public Controller findController(String uri) {

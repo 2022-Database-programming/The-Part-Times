@@ -1,8 +1,10 @@
 package model.dto;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class PostDto {
+@SuppressWarnings("serial")
+public class PostDto implements Serializable{
     private int id;
     private int memberId;
     private int isAnonymous;
@@ -13,11 +15,12 @@ public class PostDto {
     private int views;
     private Timestamp createdAt;
     private Timestamp updatedAt;
+    private String name;
 
     public PostDto() {
     }
     
-    public PostDto(int memberId, int isAnonymous, String type, String title, String content, int likes, int views) {
+    public PostDto(int memberId, int isAnonymous, String type, String title, String content, int likes, int views, String name) {
 		super();
 		this.memberId = memberId;
 		this.isAnonymous = isAnonymous;
@@ -26,20 +29,22 @@ public class PostDto {
 		this.content = content;
 		this.likes = likes;
 		this.views = views;
+		this.name = name;
 	}
     
 
-    public PostDto(int memberId, int isAnonymous, String type, String title, String content) {
+    public PostDto(int memberId, int isAnonymous, String type, String title, String content, String name) {
 		super();
 		this.memberId = memberId;
 		this.isAnonymous = isAnonymous;
 		this.type = type;
 		this.title = title;
 		this.content = content;
+		this.name = name;
 	}
 
 	public PostDto(int id, int memberId, int isAnonymous, String type, String title, String content, int likes,
-			int views, Timestamp createdAt, Timestamp updatedAt) {
+			int views, Timestamp createdAt, Timestamp updatedAt, String name) {
 		super();
 		this.id = id;
 		this.memberId = memberId;
@@ -51,9 +56,10 @@ public class PostDto {
 		this.views = views;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+		this.name = name;
 	}
 
-    public PostDto(int postId, int memberId, int isAnonymous, String type, String title, String content, int likes, int views) {
+    public PostDto(int postId, int memberId, int isAnonymous, String type, String title, String content, int likes, int views, String name) {
         this.id = postId;
         this.memberId = memberId;
         this.isAnonymous = isAnonymous;
@@ -62,6 +68,7 @@ public class PostDto {
         this.content = content;
         this.likes = likes;
         this.views = views;
+        this.name = name;
     }
 
     public int getId() {
@@ -143,4 +150,13 @@ public class PostDto {
     public void setContent(String content) {
         this.content = content;
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+    
 }

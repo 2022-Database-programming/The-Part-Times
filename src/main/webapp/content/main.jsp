@@ -7,15 +7,14 @@
 <body>
 <!-- partial:index.partial.html -->
 <!-- Git Repo: https://github.com/Russian60/flex-calendar -->
-<div ng-app="app">
+<div ng-app="app" class="calendarBox">
     <div ng-controller="MainController">
-        <h1>
-            <span class="r">Calendar</span>
-        </h1>
         <div class="wrapp">
             <flex-calendar options="options" events="events"></flex-calendar>
         </div>
-        <br />
+    </div>
+    <div class="workInfoBox">
+        블라블라
     </div>
 </div>
 <!-- partial -->

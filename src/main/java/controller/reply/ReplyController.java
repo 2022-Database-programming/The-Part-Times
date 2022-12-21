@@ -15,6 +15,7 @@ import model.service.MemberManager;
 import model.dto.PostDto;
 import model.service.PostManager;
 import model.service.ReplyManager;
+import model.dto.PageDto;
 
 public class ReplyController implements Controller {
 	private static final Logger log = LoggerFactory.getLogger(ReplyController.class);

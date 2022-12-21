@@ -48,12 +48,54 @@
     });
     </script>
 
+    <!-- salary-calculation -->
+    <script type="text/javascript">
+
+        function calculation(){
+
+            if (inputForm.h_workTime.value == "" && inputForm.m_workTime.value == "") {
+                alert('근무시간을 입력하십시오.');
+                return false;
+            }
+
+            if (inputForm.salary.value == "") {
+                alert('시급을 입력하십시오.');
+                return false;
+            }
+
+            if (inputForm.day.value == "") {
+                alert('근무 일수를 입력하십시오.');
+                return false;
+            }
+
+            var h_time = document.getElementById('h_workTime').value;
+            var m_time = document.getElementById('m_workTime').value;
+            var sal = document.getElementById('salary').value;
+            var date = document.getElementById('day').value;
+            var time_sal = h_time * sal + Math.round(m_time * 152.666667);
+            var result_salary = 0;
+            var check = document.getElementById('week_salary').checked;
+
+            /*주휴수당 x*/
+            if(check == false){
+                result_salary = time_sal * date;
+                document.getElementById("result").innerText = result_salary;
+            }
+
+
+            else{
+                result_salary = time_sal * date + (4 * time_sal);
+                document.getElementById("result").innerText = result_salary;
+            }
+
+        }
+    </script>
+
     <link href="<c:url value='/css/reset.css' />" rel="stylesheet">
     <link href="<c:url value='/css/common.css' />" rel="stylesheet">
 
     <style>
         html, body {
-            font-family: 'GmarketSansLight';
             min-width: 1200px;
             margin: 0;
             width: 100%;
@@ -86,6 +128,7 @@
             background-color: #89a6d6;
             display: flex;
             justify-content : center;
+            font-family: 'GmarketSansLight';
         }
 
         #menuList {
@@ -115,6 +158,7 @@
             width: 20%;
             height: 100%;
             min-width: 225px;
+            font-family: 'GmarketSansLight';
         }
 
         #main_container {

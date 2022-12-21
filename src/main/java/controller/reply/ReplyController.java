@@ -1,4 +1,4 @@
-package controller.post;
+package controller.reply;
 
 import java.util.List;
 
@@ -8,15 +8,17 @@ import controller.member.MemberSessionUtils;
 import controller.Controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import model.dto.PostDto;
-import model.dao.PostDao;
+import model.dto.ReplyDto;
+import model.dao.mybatis.ReplyDao;
 import model.dto.MemberDto;
-import model.dto.PageDto;
 import model.service.MemberManager;
+import model.dto.PostDto;
 import model.service.PostManager;
+import model.service.ReplyManager;
+import model.dto.PageDto;
 
-public class PostController implements Controller {
-	private static final Logger log = LoggerFactory.getLogger(PostController.class);
+public class ReplyController implements Controller {
+	private static final Logger log = LoggerFactory.getLogger(ReplyController.class);
 	private static final MemberSessionUtils memberSessionUtils = new MemberSessionUtils();
 
 	@Override
@@ -29,12 +31,12 @@ public class PostController implements Controller {
 
 		//memberId 세션 찾기
 		String memberId = memberSessionUtils.getLoginUserId(request.getSession());
-		//System.out.println(memberId);
+		System.out.println(memberId);
 
 		//memberId의 해당하는 ID 찾기
 		MemberManager membermanager = MemberManager.getInstance();
 		MemberDto memberDto = membermanager.findMember(memberId);
-		//System.out.println(memberDto.getId());
+		System.out.println(memberDto.getId());
 
 
 		if(request.getServletPath().equals("/post/post")) {
@@ -88,7 +90,7 @@ public class PostController implements Controller {
 				System.out.println(post.getName());
 
 
-				return "/post/postViewForm.jsp";   // 해당 게시글 화면으로 이동 (forwarding) -> 이거 잘못된 듯 해당 게시글로 이동해야하는데 어캐해야하는지....  
+				return "/post/postViewForm.jsp";   // 해당 게시글 화면으로 이동 (forwarding)
 			}
 
 			if (request.getMethod().equals("POST")) { 

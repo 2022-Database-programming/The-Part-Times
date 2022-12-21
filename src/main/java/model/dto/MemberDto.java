@@ -1,9 +1,11 @@
 package model.dto;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-public class MemberDto {
+@SuppressWarnings("serial")
+public class MemberDto implements Serializable {
 	private int id;		//유저번호
 	private String memberId;	//아이디
 	private String password;	//비밀번호

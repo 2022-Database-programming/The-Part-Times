@@ -24,6 +24,7 @@
 		<commons-fileupload.version>1.4</commons-fileupload.version>
 		<jackson-databind.version>2.12.5</jackson-databind.version>
 		<junit.version>4.13.2</junit.version>
+		<mybatis.version>3.5.7</mybatis.version>
 		<oracle-jdbc-driver.version>21.3.0.0</oracle-jdbc-driver.version>
 	</properties>
 	
@@ -80,6 +81,14 @@
 			<version>${oracle-jdbc-driver.version}</version>			
 			<scope>runtime</scope>
 		</dependency>
+		
+		<!-- MyBatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis.version}</version>
+		</dependency>
+
 		
 		<!-- for unit test -->
 		<dependency>

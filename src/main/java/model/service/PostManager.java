@@ -2,6 +2,8 @@ package model.service;
 
 import java.sql.SQLException;
 import java.util.List;
+
+import model.dto.PageDto;
 import model.dto.PostDto;
 import model.exception.PostListNotFoundException;
 import model.exception.PostNotFoundException;
@@ -33,7 +35,7 @@ public class PostManager {
 
     public PostDto findPost(int id) throws SQLException, PostNotFoundException {
         PostDto post = postDao.findPost(id);
-
+        
         if (post == null) {
             throw new PostNotFoundException("존재하지 않는 게시글입니다.");
         }
@@ -48,14 +50,29 @@ public class PostManager {
         }
         return list;
     }
+    
+    public List<PostDto> getPostAllList(int pageNum, int amount) throws SQLException, PostListNotFoundException{
+    	List<PostDto> list = postDao.getList(pageNum, amount);
+    	
+    	return list;
+    }
+    
+    public PageDto getPost(int pageNum, int amount) throws SQLException {
+    	int total = postDao.countPost();
+    	PageDto pageDto = new PageDto(pageNum, amount, total);
+    	
+    	return pageDto;
+    }
+    
 
-    public int delete(int id) throws SQLException, PostNotFoundException {
+    public void delete(int id) throws SQLException, PostNotFoundException {
         PostDto post = findPost(id);
-
-        if(post != null) {
+ 
+        if(post == null) {
             throw new PostNotFoundException("존재하지 않는 게시글입니다.");
         }
-        return postDao.deletePost(id);
+        
+        postDao.deletePost(id);
     }
 
     public PostDao getPostDAO() {

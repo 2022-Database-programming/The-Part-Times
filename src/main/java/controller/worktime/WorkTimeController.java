@@ -2,30 +2,43 @@ package controller.worktime;
 
 import controller.Controller;
 import controller.member.MemberSessionUtils;
+import model.dto.*;
+import model.service.MemberManager;
+import model.service.PartTimerWorkplaceManager;
 import model.service.WorkTimeManager;
-import model.dto.MyTotalWorkTimeDto;
-import model.dto.TimeSettingDto;
-import model.dto.MyTodayWorkTimeDto;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
 
 public class WorkTimeController implements Controller {
     private final MemberSessionUtils MEMBER_SESSION_UTILS = new MemberSessionUtils();
     private final WorkTimeManager WORK_TIME_MANAGER = WorkTimeManager.getInstance();
+    private final MemberManager MEMBER_MANAGER = MemberManager.getInstance();
+    private final PartTimerWorkplaceManager PART_TIMER_WORKPLACE_MANAGER = PartTimerWorkplaceManager.getInstance();
     private String memberId;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (!MEMBER_SESSION_UTILS.hasLogined(request.getSession())) {
-            return "redirect:/index.jsp";
+            return "redirect:/";
         }
 
         memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+        MemberDto member = MEMBER_MANAGER.findMember(memberId);
 
         if (request.getServletPath().equals("/worktime/today")) {
+            if (request.getMethod().equals("GET")) {
+                List<PartTimerWorkplaceDto> myWorkplaces = PART_TIMER_WORKPLACE_MANAGER.findAllPartTimerWorkplace(member.getId());
+                request.setAttribute("myWorkplaces", myWorkplaces);
+
+                return "/worktime/worktime.jsp";
+            }
+
             if (request.getMethod().equals("POST")) {
                 int partTimerWorkplaceId = Integer.parseInt(request.getParameter("workplaceId"));
                 int minimumWage = Integer.parseInt(request.getParameter("minimumWage"));
@@ -39,10 +52,11 @@ public class WorkTimeController implements Controller {
                 int breakFinishMinute = Integer.parseInt(request.getParameter("breakFinishMinute"));
                 TimeSettingDto timeSettingDto = new TimeSettingDto(workStartHour, workStartMinute, workFinishHour, workFinishMinute, breakStartHour, breakStartMinute, breakFinishHour, breakFinishMinute);
                 Date today = Date.valueOf(LocalDate.now());
+                String month = String.valueOf(today).substring(0, 7);
                 Timestamp createdAt = new Timestamp(System.currentTimeMillis());
                 Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
 
-                MyTotalWorkTimeDto myTotalWorkTimeDto = WORK_TIME_MANAGER.findMyWorkTimeByDateAndPartTimerWorkplaceId(today, partTimerWorkplaceId);
+                MyTotalWorkTimeDto myTotalWorkTimeDto = WORK_TIME_MANAGER.findMyTotalWorkTimeByDateAndTotalWorkTimeId(month, partTimerWorkplaceId);
 
                 MyTodayWorkTimeDto myTodayWorkTimeDto = new MyTodayWorkTimeDto(
                         myTotalWorkTimeDto.getId(), timeSettingDto, today, minimumWage, createdAt, updatedAt
@@ -50,7 +64,29 @@ public class WorkTimeController implements Controller {
 
                 WORK_TIME_MANAGER.create(myTodayWorkTimeDto, myTotalWorkTimeDto, partTimerWorkplaceId);
 
-                return "/worktime/worktimeResult.jsp";
+                request.setAttribute("todayWorkTime", myTodayWorkTimeDto);
+
+                return "/worktime/worktime.jsp";
+            }
+        }
+
+        if (request.getServletPath().equals("/worktime/day")) {
+            if (request.getMethod().equals("GET")) {
+                Date today = Date.valueOf(request.getParameter("today"));
+                String month = String.valueOf(today).substring(0, 7);
+
+                // partTimerWorkplaceId List
+                List<Integer> partTimerWorkplaceIds = WORK_TIME_MANAGER.findAllPartTimerWorkplaceIdByMemberId(member.getId());
+                // myTotalWorkTimeId List
+                List<Integer> myTotalWorkTimeIds = WORK_TIME_MANAGER.findAllTotalWorkTimeIdByPartTimerWorkplaceIdAndWorkDate(month, partTimerWorkplaceIds);
+                // myTodayWorkTime Map
+                HashMap<Integer, List<MyTodayWorkTimeDto>> myTodayWorkTimes = WORK_TIME_MANAGER.findAllMyTodayWorkTimeByDateAndTotalWorkTime(today, myTotalWorkTimeIds);
+
+                System.out.println(myTodayWorkTimes);
+
+                request.setAttribute("myTodayWorkTime", myTodayWorkTimes);
+
+                return "/member/main.jsp";
             }
         }
 

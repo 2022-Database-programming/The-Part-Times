@@ -1,31 +1,33 @@
 package model.dto;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Date;
 
 public class MyTotalWorkTimeDto {
     private int id;
     private int partTimerWorkplaceId;
-    private Time totalWorkTimeOfMonth;
-    private Date workDateOfMonth;
+    private int totalWorkHourOfMonth;
+    private int totalWorkMinuteOfMonth;
+    private String workDateOfMonth;
     private int salary;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public MyTotalWorkTimeDto(int id, int partTimerWorkplaceId, Time totalWorkTimeOfMonth, Date workDateOfMonth, int salary, Timestamp createdAt, Timestamp updatedAt) {
+    public MyTotalWorkTimeDto(int id, int partTimerWorkplaceId, int totalWorkHourOfMonth, int totalWorkMinuteOfMonth, String workDateOfMonth, int salary, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.partTimerWorkplaceId = partTimerWorkplaceId;
-        this.totalWorkTimeOfMonth = totalWorkTimeOfMonth;
+        this.totalWorkHourOfMonth = totalWorkHourOfMonth;
+        this.totalWorkMinuteOfMonth = totalWorkMinuteOfMonth;
         this.workDateOfMonth = workDateOfMonth;
         this.salary = salary;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public MyTotalWorkTimeDto(int partTimerWorkplaceId, Time totalWorkTimeOfMonth, Date workDateOfMonth, int salary, Timestamp createdAt, Timestamp updatedAt) {
+    public MyTotalWorkTimeDto(int partTimerWorkplaceId, int totalWorkHourOfMonth, int totalWorkMinuteOfMonth, String workDateOfMonth, int salary, Timestamp createdAt, Timestamp updatedAt) {
         this.partTimerWorkplaceId = partTimerWorkplaceId;
-        this.totalWorkTimeOfMonth = totalWorkTimeOfMonth;
+        this.totalWorkHourOfMonth = totalWorkHourOfMonth;
+        this.totalWorkMinuteOfMonth = totalWorkMinuteOfMonth;
         this.workDateOfMonth = workDateOfMonth;
         this.salary = salary;
         this.createdAt = createdAt;
@@ -35,33 +37,63 @@ public class MyTotalWorkTimeDto {
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public int getPartTimerWorkplaceId() {
         return partTimerWorkplaceId;
     }
-    public Time getTotalWorkTimeOfMonth() {
-        return totalWorkTimeOfMonth;
+
+    public void setPartTimerWorkplaceId(int partTimerWorkplaceId) {
+        this.partTimerWorkplaceId = partTimerWorkplaceId;
     }
-    public Date getWorkDateOfMonth() {
+
+    public int getTotalWorkHourOfMonth() {
+        return totalWorkHourOfMonth;
+    }
+
+    public void setTotalWorkHourOfMonth(int totalWorkHourOfMonth) {
+        this.totalWorkHourOfMonth = totalWorkHourOfMonth;
+    }
+
+    public int getTotalWorkMinuteOfMonth() {
+        return totalWorkMinuteOfMonth;
+    }
+
+    public void setTotalWorkMinuteOfMonth(int totalWorkMinuteOfMonth) {
+        this.totalWorkMinuteOfMonth = totalWorkMinuteOfMonth;
+    }
+
+    public String getWorkDateOfMonth() {
         return workDateOfMonth;
     }
+
+    public void setWorkDateOfMonth(String workDateOfMonth) {
+        this.workDateOfMonth = workDateOfMonth;
+    }
+
     public int getSalary() {
         return salary;
     }
+
     public void setSalary(int salary) {
         this.salary = salary;
     }
+
     public Timestamp getCreatedAt() {
         return createdAt;
     }
+
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
+
     public Timestamp getUpdatedAt() {
         return updatedAt;
     }
+
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
@@ -69,10 +101,11 @@ public class MyTotalWorkTimeDto {
     @Override
     public String toString() {
         return "MyTotalWorkTimeDto{" +
-                "partTimerWorkplaceId=" + partTimerWorkplaceId +
-                ", totalWorkTimeOfMonth=" + totalWorkTimeOfMonth +
+                "id=" + id +
+                ", partTimerWorkplaceId=" + partTimerWorkplaceId +
+                ", totalWorkHourOfMonth=" + totalWorkHourOfMonth +
+                ", totalWorkMinuteOfMonth=" + totalWorkMinuteOfMonth +
                 ", workDateOfMonth=" + workDateOfMonth +
-                ", date=" + workDateOfMonth +
                 ", salary=" + salary +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +

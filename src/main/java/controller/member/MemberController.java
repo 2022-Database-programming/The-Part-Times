@@ -48,10 +48,13 @@ public class MemberController implements Controller {
                     LOG.debug("Update User : {}", updateUser);
                     MEMBER_MANAGER.update(updateUser);
 
-                    return "redirect:/member/myPage.jsp";
+
+                    return "redirect:/member/mypage.jsp";
+
                 }
 
                 return "redirect:/";
+
             }
         }
 

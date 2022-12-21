@@ -17,17 +17,16 @@ public class RequestMapping {
         mappings.put("/member/signup", new MemberController());
         mappings.put("/member/signout", new MemberController());
         mappings.put("/member/update", new MemberController());
+        mappings.put("/member/mypage", new MemberController());
 
         mappings.put("/worktime/today", new WorkTimeController());
-
-        mappings.put("/worktime/todayForm", new ForwardController("/worktime/workTimeForm.jsp"));
-        mappings.put("/post/post", new PostController());
-
         mappings.put("/worktime/day", new WorkTimeController());
 
         mappings.put("/post/update", new PostController());
         mappings.put("/post/delete", new PostController());
         mappings.put("/post/create", new PostController());
+        mappings.put("/post/postList", new PostController());
+        mappings.put("/post/postDetail", new PostController());
         
     }
 

@@ -4,7 +4,6 @@ import java.sql.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import controller.Controller;
@@ -17,14 +16,25 @@ public class MemberController implements Controller {
     private final Logger LOG = LoggerFactory.getLogger(MemberController.class);
     private final MemberSessionUtils MEMBER_SESSION_UTILS = new MemberSessionUtils();
     private final MemberManager MEMBER_MANAGER = MemberManager.getInstance();
-    private String memberId;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if(request.getServletPath().equals("/member/update")) {
+        if (request.getServletPath().equals("/member/mypage")) {
+            if (MEMBER_SESSION_UTILS.hasLogined(request.getSession())) {
+                String memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+                MemberDto member = MEMBER_MANAGER.findMember(memberId);
+                request.setAttribute("member", member);
+
+                return "/member/myPage.jsp";
+            }
+
+            return "redirect:/";
+        }
+
+        if (request.getServletPath().equals("/member/update")) {
             if (request.getMethod().equals("GET")) {
                 if (MEMBER_SESSION_UTILS.hasLogined(request.getSession())) {
-                    memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+                    String memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
                     MemberDto member = MEMBER_MANAGER.findMember(memberId);
                     request.setAttribute("member", member);
 
@@ -35,7 +45,7 @@ public class MemberController implements Controller {
 
             if (request.getMethod().equals("POST")) {
                 if (MEMBER_SESSION_UTILS.hasLogined(request.getSession())) {
-                    memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+                    String memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
 
                     MemberUpdateDto updateUser = new MemberUpdateDto(
                             memberId,
@@ -48,13 +58,10 @@ public class MemberController implements Controller {
                     LOG.debug("Update User : {}", updateUser);
                     MEMBER_MANAGER.update(updateUser);
 
-
-                    return "redirect:/member/mypage.jsp";
-
+                    return "redirect:/member/mypage";
                 }
 
                 return "redirect:/";
-
             }
         }
 
@@ -71,6 +78,7 @@ public class MemberController implements Controller {
 
                     return "redirect:/member/mainMenu.jsp";
                 } catch (Exception e) {
+                    e.printStackTrace();
                     request.setAttribute("loginFailed", true);
                     request.setAttribute("exception", e);
                     return "/index.jsp";

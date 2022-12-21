@@ -1,0 +1,147 @@
+
+.calculation {
+    font-family: 'GmarketSansMedium';
+}
+
+/*근무 시간 계산기 제목*/
+.time_title{
+    text-align: center;
+    padding-top: 6%;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/*입력박스*/
+.inputValue{
+    height: 60%;
+    width: 50%;
+    float: left;
+    margin-left: 0%;
+    border: none;
+}
+
+/*시간 입력 title*/
+.inputTime {
+    width: 73%;
+    font-size: 22px;
+    padding-top: 5%;
+    margin-left: 23%;
+}
+
+/*시간 입력*/
+.h_inputBox{
+    height: 10%;
+    width: 10%;
+    margin-left: 1%;
+    padding-left:5%;
+    border:1.5px solid #89a6d6;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+/*분 입력*/
+.m_inputBox{
+    height: 10%;
+    width: 20%;
+    margin-left: 3%;
+    padding-left:5%;
+    border:1.5px solid #89a6d6;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+/*근무 일수*/
+.inputDay{
+    font-size: 22px;
+    margin-top: 5%;
+    margin-left: 23%;
+}
+.day_inputBox{
+    height: 10%;
+    width: 15%;
+    margin-left: 3%;
+    padding-left:5%;
+    border:1.5px solid #89a6d6;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+/*시급입력*/
+.inputSalary{
+    font-size: 22px;
+    margin-top: 5%;
+    margin-left: 23%;
+}
+
+.salary_inputBox{
+    height: 10%;
+    width: 65%;
+    margin-left: 1%;
+    padding-left: 5%;
+    border:1.5px solid #89a6d6;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+/*주휴수당 여부 체크*/
+.check_week_salary{
+    font-size: 22px;
+    margin-top: 5%;
+    margin-left: 23%;
+}
+
+.weekSalary_inputBox{
+    height: 7%;
+    width: 7%;
+    margin-left: 5%;
+    border:1.5px solid #89a6d6;
+}
+
+/*구분선*/
+.line{
+    border: none;
+    float: left;
+    width: 5%;
+    height: 60%;
+}
+hr{
+    height:70%;
+    width: 0.5px;
+    color:#000;
+    background-color:#000;
+}
+
+/*계산 결과*/
+.calResult{
+    height: 60%;
+    width: 35%;
+    border: none;
+    float: left;
+}
+.calResult_title{
+    font-size: 20px;
+    padding-top: 8%;
+    text-align:center;
+}
+
+.salaryResult{
+    font-family: 'GmarketSansLight';
+    padding-top: 8%;
+    text-align:center;
+    font-size: 50px;
+}
+
+/*계산버튼*/
+.calButton {
+    font-family: 'GmarketSansMedium';
+    width: 40%;
+    height: 8%;
+    margin-top: 1%;
+    margin-left: 30%;
+    background-color: #c1d5f6;
+    border-width: 0px;
+    color: black;
+    box-shadow: 3px 3px gray;
+    border-radius: 8px;
+    font-size: 20px;
+}

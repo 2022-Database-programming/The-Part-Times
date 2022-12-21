@@ -10,7 +10,7 @@ import java.util.List;
 public class PartTimerWorkplaceDao {
     private final JDBCUtil JDBC_UTIL;
 
-    private final String TABLE_NAME = "PARTTIMER_WORKTIME";
+    private final String TABLE_NAME = "PARTTIMER_WORKPLACE";
     private final String ID = "id";
     private final String MEMBER_ID = "member_id";
     private final String WORKPLACE_ID = "workplace_id";
@@ -29,13 +29,11 @@ public class PartTimerWorkplaceDao {
             "where " + MEMBER_ID + "=? and " + WORKPLACE_ID + "=?";
     private String SELECT_BY_ID_QUERY = "select * from " + TABLE_NAME +
             "where " + MEMBER_ID + "=? and " + WORKPLACE_ID + "=?";
-
     private final String CHECK_EXISTED_QUERY = "select count(*) from " + TABLE_NAME +
             "where MEMBER_ID=? and WORKPLACE_ID=?";    // 이거 왜 넣은거야?
+    private final String FIND_ALL_QUERY = "select * from " + TABLE_NAME + " where " + MEMBER_ID + "=?";
 
-    private final String FIND_ALL_QUERY = "select W.* from PARTTIMER_WORKPLACE " +
-            "join WORKPLACE W on PARTTIMER_WORKPLACE.WORKPLACE_ID = W.ID " +
-            "where MEMBER_ID = ?";
+
 
     public PartTimerWorkplaceDao() {
         JDBC_UTIL = new JDBCUtil();

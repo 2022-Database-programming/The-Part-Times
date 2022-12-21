@@ -13,38 +13,28 @@ import model.service.MemberManager;
 import model.service.PostManager;
 
 public class PostController implements Controller {
-    private static final Logger log = LoggerFactory.getLogger(PostController.class);
-    private static final MemberSessionUtils memberSessionUtils = new MemberSessionUtils();
-    private static final PostSessionUtils postSessionUtils = new PostSessionUtils();
+    private final Logger LOG = LoggerFactory.getLogger(PostController.class);
+    private final MemberSessionUtils MEMBER_SESSION_UTILS = new MemberSessionUtils();
+    private final MemberManager MEMBER_MANAGER = MemberManager.getInstance();
+    private final PostManager POST_MANAGER = PostManager.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        /* 사용자가 로그아웃하지 않았으면 세션에서 아이디를 꺼내온다. */
         if (request.getSession() == null) {
-            System.out.print("로그아웃된 유저입니다.");
-            return "index.jsp";
+            return "redirect:/";
         }
 
-        String memberId = memberSessionUtils.getLoginUserId(request.getSession());
-        System.out.println(memberId);
-
-        MemberManager membermanager = MemberManager.getInstance();
-        MemberDto memberDto = membermanager.findMember(memberId);
-        System.out.println(memberDto.getId());
-
+        String memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+        MemberDto memberDto = MEMBER_MANAGER.findMember(memberId);
 
         if(request.getServletPath().equals("/post/update")) {
             int postId = Integer.parseInt(request.getParameter("id"));
 
             if (request.getMethod().equals("GET")) {
-                log.debug("UpdateForm Request : {}", postId);
+                LOG.debug("UpdateForm Request : {}", postId);
 
-                PostManager manager = PostManager.getInstance();
-                PostDto post = new PostDao().findPost(postId);   // 수정하려는 post 정보 검색
-                request.setAttribute("post", post);   // DTO 값을 통째로 넣어줌
-
-                System.out.println(post.getId());
-                System.out.println(post.getMemberId());
+                PostDto post = POST_MANAGER.findPost(postId);
+                request.setAttribute("post", post);
 
                 return "/post/postViewForm.jsp";   // 사용자 보기 화면으로 이동 (forwarding)
             }
@@ -56,80 +46,57 @@ public class PostController implements Controller {
                         Integer.parseInt(request.getParameter("isAnonymous")),
                         request.getParameter("type"),
                         request.getParameter("title"),
-                        request.getParameter("content"),
-                        Integer.parseInt(request.getParameter("likes")),
-                        Integer.parseInt(request.getParameter("views"))
+                        request.getParameter("content")
                 );
 
-                log.debug("Update Post : {}", updatePost);
+                LOG.debug("Update Post : {}", updatePost);
 
-                PostManager updatemanager = PostManager.getInstance();
-                updatemanager.update(updatePost);
+                POST_MANAGER.update(updatePost);
 
-                return "redirect:/post/postView.jsp";
+                return "redirect:/post/postView?id=" + postId;
             }
+        }
 
-            if (request.getMethod().equals("DELETE")) {  //post 삭제
+        if (request.getServletPath().equals("/post/create")) {    // post 작성
+            if (request.getMethod().equals("POST")) {
+                PostDto post = new PostDto(
+                        memberDto.getId(),
+                        Integer.parseInt(request.getParameter("isAnonymous")),
+                        memberDto.getType(),
+                        request.getParameter("title"),
+                        request.getParameter("content")
+                );
+
+                LOG.debug("Create Post : {}", post);
+
+                POST_MANAGER.create(post);
+
+                return "redirect:/post/postList";   // 성공 시 게시글 main 화면으로
+            }
+        }
+
+        if (request.getServletPath().equals("/post/delete")) {
+            int postId = Integer.parseInt(request.getParameter("postId"));
+
+            if (request.getMethod().equals("POST")) {
                 try {
-                    PostManager deletemanager = PostManager.getInstance();
-                    deletemanager.delete(postId);
+                    POST_MANAGER.delete(postId);
 
-                    System.out.println("1");
-
-                    return "redirect:/post/postView.jsp";
+                    return "redirect:/post/postViewFrom.jsp";
                 } catch (Exception e) {
                     /* PostNotFoundException 발생 시
                      * 다시 post form을 사용자에게 전송하고 오류 메세지도 출력
                      */
                     request.setAttribute("deleteFailed", true);
                     request.setAttribute("exception", e);
-                    return "redirect:/post/postViewForm.jsp";
+                    return "/post/postView.jsp";
                 }
             }
         }
 
-        if (request.getServletPath().equals("/post/create")) {    // post 작성
-            if (request.getMethod().equals("POST")) {
-                System.out.println("-------------------------");
-                Integer.parseInt(request.getParameter("memberId"));
-                System.out.println("-------------------------");
-                Integer.parseInt(request.getParameter("isAnonymous"));
-                System.out.println("-------------------------");
-                request.getParameter("type");
-                request.getParameter("title");
-                request.getParameter("content");
-                Integer.parseInt(request.getParameter("likes"));
-                System.out.println("-------------------------");
-                Integer.parseInt(request.getParameter("views"));
-                System.out.println("-------------------------");
-
-
-                PostDto post = new PostDto(
-                        memberDto.getId(),
-                        Integer.parseInt(request.getParameter("isAnonymous")),
-                        request.getParameter("type"),
-                        request.getParameter("title"),
-                        request.getParameter("content"),
-                        Integer.parseInt(request.getParameter("likes")),
-                        Integer.parseInt(request.getParameter("views"))
-                );
-
-
-                log.debug("Create Post : {}", post);
-                System.out.println(post.getId());
-                System.out.println(post.getMemberId());
-                System.out.println(post.getTitle());
-
-                PostManager createmanager = PostManager.getInstance();
-                createmanager.create(post);
-
-                return "redirect:/post/postView.jsp";   // 성공 시 게시글 main 화면으로
-            }
+        if (request.getServletPath().equals("/post/postList")) {
+            POST_MANAGER.findAllPost();
         }
-
-
-        //post 조회
-
 
         return "/error/error.jsp";
     }

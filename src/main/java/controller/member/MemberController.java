@@ -17,14 +17,13 @@ public class MemberController implements Controller {
     private final Logger LOG = LoggerFactory.getLogger(MemberController.class);
     private final MemberSessionUtils MEMBER_SESSION_UTILS = new MemberSessionUtils();
     private final MemberManager MEMBER_MANAGER = MemberManager.getInstance();
-    private String memberId;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         if(request.getServletPath().equals("/member/update")) {
             if (request.getMethod().equals("GET")) {
                 if (MEMBER_SESSION_UTILS.hasLogined(request.getSession())) {
-                    memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+                    String memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
                     MemberDto member = MEMBER_MANAGER.findMember(memberId);
                     request.setAttribute("member", member);
 
@@ -35,7 +34,7 @@ public class MemberController implements Controller {
 
             if (request.getMethod().equals("POST")) {
                 if (MEMBER_SESSION_UTILS.hasLogined(request.getSession())) {
-                    memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+                    String memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
 
                     MemberUpdateDto updateUser = new MemberUpdateDto(
                             memberId,
@@ -82,7 +81,7 @@ public class MemberController implements Controller {
                         request.getParameter("password"),
                         request.getParameter("name"),
                         Date.valueOf(request.getParameter("birth")),
-                        request.getParameter("phone_number"),
+                        request.getParameter("phoneNumber"),
                         request.getParameter("type"));
 
                 LOG.debug("Create User : {}", member);

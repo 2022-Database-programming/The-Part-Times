@@ -13,24 +13,17 @@ public class PostDto {
     private int views;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-
-    public PostDto() {
-    }
     
-    public PostDto(int memberId, int isAnonymous, String type, String title, String content, int likes, int views) {
-		super();
+    public PostDto(int memberId, int isAnonymous, String type, String title, String content) {
 		this.memberId = memberId;
 		this.isAnonymous = isAnonymous;
 		this.type = type;
 		this.title = title;
 		this.content = content;
-		this.likes = likes;
-		this.views = views;
 	}
 
     public PostDto(int id, int memberId, int isAnonymous, String type, String title, String content, int likes,
 			int views, Timestamp createdAt, Timestamp updatedAt) {
-		super();
 		this.id = id;
 		this.memberId = memberId;
 		this.isAnonymous = isAnonymous;
@@ -43,15 +36,13 @@ public class PostDto {
 		this.updatedAt = updatedAt;
 	}
 
-    public PostDto(int postId, int memberId, int isAnonymous, String type, String title, String content, int likes, int views) {
+    public PostDto(int postId, int memberId, int isAnonymous, String type, String title, String content) {
         this.id = postId;
         this.memberId = memberId;
         this.isAnonymous = isAnonymous;
         this.type = type;
         this.title = title;
         this.content = content;
-        this.likes = likes;
-        this.views = views;
     }
 
     public int getId() {

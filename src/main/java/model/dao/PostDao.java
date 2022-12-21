@@ -3,19 +3,17 @@ package model.dao;
 import model.dto.PostDto;
 import util.JDBCUtil;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PostDao {
-	private JDBCUtil jdbcUtil;
+	private final JDBCUtil JDBC_UTIL;
 
 	public PostDao() {
-		jdbcUtil = new JDBCUtil();
+		JDBC_UTIL = new JDBCUtil();
 	}
 
 	//게시글 추가
@@ -24,19 +22,18 @@ public class PostDao {
 
 		int rs = 0;
 		Object[] param = new Object[] { postDto.getMemberId(), postDto.getIsAnonymous(), postDto.getType(),
-				postDto.getTitle(), postDto.getContent(), postDto.getLikes(), postDto.getViews() };
+				postDto.getTitle(), postDto.getContent()};
 
-		jdbcUtil.setSqlAndParameters(sql, param);
+		JDBC_UTIL.setSqlAndParameters(sql, param);
 
 		try {
-			rs = jdbcUtil.executeUpdate();
-			System.out.println("insert success");
+			rs = JDBC_UTIL.executeUpdate();
 		} catch(Exception e) {
-			jdbcUtil.rollback();
+			JDBC_UTIL.rollback();
 			e.printStackTrace();
 		} finally {
-			jdbcUtil.commit();
-			jdbcUtil.close();
+			JDBC_UTIL.commit();
+			JDBC_UTIL.close();
 		}
 		return rs;
 	}
@@ -48,18 +45,18 @@ public class PostDao {
 		String sql = "UPDATE post " + "SET title=?, content=?, likes=?, views=?, updated_at=? " + "WHERE id=?";
 		Object[] param = new Object[] {postDto.getTitle(), postDto.getContent(), postDto.getLikes(), postDto.getViews(), new Timestamp(System.currentTimeMillis()),findPostDto.getId()};
 
-		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
+		JDBC_UTIL.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
 
 		try {
-			int result = jdbcUtil.executeUpdate();	// update 문 실행
+			int result = JDBC_UTIL.executeUpdate();	// update 문 실행
 			return result;
 		} catch (Exception ex) {
-			jdbcUtil.rollback();
+			JDBC_UTIL.rollback();
 			ex.printStackTrace();
 		}
 		finally {
-			jdbcUtil.commit();
-			jdbcUtil.close();	// resource 반환
+			JDBC_UTIL.commit();
+			JDBC_UTIL.close();	// resource 반환
 		}
 		return 0;
 	}
@@ -70,17 +67,19 @@ public class PostDao {
 		String sql = "DELETE FROM post WHERE id=?";
 
 		Object[] param = new Object[] {id};
-		jdbcUtil.setSqlAndParameters(sql, param);
+
+		JDBC_UTIL.setSqlAndParameters(sql, param);
+
 		try {
-			int result = jdbcUtil.executeUpdate();
-			System.out.println("delete success");
+			int result = JDBC_UTIL.executeUpdate();
+
 			return result;
 		} catch(Exception e) {
-			jdbcUtil.rollback();
+			JDBC_UTIL.rollback();
 			e.printStackTrace();
 		} finally {
-			jdbcUtil.commit();
-			jdbcUtil.close();
+			JDBC_UTIL.commit();
+			JDBC_UTIL.close();
 		}
 		return 0;
 	}
@@ -90,10 +89,10 @@ public class PostDao {
 	public PostDto findPost(int id) throws SQLException {
 		String sql = "SELECT * " + "FROM post " + "WHERE id=?";
 
-		jdbcUtil.setSqlAndParameters(sql, new Object[] { id });	// JDBCUtil에 query문과 매개 변수 설정
+		JDBC_UTIL.setSqlAndParameters(sql, new Object[] { id });	// JDBCUtil에 query문과 매개 변수 설정
 
 		try {
-			ResultSet rs = jdbcUtil.executeQuery();		// query 실행
+			ResultSet rs = JDBC_UTIL.executeQuery();		// query 실행
 			if (rs.next()) {
 				PostDto post = new PostDto(
 						rs.getInt("id"),
@@ -112,7 +111,7 @@ public class PostDao {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
-			jdbcUtil.close();		// resource 반환
+			JDBC_UTIL.close();		// resource 반환
 		}
 		return null;
 	}
@@ -122,10 +121,10 @@ public class PostDao {
 	public List<PostDto> findAllPost() throws SQLException {
 		String sql = "SELECT * " + "FROM post " + "ORDER BY created_at DESC";
 
-		jdbcUtil.setSqlAndParameters(sql, null);
+		JDBC_UTIL.setSqlAndParameters(sql, null);
 
 		try {
-			ResultSet rs = jdbcUtil.executeQuery();
+			ResultSet rs = JDBC_UTIL.executeQuery();
 			List<PostDto> postList = new ArrayList<PostDto>();
 			while (rs.next()) {
 				PostDto post = new PostDto(
@@ -146,7 +145,7 @@ public class PostDao {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
-			jdbcUtil.close();		// resource 반환
+			JDBC_UTIL.close();		// resource 반환
 		}
 		return null;
 	}
@@ -155,10 +154,10 @@ public class PostDao {
 	//게시글 개수 조회
 	public int countPost() throws SQLException {
 		String sql = "SELECT count(*) FROM post";
-		jdbcUtil.setSqlAndParameters(sql, null);	// JDBCUtil에 query문과 매개 변수 설정
+		JDBC_UTIL.setSqlAndParameters(sql, null);	// JDBCUtil에 query문과 매개 변수 설정
 
 		try {
-			ResultSet rs = jdbcUtil.executeQuery();		// query 실행
+			ResultSet rs = JDBC_UTIL.executeQuery();		// query 실행
 			if (rs.next()) {
 				int count = rs.getInt(1);
 				return count;
@@ -166,7 +165,7 @@ public class PostDao {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
-			jdbcUtil.close();		// resource 반환
+			JDBC_UTIL.close();		// resource 반환
 		}
 		return 0;
 	}

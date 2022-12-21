@@ -81,7 +81,7 @@ public class PostController implements Controller {
 
 				POST_MANAGER.update(updatePost);
 
-				return "redirect:/post/postDetail";
+				return "redirect:/post/postDetail?id=" + postId;
 			}
 		}
 
@@ -99,14 +99,10 @@ public class PostController implements Controller {
 		if (request.getServletPath().equals("/post/delete")) {
 			int postId = Integer.parseInt(request.getParameter("postId"));
 
-			System.out.println(postId);
-
 			if (request.getMethod().equals("POST")) { 
 				try {
 					PostManager deletemanager = PostManager.getInstance();
 					deletemanager.delete(postId);
-
-					System.out.println("1");
 
 					return "redirect:/post/postViewFrom.jsp";
 				} catch (Exception e) {
@@ -141,7 +137,7 @@ public class PostController implements Controller {
 				PostManager createmanager = PostManager.getInstance();
 				createmanager.create(post);
 
-				return "redirect:/post/postView.jsp";   // 성공 시 게시글 main 화면으로
+				return "redirect:/post/postList";   // 성공 시 게시글 main 화면으로
 			}
 		}        
 

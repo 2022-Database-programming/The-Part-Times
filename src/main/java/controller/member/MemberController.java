@@ -118,6 +118,7 @@ public class MemberController implements Controller {
                 session.removeAttribute(MEMBER_SESSION_UTILS.USER_SESSION_KEY);
                 session.invalidate();
             }
+
             return "redirect:/";
         }
 

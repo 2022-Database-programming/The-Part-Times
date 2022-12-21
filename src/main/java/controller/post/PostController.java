@@ -75,7 +75,7 @@ public class PostController implements Controller {
 						Integer.parseInt(request.getParameter("likes")),
 						Integer.parseInt(request.getParameter("views")),
 						memberDto.getName()
-						);
+				);
 
 				LOG.debug("Update Post : {}", updatePost);
 
@@ -86,13 +86,13 @@ public class PostController implements Controller {
 		}
 
 		if (request.getServletPath().equals("/post/postDetail")) {
-			int postId = Integer.parseInt(request.getParameter("postId"));
+			int postId = Integer.parseInt(request.getParameter("id"));
 
 			if (request.getMethod().equals("GET")) {  // 조회
 				PostDto post = POST_MANAGER.findPost(postId);   // 수정하려는 post 정보 검색
 				request.setAttribute("post", post);   // DTO 값을 통째로 넣어줌
 
-				return "/post/postDetailForm.jsp";
+				return "/post/postDetail.jsp";
 			}
 		}
 
@@ -101,17 +101,17 @@ public class PostController implements Controller {
 
 			if (request.getMethod().equals("POST")) { 
 				try {
-					PostManager deletemanager = PostManager.getInstance();
-					deletemanager.delete(postId);
+					POST_MANAGER.delete(postId);
 
-					return "redirect:/post/postViewFrom.jsp";
+					return "redirect:/post/postList";
 				} catch (Exception e) {
 					/* PostNotFoundException 발생 시
 					 * 다시 post form을 사용자에게 전송하고 오류 메세지도 출력
 					 */
+					request.setAttribute("post", postId);
 					request.setAttribute("deleteFailed", true);
 					request.setAttribute("exception", e);
-					return "/post/postView.jsp";
+					return "/post/postDetail.jsp";
 				}
 			}
 		}
@@ -125,17 +125,10 @@ public class PostController implements Controller {
 						request.getParameter("title"),
 						request.getParameter("content"),
 						memberDto.getName()
-						);
-
+				);
 
 				LOG.debug("Create Post : {}", post);
-				System.out.println(post.getId());
-				System.out.println(post.getMemberId());
-				System.out.println(post.getTitle());
-				System.out.println(post.getName());
-
-				PostManager createmanager = PostManager.getInstance();
-				createmanager.create(post);
+				POST_MANAGER.create(post);
 
 				return "redirect:/post/postList";   // 성공 시 게시글 main 화면으로
 			}

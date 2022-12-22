@@ -46,7 +46,7 @@ public class PartTimerWorkplaceManager {
         return initWorkplaceNames(workplaces);
     }
 
-    public List<String> findAllWorkplaceNamesByPartTimerWorkplace(int memberId) {
+    public List<WorkplaceDto> findAllWorkplaceNamesByPartTimerWorkplace(int memberId) {
         List<PartTimerWorkplaceDto> partTimerWorkplaces = partTimerWorkplaceDao.findAllWorkplace(memberId);
         List<WorkplaceDto> workplaces = new ArrayList<>();
 
@@ -55,7 +55,7 @@ public class PartTimerWorkplaceManager {
             workplaces.add(workplaceDto);
         }
 
-        return initWorkplaceNames(workplaces);
+        return workplaces;
     }
 
     private List<String> initWorkplaceNames(List<WorkplaceDto> workplaces) {

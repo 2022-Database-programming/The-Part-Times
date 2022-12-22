@@ -1,6 +1,7 @@
 package controller;
 
 import controller.post.PostController;
+import controller.reply.ReplyController;
 import controller.member.MemberController;
 import controller.worktime.WorkTimeController;
 import java.util.HashMap;
@@ -29,6 +30,9 @@ public class RequestMapping {
         mappings.put("/post/delete", new PostController());
         mappings.put("/post/create", new PostController());
         
+        mappings.put("/reply/create", new ReplyController());
+        mappings.put("/reply/update", new ReplyController());
+        mappings.put("/reply/delete", new ReplyController());
     }
 
     public Controller findController(String uri) {

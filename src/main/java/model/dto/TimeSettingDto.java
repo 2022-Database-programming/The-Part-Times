@@ -61,4 +61,28 @@ public class TimeSettingDto {
     public Time getTotalBreakTime() {
         return totalBreakTime;
     }
+
+    @Override
+    public String toString() {
+        return "TimeSettingDto{" +
+                "workStartHour=" + workStartHour +
+                ", workStartMinute=" + workStartMinute +
+                ", workFinishHour=" + workFinishHour +
+                ", workFinishMinute=" + workFinishMinute +
+                ", breakStartHour=" + breakStartHour +
+                ", breakStartMinute=" + breakStartMinute +
+                ", breakFinishHour=" + breakFinishHour +
+                ", breakFinishMinute=" + breakFinishMinute +
+                ", totalWorkHour=" + totalWorkHour +
+                ", totalWorkMinute=" + totalWorkMinute +
+                ", totalBreakHour=" + totalBreakHour +
+                ", totalBreakMinute=" + totalBreakMinute +
+                ", workStartTime=" + workStartTime +
+                ", workFinishTime=" + workFinishTime +
+                ", breakStartTime=" + breakStartTime +
+                ", breakFinishTime=" + breakFinishTime +
+                ", totalWorkTime=" + totalWorkTime +
+                ", totalBreakTime=" + totalBreakTime +
+                '}';
+    }
 }

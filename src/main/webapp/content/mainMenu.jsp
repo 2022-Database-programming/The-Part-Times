@@ -69,6 +69,141 @@
 
         }
     </script>
+	
+    <script type="text/javascript">
+		let timer_sec;
+	    let timer_min;
+	    let timer_hour;
+		function printTime() {
+		
+		    var clock = document.getElementById("startT");            // 출력할 장소 선택
+		    var now = new Date();                                                  // 현재시간
+		    
+		    if(now.getMinutes() < 10)		    	
+		    	var nowTime = now.getHours() + " : 0" + now.getMinutes();
+		    	
+    		else
+    			var nowTime = now.getHours() + " : " + now.getMinutes();	
+		    clock.innerHTML = nowTime;           // 현재시간을 출력
+		}
+		
+		function end_printTime() {
+			
+		    var clock = document.getElementById("endT");            // 출력할 장소 선택
+		    var now = new Date();                                                  // 현재시간
+		    
+		    if(now.getMinutes() < 10)		    	
+		    	var nowTime = now.getHours() + " : 0" + now.getMinutes();
+		    	
+    		else
+    			var nowTime = now.getHours() + " : " + now.getMinutes();	
+		    clock.innerHTML = nowTime;           // 현재시간을 출력
+		}
+		
+		function workTime() { 
+			
+
+            let timer = 0;
+            let click_check = 0;
+			const btnElement = document.getElementById('work_start_btn');	
+			
+			if(btnElement.value == " 시작 ")
+				alert('총 근무 시간 저장 버튼을 클릭해주세요.');
+			
+			else if(btnElement.value == "시작" && click_check == 0){
+
+		  		btnElement.value = "중지";
+		  		printTime();
+		  		
+		  		if(timer > 0){
+                    return;
+                }
+		  		
+                var sec = parseInt(document.getElementById("sec").innerText);
+                var min = parseInt(document.getElementById("min").innerText);
+                var hour = parseInt(document.getElementById("hour").innerText);               
+
+                //start seconds
+                timer_sec = setInterval(function(){
+
+                    sec++;
+                    if(sec == 60) {
+                        sec = "00";
+                    } else if(sec < 10){
+                        sec = "0" + sec;
+                    }
+                    document.getElementById("sec").innerText = sec;
+                }, 1000);
+
+                //start minutes
+                timer_min = setInterval(function(){
+                    min++;
+
+                    if(min == 60) {
+                        min = 0;
+                    } else if(min < 10){
+                        min = "0" + min;
+                    }
+
+                    document.getElementById("min").innerText = min;
+                }, 60000);
+
+                //start hours
+                timer_hour = setInterval(function(){
+                    //console.log(hour);
+                    hour++;
+
+                    if(hour < 10){
+                        hour = "0" + hour;
+                    }
+
+                    document.getElementById("hour").innerText = hour;
+
+                }, 3600000);
+
+                timer++;
+			}
+			
+			
+			else if(btnElement.value == "중지" && click_check == 0){
+				btnElement.value = " 시작 ";
+				end_printTime();
+				stop();
+				click_check = 1;
+			}
+
+		}
+		
+        function stop(){
+            clearInterval(timer_sec);
+            clearInterval(timer_min);
+            clearInterval(timer_hour);
+
+            timer--;
+            if(timer < 0)
+                timer = 0;
+        }
+		
+		function breakTime(){
+			const btnElement = document.getElementById('break_start_btn');	
+			
+			if(btnElement.value == "시작"){
+		  		btnElement.value = "중지";
+			}
+			
+			else
+				btnElement.value = "시작";
+		}
+		
+		function time_store(){
+            document.getElementById("sec").innerText = "00";
+            document.getElementById("min").innerText = "00";
+            document.getElementById("hour").innerText = "00";
+            document.getElementById("startT").innerText = "00 : 00";
+            document.getElementById("endT").innerText = "00 : 00";
+		}
+
+	</script>
 
     <link href="<c:url value='/css/reset.css' />" rel="stylesheet">
     <link href="<c:url value='/css/common.css' />" rel="stylesheet">

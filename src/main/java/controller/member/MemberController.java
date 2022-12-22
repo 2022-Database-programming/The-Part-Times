@@ -1,10 +1,15 @@
 package controller.member;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.dto.MyTotalWorkTimeDto;
+import model.service.PartTimerWorkplaceManager;
+import model.service.WorkTimeManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import controller.Controller;
@@ -17,26 +22,40 @@ public class MemberController implements Controller {
     private final Logger LOG = LoggerFactory.getLogger(MemberController.class);
     private final MemberSessionUtils MEMBER_SESSION_UTILS = new MemberSessionUtils();
     private final MemberManager MEMBER_MANAGER = MemberManager.getInstance();
-    private String memberId;
+    private final WorkTimeManager WORK_TIME_MANAGER = WorkTimeManager.getInstance();
+    private final PartTimerWorkplaceManager PART_TIMER_WORKPLACE_MANAGER = PartTimerWorkplaceManager.getInstance();
+    private final int START_INDEX = 0;
+    private final int END_INDEX = 7;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if(request.getServletPath().equals("/member/update")) {
+        if (request.getServletPath().equals("/member/mypage")) {
+            if (MEMBER_SESSION_UTILS.hasLogined(request.getSession())) {
+                String memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+                MemberDto member = MEMBER_MANAGER.findMember(memberId);
+                request.setAttribute("member", member);
+
+                return "/member/myPage.jsp";
+            }
+
+            return "redirect:/";
+        }
+
+        if (request.getServletPath().equals("/member/update")) {
             if (request.getMethod().equals("GET")) {
                 if (MEMBER_SESSION_UTILS.hasLogined(request.getSession())) {
-                    memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+                    String memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
                     MemberDto member = MEMBER_MANAGER.findMember(memberId);
                     request.setAttribute("member", member);
 
                     return "/member/myPageForm.jsp";
                 }
-
-                return "redirect:/index.jsp";
+                return "redirect:/";
             }
 
             if (request.getMethod().equals("POST")) {
                 if (MEMBER_SESSION_UTILS.hasLogined(request.getSession())) {
-                    memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+                    String memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
 
                     MemberUpdateDto updateUser = new MemberUpdateDto(
                             memberId,
@@ -49,10 +68,10 @@ public class MemberController implements Controller {
                     LOG.debug("Update User : {}", updateUser);
                     MEMBER_MANAGER.update(updateUser);
 
-                    return "redirect:/member/myPage.jsp";
+                    return "redirect:/member/mypage";
                 }
 
-                return "redirect:/index.jsp";
+                return "redirect:/";
             }
         }
 
@@ -67,8 +86,9 @@ public class MemberController implements Controller {
                     HttpSession session = request.getSession();
                     session.setAttribute(MemberSessionUtils.USER_SESSION_KEY, userId);
 
-                    return "redirect:/member/mainMenu.jsp";
+                    return "redirect:/content/mainMenu.jsp?page=main";
                 } catch (Exception e) {
+                    e.printStackTrace();
                     request.setAttribute("loginFailed", true);
                     request.setAttribute("exception", e);
                     return "/index.jsp";
@@ -78,7 +98,6 @@ public class MemberController implements Controller {
 
         if (request.getServletPath().equals("/member/signup")) {
             if (request.getMethod().equals("POST")) {
-                System.out.println("회원가입 요청");
                 MemberDto member = new MemberDto(
                         request.getParameter("memberId"),
                         request.getParameter("password"),
@@ -92,7 +111,7 @@ public class MemberController implements Controller {
                 try {
                     MEMBER_MANAGER.create(member);
 
-                    return "redirect:/index.jsp";
+                    return "redirect:/";
                 } catch (ExistingMemberException e) {
                     request.setAttribute("registerFailed", true);
                     request.setAttribute("exception", e);
@@ -103,15 +122,39 @@ public class MemberController implements Controller {
             }
         }
 
-        if (request.getServletPath().equals("/member/signout")) {   // 로그아웃
+        if (request.getServletPath().equals("/member/signout")) {
             if (request.getMethod().equals("POST")) {
                 HttpSession session = request.getSession();
                 session.removeAttribute(MEMBER_SESSION_UTILS.USER_SESSION_KEY);
                 session.invalidate();
             }
-            return "redirect:/index.jsp";
+
+            return "redirect:/";
         }
 
-        return "redirect:/error/noRequestError.jsp";
+        if (request.getServletPath().equals("/member/main")) {
+            // 달력 표시를 위한 오늘 날짜와 totalWorkTime 리스트를 넘겨준다.
+            LocalDate today = LocalDate.now();
+            String month = String.valueOf(today).substring(START_INDEX, END_INDEX);
+
+            String memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+            MemberDto member = MEMBER_MANAGER.findMember(memberId);
+            request.setAttribute("member", member);
+
+            List<Integer> partTimerWorkplaceIds = WORK_TIME_MANAGER.findAllPartTimerWorkplaceIdsByMemberId(member.getId());
+            List<MyTotalWorkTimeDto> myTotalWorkTimes = WORK_TIME_MANAGER.findAllTotalWorkTimesByPartTimerWorkplaceIdAndWorkDate(month, partTimerWorkplaceIds);
+            // myTotal에 저장된 workplace id값을 기반으로 직장 이름을 찾아온다.
+            List<String> workplaceNames = PART_TIMER_WORKPLACE_MANAGER.findThisMonthWorkplaceNamesByPartTimerWorkplace(myTotalWorkTimes, member.getId());
+
+            request.setAttribute("myTotalWorkTimes", myTotalWorkTimes);
+            request.setAttribute("workplaceNames", workplaceNames);
+
+            System.out.println(myTotalWorkTimes);
+            System.out.println(workplaceNames);
+
+            return "/member/main.jsp";
+        }
+
+        return "redirect:/error/noRequestError";
     }
 }

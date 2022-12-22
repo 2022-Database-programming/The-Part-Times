@@ -42,6 +42,10 @@
                 return false;
             }
 
+            else{
+            	
+            	alert("회원 정보 변경이 완료되었습니다.");
+            }
             form.submit();
         }
     </script>
@@ -77,7 +81,7 @@
             </tr>
             <tr>
                 <td>사용자 유형</td>
-                <td><input type="checkbox" class="check1" value="알바생">&nbsp;&nbsp;알바생<input type="checkbox" class="check2" value="고용주">&nbsp;&nbsp;고용주</td>
+                <td><span class="radioText_mypage"><input type="radio" name="type" class="check1" value="parttimer">아르바이트생</span> <span><input type="radio" name="type" class="check2" value="employer">사업주</span></td>
             </tr>
             <tr>
             	<td><input type="submit" value="변경" class="updateButton" onclick="userCreate();"></td>

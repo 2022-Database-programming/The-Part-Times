@@ -2,3 +2,4 @@ context.properties
 .idea/
 .metadata/
 target/
+.DS_Store

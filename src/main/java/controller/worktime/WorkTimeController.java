@@ -21,6 +21,8 @@ public class WorkTimeController implements Controller {
     private final MemberManager MEMBER_MANAGER = MemberManager.getInstance();
     private final PartTimerWorkplaceManager PART_TIMER_WORKPLACE_MANAGER = PartTimerWorkplaceManager.getInstance();
     private String memberId;
+    private final int START_INDEX = 0;
+    private final int END_INDEX = 7;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -33,7 +35,7 @@ public class WorkTimeController implements Controller {
 
         if (request.getServletPath().equals("/worktime/today")) {
             if (request.getMethod().equals("GET")) {
-                List<PartTimerWorkplaceDto> myWorkplaces = PART_TIMER_WORKPLACE_MANAGER.findAllPartTimerWorkplace(member.getId());
+                List<String> myWorkplaces = PART_TIMER_WORKPLACE_MANAGER.findAllWorkplaceNamesByPartTimerWorkplace(member.getId());
                 request.setAttribute("myWorkplaces", myWorkplaces);
 
                 return "/worktime/worktime.jsp";
@@ -52,7 +54,7 @@ public class WorkTimeController implements Controller {
                 int breakFinishMinute = Integer.parseInt(request.getParameter("breakFinishMinute"));
                 TimeSettingDto timeSettingDto = new TimeSettingDto(workStartHour, workStartMinute, workFinishHour, workFinishMinute, breakStartHour, breakStartMinute, breakFinishHour, breakFinishMinute);
                 Date today = Date.valueOf(LocalDate.now());
-                String month = String.valueOf(today).substring(0, 7);
+                String month = String.valueOf(today).substring(START_INDEX, END_INDEX);
                 Timestamp createdAt = new Timestamp(System.currentTimeMillis());
                 Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
 
@@ -73,10 +75,10 @@ public class WorkTimeController implements Controller {
         if (request.getServletPath().equals("/worktime/day")) {
             if (request.getMethod().equals("GET")) {
                 Date today = Date.valueOf(request.getParameter("today"));
-                String month = String.valueOf(today).substring(0, 7);
+                String month = String.valueOf(today).substring(START_INDEX, END_INDEX);
 
                 // partTimerWorkplaceId List
-                List<Integer> partTimerWorkplaceIds = WORK_TIME_MANAGER.findAllPartTimerWorkplaceIdByMemberId(member.getId());
+                List<Integer> partTimerWorkplaceIds = WORK_TIME_MANAGER.findAllPartTimerWorkplaceIdsByMemberId(member.getId());
                 // myTotalWorkTimeId List
                 List<Integer> myTotalWorkTimeIds = WORK_TIME_MANAGER.findAllTotalWorkTimeIdByPartTimerWorkplaceIdAndWorkDate(month, partTimerWorkplaceIds);
                 // myTodayWorkTime Map

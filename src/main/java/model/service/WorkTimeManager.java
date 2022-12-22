@@ -3,9 +3,11 @@ package model.service;
 import model.dao.MyTodayWorkTimeDao;
 import model.dao.PartTimerWorkplaceDao;
 import model.dao.MyTotalWorkTimeDao;
+import model.dao.WorkplaceDao;
 import model.dto.MyTodayWorkTimeDto;
 import model.dto.MyTotalWorkTimeDto;
 import model.dto.PartTimerWorkplaceDto;
+
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -18,12 +20,14 @@ public class WorkTimeManager {
     private MyTodayWorkTimeDao myTodayWorkTimeDao;
     private MyTotalWorkTimeDao myTotalWorkTimeDao;
     private PartTimerWorkplaceDao partTimerWorkplaceDao;
+    private WorkplaceDao workplaceDao;
 
     private WorkTimeManager() {
         try {
             this.myTodayWorkTimeDao = new MyTodayWorkTimeDao();
             this.myTotalWorkTimeDao = new MyTotalWorkTimeDao();
             this.partTimerWorkplaceDao = new PartTimerWorkplaceDao();
+            this.workplaceDao = new WorkplaceDao();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,7 +91,21 @@ public class WorkTimeManager {
         return myTotalWorkTimeIds;
     }
 
-    public List<Integer> findAllPartTimerWorkplaceIdByMemberId(int memberId) {
+    public List<MyTotalWorkTimeDto> findAllTotalWorkTimesByPartTimerWorkplaceIdAndWorkDate(String month, List<Integer> partTimerWorkplaceIds) {
+        List<MyTotalWorkTimeDto> myTotalWorkTimes = new ArrayList<>();
+
+        for (int i = 0; i < partTimerWorkplaceIds.size(); i++) {
+            MyTotalWorkTimeDto myTotalWorkTimeDto = myTotalWorkTimeDao.findMyTotalWorkTimeByDateAndPartTimerWorkplaceId(month, partTimerWorkplaceIds.get(i));
+
+            if (myTotalWorkTimeDto != null) {
+                myTotalWorkTimes.add(myTotalWorkTimeDto);
+            }
+        }
+
+        return myTotalWorkTimes;
+    }
+
+    public List<Integer> findAllPartTimerWorkplaceIdsByMemberId(int memberId) {
         List<PartTimerWorkplaceDto> partTimerWorkplaces = partTimerWorkplaceDao.findAllWorkplace(memberId);
 
         List<Integer> partTimerWorkplaceIds = initPartTimerWorkplaceIds(partTimerWorkplaces);
@@ -104,5 +122,4 @@ public class WorkTimeManager {
 
         return partTimerWorkplaceIds;
     }
-
 }

@@ -1,9 +1,15 @@
 package controller.member;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import model.dto.MyTotalWorkTimeDto;
+import model.service.PartTimerWorkplaceManager;
+import model.service.WorkTimeManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import controller.Controller;
@@ -16,6 +22,10 @@ public class MemberController implements Controller {
     private final Logger LOG = LoggerFactory.getLogger(MemberController.class);
     private final MemberSessionUtils MEMBER_SESSION_UTILS = new MemberSessionUtils();
     private final MemberManager MEMBER_MANAGER = MemberManager.getInstance();
+    private final WorkTimeManager WORK_TIME_MANAGER = WorkTimeManager.getInstance();
+    private final PartTimerWorkplaceManager PART_TIMER_WORKPLACE_MANAGER = PartTimerWorkplaceManager.getInstance();
+    private final int START_INDEX = 0;
+    private final int END_INDEX = 7;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -76,7 +86,7 @@ public class MemberController implements Controller {
                     HttpSession session = request.getSession();
                     session.setAttribute(MemberSessionUtils.USER_SESSION_KEY, userId);
 
-                    return "redirect:/member/mainMenu.jsp";
+                    return "redirect:/member/main?memberId=" + userId;
                 } catch (Exception e) {
                     e.printStackTrace();
                     request.setAttribute("loginFailed", true);
@@ -120,6 +130,29 @@ public class MemberController implements Controller {
             }
 
             return "redirect:/";
+        }
+
+        if (request.getServletPath().equals("/member/main")) {
+            // 달력 표시를 위한 오늘 날짜와 totalWorkTime 리스트를 넘겨준다.
+            LocalDate today = LocalDate.now();
+            String month = String.valueOf(today).substring(START_INDEX, END_INDEX);
+
+            String memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+            MemberDto member = MEMBER_MANAGER.findMember(memberId);
+            request.setAttribute("member", member);
+
+            List<Integer> partTimerWorkplaceIds = WORK_TIME_MANAGER.findAllPartTimerWorkplaceIdsByMemberId(member.getId());
+            List<MyTotalWorkTimeDto> myTotalWorkTimes = WORK_TIME_MANAGER.findAllTotalWorkTimesByPartTimerWorkplaceIdAndWorkDate(month, partTimerWorkplaceIds);
+            // myTotal에 저장된 workplace id값을 기반으로 직장 이름을 찾아온다.
+            List<String> workplaceNames = PART_TIMER_WORKPLACE_MANAGER.findThisMonthWorkplaceNamesByPartTimerWorkplace(myTotalWorkTimes, member.getId());
+
+            request.setAttribute("myTotalWorkTimes", myTotalWorkTimes);
+            request.setAttribute("workplaceNames", workplaceNames);
+
+            System.out.println(myTotalWorkTimes);
+            System.out.println(workplaceNames);
+
+            return "/member/main.jsp";
         }
 
         return "redirect:/error/noRequestError";

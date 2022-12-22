@@ -18,6 +18,7 @@ public class RequestMapping {
         mappings.put("/member/signout", new MemberController());
         mappings.put("/member/update", new MemberController());
         mappings.put("/member/mypage", new MemberController());
+        mappings.put("/member/main", new MemberController());
 
         mappings.put("/worktime/today", new WorkTimeController());
         mappings.put("/worktime/day", new WorkTimeController());

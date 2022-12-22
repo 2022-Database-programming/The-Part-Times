@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class WorkplaceDto {
     private int id;
-    private String workplace_name;
+    private String workplaceName;
     private String address;
     private String phoneNumber;
     private String businessNumber;
@@ -12,7 +12,7 @@ public class WorkplaceDto {
     private Timestamp updatedAt;
 
     public WorkplaceDto(String workplace_name, String address, String phoneNumber, String businessNumber) {
-        this.workplace_name = workplace_name;
+        this.workplaceName = workplace_name;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.businessNumber = businessNumber;
@@ -20,7 +20,7 @@ public class WorkplaceDto {
 
     public WorkplaceDto(int id, String workplace_name, String address, String phoneNumber, String businessNumber, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
-        this.workplace_name = workplace_name;
+        this.workplaceName = workplace_name;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.businessNumber = businessNumber;
@@ -32,8 +32,8 @@ public class WorkplaceDto {
         return id;
     }
 
-    public String getWorkplace_name() {
-        return workplace_name;
+    public String getWorkplaceName() {
+        return workplaceName;
     }
 
     public String getAddress() {
@@ -60,8 +60,8 @@ public class WorkplaceDto {
         this.id = id;
     }
 
-    public void setWorkplace_name(String workplace_name) {
-        this.workplace_name = workplace_name;
+    public void setWorkplaceName(String workplaceName) {
+        this.workplaceName = workplaceName;
     }
 
     public void setAddress(String address) {
@@ -88,7 +88,7 @@ public class WorkplaceDto {
     public String toString() {
         return "WorkplaceDto{" +
                 "id=" + id +
-                ", workplace_name='" + workplace_name + '\'' +
+                ", workplace_name='" + workplaceName + '\'' +
                 ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", businessNumber='" + businessNumber + '\'' +

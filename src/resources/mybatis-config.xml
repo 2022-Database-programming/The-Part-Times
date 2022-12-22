@@ -24,5 +24,6 @@
 	</environments>
 	<mappers>
 		<mapper resource="mybatis/mapper/ReplyMapper.xml" />
+		<mapper resource="src/main/java/model/dao/mybatis/mapper/ReplyMapper.java"/>
 	</mappers>
 </configuration>

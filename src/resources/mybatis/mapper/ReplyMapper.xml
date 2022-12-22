@@ -22,15 +22,15 @@
 		VALUES (#{id}, #{postId}, #{replyId}, #{isAnonymous}, #{content}, #{likes}, #{layer}, DEFAULT, DEFAULT, #{memberId})
 	</insert>
 
-	<update id="updateReply" parameterType="ReplyDto, int">
+	<update id="updateReply">
 		UPDATE reply 
-		SET content = #{content}, updated_at = SYSDATE
+		SET content = #{replayDto.content}, updated_at = SYSDATE
 		WHERE id = #{findReplyId}
 	</update>
  
-	<update id="updateLikesReply" parameterType="ReplyDto, int">
+	<update id="updateLikesReply">
 		UPDATE reply
-		SET content = #{content}, likes = #{likes}, updated_at = SYSDATE
+		SET content = #{replayDto.content}, likes = #{replayDto.likes}, updated_at = SYSDATE
 		WHERE id = #{findReplyId}
 	</update>
 	

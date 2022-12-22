@@ -35,13 +35,10 @@ public class ReplyDao {
 	public int create(ReplyDto replyDto) {
 		int result = -1;
 //		ReplyDto topReply;
-		System.out.println("------dao start");
 		if(replyDto.getLayer() == 0) {
 			result = firstCreateReply(replyDto);
-			System.out.println("------first dao");
 		} else {
 			result = createReply(replyDto);
-			System.out.println("------dao");
 		}
 		return result;
 	}
@@ -50,16 +47,12 @@ public class ReplyDao {
 
 	//댓글 추가
 	public int firstCreateReply(ReplyDto replyDto){
-		System.out.println("------first dao start");
 		SqlSession sqlSession = sqlSessionFactory.openSession();
-		System.out.println("------first dao 2");
 		try {
 			int result = sqlSession.getMapper(ReplyMapper.class).insertFirstReply(replyDto);
-			System.out.println("------first dao 3");
 			if (result > 0) {
 				sqlSession.commit();
 			} 
-			System.out.println("------first dao 4");
 			return result;
 		} finally {
 			sqlSession.close();

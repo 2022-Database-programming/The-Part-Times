@@ -1,131 +1,131 @@
-/*Î©îÏù∏ÌôîÎ©¥*/
-#title {
-    position: absolute;
-    top: 30%;
-    left: 52%;
-    font-family: 'GmarketSansMedium';
-    font-size: 24px;
-}
+@charset "EUC-KR";
 
-/*Í∑ºÎ¨¥ÏßÄ ÏÑ†ÌÉù*/
-#select {
-    position: absolute;
-    width: 380px;
-    height: 30px;
-    top: 38%;
-    left: 45%;
-    border: 1.5px solid;
-    border-color: #89a6d6;
-    border-radius: 12px;
-    padding:.5em .5em;
-    font-family: 'GmarketSansLight';
-}
+    	/*∆˘∆Æ¿˚øÎ*/
+    	@font-face {
+            font-family: 'GmarketSansLight';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+    	
+        @font-face {
+            font-family: 'GmarketSansMedium';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
-/*ÏãúÍ∞Ñ Ï∏°Ï†ï*/
-.time_box {
-    position: absolute;
-    left: 28%;
-    width: 65%;
-    height: 15%;
-    border-radius: 10px;
-    background-color: #e9f1ff;
-}
+        @font-face {
+            font-family: 'GmarketSansBold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
-.work_box{
-    top: 47%;
-}
+        
+        /*±Ÿπ´¡ˆ º±≈√ ¡¶∏Ò*/
+		.workPlace_title{
+			margin-left:38%;
+			padding-top: 6%;
+			font-family: 'GmarketSansMedium';
+			font-size: 25px;
+		}
+		
+		/*±Ÿπ´¡ˆ º±≈√∂ı*/
+		.selectWorkPlace{	
+		    width: 380px;
+		    height: 30px;
+		    margin-top: 1%;
+		    border: 1.5px solid;
+		    border-color: #89a6d6;
+		    border-radius: 8px;
+		    margin-left: 30%;
+		    padding-top: 4px;
+		    padding-left: 4px;
+		    font-family: 'GmarketSansLight';
+		}
+		
+		/*√‚≈±Ÿ Ω√∞£ √¯¡§ π⁄Ω∫*/
+		.work_time_box {
+			margin-top: 3%;
+		    margin-left: 5%;
+		    padding-top: 3%;	    
+		    width: 90%;
+		    height: 18%;
+		    border-radius: 10px;
+		    background-color: #e9f1ff;
+		    display: flex;
+		    flex-wrap: wrap;
+		    flex-direction: row; 
+		}
+		
+		.workT_title, .breakT_title{	    
+		    font-size: 19px;	    
+		    margin-left: 4%;
+		    font-family: 'GmarketSansMedium';
+		    width: 11%;
+		    text-align: center;
+		}
+		
+		.start, .working, .end{
+			font-family: 'GmarketSansLight';
+			font-size: 15px;
+			padding-left: 2%;
+		}
+			
+		#startT, #hour, #min, #sec, #endT, #dot{
+			font-family: 'GmarketSansMedium';
+			font-size: 30px;
+			padding-left: 1%;
+		}
 
-.break_box{
-    top: 65%;
-}
+		#work_start_btn{
+		    height: 85%;
+		    width: 10%;
+		    margin-left: 2%;
+		    border-radius: 7px;
+		    border: solid 1px #fff;
+		    background-color: #c1d5f6;
+		    font-size: 20px;
+		    font-family: 'GmarketSansMedium';
+		}
+		
+		/*»ﬁ∞‘Ω√∞£ Ω√∞£ √¯¡§ π⁄Ω∫*/
+		.break_time_box {
+			margin-top: 2%;
+		    margin-left: 5%;
+		    padding-top: 3%;
+		    width: 90%;
+		    height: 18%;
+		    border-radius: 10px;
+		    background-color: #e9f1ff;
+		    display: flex;
+		    flex-wrap: wrap;
+		    flex-direction: row; 
+		}
 
-span{
-    position: absolute;
-    font-family: 'GmarketSansMedium';
-    color: #536684;
-    margin-top: 38px;
-    margin-left: 18px;
-}
-
-/*ÏãúÍ∞Ñ ÌùêÎ¶Ñ Î∞ïÏä§*/
-.time{
-    position: absolute;
-    width: 65%;
-    left: 15%;
-    height: 27px;
-    margin-top: 30px;
-    border-radius: 10px;
-    background-color: #c1d0ea;
-}
-
-/*Ï∂úÍ∑º ÏãúÍ∞Ñ, Ìú¥Í≤å ÏãúÍ∞Ñ Î≤ÑÌäº*/
-#work_start_btn, #break_start_btn{
-    position: absolute;
-    top: 27%;
-    left: 85%;
-    height: 45%;
-    width: 10%;
-    border-radius: 7px;
-    border: solid 1px #fff;
-    background-color: #c1d5f6;
-    font-family: 'GmarketSansMedium';
-}
-
-/*ÏãúÍ∞Ñ Ï†ÄÏû• Î≤ÑÌäº*/
-#time_store_btn{
-    position: absolute;
-    top: 87%;
-    left: 52%;
-    width: 17%;
-    height: 6%;
-    border-radius: 8px;
-    border: none;
-    background-color: #8ca9d8;
-    font-family: 'GmarketSansLight';
-    font-size: 17px;
-}
-
-/*Î™®Îã¨Ï∞Ω*/
-#my_modal {
-    display: none;
-    position: absolute;
-    width: 60%;
-    height: 60%;
-    top: 25%;
-    left: 25%;
-    background-color: #fefefe;
-    border: 1px solid #888;
-    border-radius: 10px;
-}
-
-.black_bg{
-    display: none;
-    position: absolute;
-    content: "";
-    width: 100%;
-    height: 100%;
-    background-color:rgba(0, 0,0, 0.5);
-    top:0;
-    left: 0;
-    z-index: 1;
-}
-
-#modal_title{
-    position: absolute;
-    left: 35%;
-    font-family: 'GmarketSansMedium';
-    font-size: 22px;
-    color: black;
-}
-#modal_close_btn {
-    position: absolute;
-    top: 80%;
-    left: 35%;
-    width: 30%;
-    height: 10%;
-    background-color: #c1d0ea;
-    border: none;
-    border-radius: 8px;
-    font-family: 'GmarketSansMedium';
-    font-size: 18px;
-}
+		
+		#break_start_btn{
+		    height: 85%;
+		    width: 10%;
+		    margin-left: 3%;
+		    border-radius: 7px;
+		    border: solid 1px #fff;
+		    background-color: #c1d5f6;
+		    font-size: 20px;
+		    font-family: 'GmarketSansMedium';
+		}
+		
+		/*Ω√∞£ ¿˙¿Â πˆ∆∞*/
+		#time_store_btn{
+		    margin-top: 3%;
+		    margin-left: 36%;
+		    width: 22%;
+		    height: 8%;
+		    border-radius: 8px;
+		    border: none;
+		    background-color: #8ca9d8;
+		    font-family: 'GmarketSansLight';
+		    font-size: 17px;
+		}
+		

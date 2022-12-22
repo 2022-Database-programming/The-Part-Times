@@ -425,7 +425,6 @@
             <li id="menu_main" class="menu" onclick="location.href='?page=main'"><a class="top_navbar_menu" href="?page=main">Main</a></li>
             <li id="menu_record_work_time" class="menu" onclick="location.href='?page=record'"><a class="top_navbar_menu" href="?page=record">Record Work Time</a></li>
             <li id="menu_salary_calculation" class="menu" onclick="location.href='?page=salary'"><a class="top_navbar_menu" href="?page=salary">Salary Calculation</a></li>
-            <li id="menu_community_board" class="menu" onclick="location.href='?page=community'"><a class="top_navbar_menu" href="?page=community">Community Board</a></li>
             <li id="menu_my_page" class="menu" onclick="location.href='?page=mypage'"><a class="top_navbar_menu" href="?page=mypage">My Page</a></li>
         </ul>
 
@@ -463,8 +462,6 @@
                 <jsp:include page="./record-work-time.jsp" />
             <% System.out.println("record.jsp"); } else if(request.getParameter("page").equals("salary")) { %>
                 <jsp:include page="./salary-calculation.jsp" />
-            <%} else if(request.getParameter("page").equals("community")){%>
-                <jsp:include page="./community-board.jsp" />
             <% }else { %>
                 <jsp:include page="./mypageForm.jsp" />
             <%} %>

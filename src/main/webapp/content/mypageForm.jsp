@@ -42,6 +42,10 @@
                 return false;
             }
 
+            else{
+            	
+            	alert("회원 정보 변경이 완료되었습니다.");
+            }
             form.submit();
         }
     </script>
@@ -50,10 +54,10 @@
 <body>
 <div class="inputBox">
     <form name="mypageForm" method="POST">
-        <table class="table">
+        <table class="mypage_table">
             <tr>
                 <td>아이디</td>
-                <td><input type="text" name="memberId" class="id_underline"></td>
+                <td><input type="text" name="memberId" class="underline"></td>
             </tr>
             <tr>
                 <td>현재 비밀번호</td>
@@ -77,10 +81,11 @@
             </tr>
             <tr>
                 <td>사용자 유형</td>
+                <td><span class="radioText_mypage"><input type="radio" name="type" class="check1" value="parttimer">아르바이트생</span> <span><input type="radio" name="type" class="check2" value="employer">사업주</span></td>
             </tr>
             <tr>
-                <td><input type="submit" value="변경" class="updateButton" onclick="userCreate();"></td>
-                <td><input type="reset" value="다시입력" class="resetButton"></td>
+            	<td><input type="submit" value="변경" class="updateButton" onclick="userCreate();"></td>
+            	<td><input type="reset" value="다시입력" class="resetButton"></td>
             </tr>
         </table>
     </form>

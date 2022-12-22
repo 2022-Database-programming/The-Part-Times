@@ -86,7 +86,7 @@ public class MemberController implements Controller {
                     HttpSession session = request.getSession();
                     session.setAttribute(MemberSessionUtils.USER_SESSION_KEY, userId);
 
-                    return "redirect:/member/main?memberId=" + userId;
+                    return "redirect:/content/mainMenu.jsp?page=main";
                 } catch (Exception e) {
                     e.printStackTrace();
                     request.setAttribute("loginFailed", true);

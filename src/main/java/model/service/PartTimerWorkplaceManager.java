@@ -48,11 +48,16 @@ public class PartTimerWorkplaceManager {
 
     public List<WorkplaceDto> findAllWorkplaceNamesByPartTimerWorkplace(int memberId) {
         List<PartTimerWorkplaceDto> partTimerWorkplaces = partTimerWorkplaceDao.findAllWorkplace(memberId);
+        System.out.println(partTimerWorkplaces);
+
         List<WorkplaceDto> workplaces = new ArrayList<>();
 
         for (int i = 0; i < partTimerWorkplaces.size(); i++) {
-            WorkplaceDto workplaceDto = workplaceDao.findByWorkplaceId(partTimerWorkplaces.get(i).getId());
-            workplaces.add(workplaceDto);
+            WorkplaceDto workplaceDto = workplaceDao.findByWorkplaceId(partTimerWorkplaces.get(i).getWorkplaceId());
+
+            if (workplaceDto != null) {
+                workplaces.add(workplaceDto);
+            }
         }
 
         return workplaces;

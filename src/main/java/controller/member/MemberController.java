@@ -86,7 +86,7 @@ public class MemberController implements Controller {
                     HttpSession session = request.getSession();
                     session.setAttribute(MemberSessionUtils.USER_SESSION_KEY, userId);
 
-                    return "redirect:/member/main?id="+userId;
+                    return "redirect:/member/main?page=main&id="+userId;
                 } catch (Exception e) {
                     e.printStackTrace();
                     request.setAttribute("loginFailed", true);
@@ -133,26 +133,31 @@ public class MemberController implements Controller {
         }
 
         if (request.getServletPath().equals("/member/main")) {
-            // 달력 표시를 위한 오늘 날짜와 totalWorkTime 리스트를 넘겨준다.
-            LocalDate today = LocalDate.now();
-            String month = String.valueOf(today).substring(START_INDEX, END_INDEX);
+            if (request.getParameter("page").equals("main")) {
+                LocalDate today = LocalDate.now();
+                String month = String.valueOf(today).substring(START_INDEX, END_INDEX);
 
-            String memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
-            MemberDto member = MEMBER_MANAGER.findMember(memberId);
-            request.setAttribute("member", member);
+                String memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+                MemberDto member = MEMBER_MANAGER.findMember(memberId);
+                request.setAttribute("member", member);
 
-            List<Integer> partTimerWorkplaceIds = WORK_TIME_MANAGER.findAllPartTimerWorkplaceIdsByMemberId(member.getId());
-            List<MyTotalWorkTimeDto> myTotalWorkTimes = WORK_TIME_MANAGER.findAllTotalWorkTimesByPartTimerWorkplaceIdAndWorkDate(month, partTimerWorkplaceIds);
-            // myTotal에 저장된 workplace id값을 기반으로 직장 이름을 찾아온다.
-            List<String> workplaceNames = PART_TIMER_WORKPLACE_MANAGER.findThisMonthWorkplaceNamesByPartTimerWorkplace(myTotalWorkTimes, member.getId());
+                List<Integer> partTimerWorkplaceIds = WORK_TIME_MANAGER.findAllPartTimerWorkplaceIdsByMemberId(member.getId());
+                List<MyTotalWorkTimeDto> myTotalWorkTimes = WORK_TIME_MANAGER.findAllTotalWorkTimesByPartTimerWorkplaceIdAndWorkDate(month, partTimerWorkplaceIds);
+                // myTotal에 저장된 workplace id값을 기반으로 직장 이름을 찾아온다.
+                List<String> workplaceNames = PART_TIMER_WORKPLACE_MANAGER.findThisMonthWorkplaceNamesByPartTimerWorkplace(myTotalWorkTimes, member.getId());
 
-            request.setAttribute("myTotalWorkTimes", myTotalWorkTimes);
-            request.setAttribute("workplaceNames", workplaceNames);
+                request.setAttribute("myTotalWorkTimes", myTotalWorkTimes);
+                request.setAttribute("workplaceNames", workplaceNames);
 
-            System.out.println(myTotalWorkTimes);
-            System.out.println(workplaceNames);
+                System.out.println(myTotalWorkTimes);
+                System.out.println(workplaceNames);
 
-            return "/content/mainMenu.jsp?page=main";
+                return "/content/mainMenu.jsp?page=main";
+            }
+
+            if (request.getParameter("page").equals("record")) {
+                return "redirect:/worktime/today";
+            }
         }
 
         return "redirect:/error/noRequestError";

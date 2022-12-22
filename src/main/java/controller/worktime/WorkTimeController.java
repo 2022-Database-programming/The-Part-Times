@@ -41,7 +41,7 @@ public class WorkTimeController implements Controller {
                 System.out.println(myWorkplaces);
                 request.setAttribute("myWorkplaces", myWorkplaces);
 
-                return "/worktime/worktime.jsp";
+                return "/content/mainMenu.jsp?page=record";
             }
 
             if (request.getMethod().equals("POST")) {

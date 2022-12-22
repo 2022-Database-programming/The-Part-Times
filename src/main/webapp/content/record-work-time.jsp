@@ -29,7 +29,16 @@
     <!-- 휴게 시간 측정 박스 -->
     <div class="break_time_box">
         <span class="breakT_title">휴게 시간</span>
-        <div class="break_time_bar"></div>
+        <div class="start">시작 시간</div>
+        <span id="startB">00 : 00</span>
+        <div class="breaking">휴게 시간</div>
+        <span id="b_hour">00</span>
+        <span id="dot"> : </span>
+        <span id="b_min">00</span>
+        <span id="dot"> : </span>
+        <span id="b_sec">00</span>
+        <div class="end">종료 시간</div>
+        <span id="endB">00 : 00</span>
         <input type='submit' id="break_start_btn" value="시작" onclick="breakTime();">
     </div>
     

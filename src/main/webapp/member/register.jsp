@@ -110,6 +110,63 @@
             margin-top: 2%;
         }
     </style>
+    
+    <script>
+	    function register() {
+	        if (registerForm.memberId.value == "") {
+	            alert("사용자 ID를 입력하십시오.");
+	            registerForm.memberId.focus();
+	            return false;
+	        }
+	        if (registerForm.password.value == "") {
+	            alert("비밀번호를 입력하십시오.");
+	            registerForm.password.focus();
+	            return false;
+	        }
+	        
+	        if(registerForm.passwordCheck.value ==""){
+	        	alert("비밀번호 확인을 해주세요.");
+	        	registerForm.passwordCheck.focus();
+	        	return false;
+	        }
+	        
+	        if(registerForm.passwordCheck.value != registerForm.password.value){
+	        	alert("입력한 비밀번호가 다릅니다.");
+	        	registerForm.passwordCheck.focus();
+	        	return false;
+	        }
+	        
+	        if(registerForm.birth.value ==""){
+	        	alert("생년월일을 입력해주세요.");
+	        	registerForm.birth.focus();
+	        	return false;
+	        }
+	        
+	        if(registerForm.phone1.value ==""){
+	        	alert("전화번호 형식이 올바르지 않습니다.");
+	        	registerForm.phone1.focus();
+	        	return false;
+	        }
+	        
+	        if(registerForm.phone2.value ==""){
+	        	alert("전화번호 형식이 올바르지 않습니다.");
+	        	registerForm.phone2.focus();
+	        	return false;
+	        }
+	        
+	        if(registerForm.phone3.value ==""){
+	        	alert("전화번호 형식이 올바르지 않습니다.");	        	
+	        	registerForm.phone3.focus();
+	        	return false;
+	        }
+	        
+	        else{
+	        	
+	        	alert('회원가입이 완료되었습니다.');
+	        }
+	        form.submit();
+	    }
+    </script>
 </head>
 <body bgcolor="#89a6d6">
 <div class="titleBox">
@@ -148,7 +205,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <input type="submit" value="회원가입" class="submitButton">
+                    <input type="submit" value="회원가입" class="submitButton" onclick="register();">
                 </td>
             </tr>
         </table>

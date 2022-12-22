@@ -50,10 +50,10 @@
 <body>
 <div class="inputBox">
     <form name="mypageForm" method="POST">
-        <table class="table">
+        <table class="mypage_table">
             <tr>
                 <td>아이디</td>
-                <td><input type="text" name="memberId" class="id_underline"></td>
+                <td><input type="text" name="memberId" class="underline"></td>
             </tr>
             <tr>
                 <td>현재 비밀번호</td>
@@ -77,10 +77,11 @@
             </tr>
             <tr>
                 <td>사용자 유형</td>
+                <td><input type="checkbox" class="check1" value="알바생">&nbsp;&nbsp;알바생<input type="checkbox" class="check2" value="고용주">&nbsp;&nbsp;고용주</td>
             </tr>
             <tr>
-                <td><input type="submit" value="변경" class="updateButton" onclick="userCreate();"></td>
-                <td><input type="reset" value="다시입력" class="resetButton"></td>
+            	<td><input type="submit" value="변경" class="updateButton" onclick="userCreate();"></td>
+            	<td><input type="reset" value="다시입력" class="resetButton"></td>
             </tr>
         </table>
     </form>

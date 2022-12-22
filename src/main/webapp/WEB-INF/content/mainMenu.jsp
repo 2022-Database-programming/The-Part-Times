@@ -11,7 +11,7 @@
         // top navbar click시, 메뉴 css 처리
         $(document).ready(function () {
             const tabList = document.querySelectorAll('#menuList li');
-            var para = document.location.href.split("/member/main?page=")[1];
+            var para = document.location.href.split("?page=")[1];
 
             if(para == "main") {
                 tabList[0].style.fontFamily = 'GmarketSansMedium';
@@ -71,82 +71,51 @@
     </script>
 
     <script type="text/javascript">
-		let timer_sec;
-	    let timer_min;
-	    let timer_hour;
-	    
-	    /*근무 시작 시간*/
-		function printTime() {
-		
-		    var clock = document.getElementById("startT");            // 출력할 장소 선택
-		    var now = new Date();                                                  // 현재시간
-		    
-		    if(now.getMinutes() < 10)		    	
-		    	var nowTime = now.getHours() + " : 0" + now.getMinutes();
-		    	
-    		else
-    			var nowTime = now.getHours() + " : " + now.getMinutes();	
-		    clock.innerHTML = nowTime;           // 현재시간을 출력
-		}
-	    
-	    /*휴게 시작 시간*/
-   		function printBreakTime() {
-		
-		    var clock = document.getElementById("startB");            // 출력할 장소 선택
-		    var now = new Date();                                                  // 현재시간
-		    
-		    if(now.getMinutes() < 10)		    	
-		    	var nowTime = now.getHours() + " : 0" + now.getMinutes();
-		    	
-    		else
-    			var nowTime = now.getHours() + " : " + now.getMinutes();	
-		    clock.innerHTML = nowTime;           // 현재시간을 출력
-		}
-		
-	    /*근무 종료 시간*/
-		function end_printTime() {
-			
-		    var clock = document.getElementById("endT");            // 출력할 장소 선택
-		    var now = new Date();                                                  // 현재시간
-		   
-		    if(now.getMinutes() < 10)		    	
-		    	var nowTime = now.getHours() + " : 0" + now.getMinutes();
-		    	
-    		else
-    			var nowTime = now.getHours() + " : " + now.getMinutes();	
-		    clock.innerHTML = nowTime;           // 현재시간을 출력
-		}
-	    
-	    /*휴게 종료 시간*/
-   		function end_printBreakTime() {
-			
-		    var clock = document.getElementById("endB");            // 출력할 장소 선택
-		    var now = new Date();                                                  // 현재시간
-		    
-		    if(now.getMinutes() < 10)		    	
-		    	var nowTime = now.getHours() + " : 0" + now.getMinutes();
-		    	
-    		else
-    			var nowTime = now.getHours() + " : " + now.getMinutes();	
-		    clock.innerHTML = nowTime;           // 현재시간을 출력
-		}
-		
-		/*근무 시간 측정*/
-		function workTime() { 
+        let timer_sec;
+        let timer_min;
+        let timer_hour;
+        function printTime() {
+
+            var clock = document.getElementById("startT");            // 출력할 장소 선택
+            var now = new Date();                                                  // 현재시간
+
+            if(now.getMinutes() < 10)
+                var nowTime = now.getHours() + " : 0" + now.getMinutes();
+
+            else
+                var nowTime = now.getHours() + " : " + now.getMinutes();
+            clock.innerHTML = nowTime;           // 현재시간을 출력
+        }
+
+        function end_printTime() {
+
+            var clock = document.getElementById("endT");            // 출력할 장소 선택
+            var now = new Date();                                                  // 현재시간
+
+            if(now.getMinutes() < 10)
+                var nowTime = now.getHours() + " : 0" + now.getMinutes();
+
+            else
+                var nowTime = now.getHours() + " : " + now.getMinutes();
+            clock.innerHTML = nowTime;           // 현재시간을 출력
+        }
+
+        function workTime() {
+
 
             let timer = 0;
             let click_check = 0;
-			const workbtnElement = document.getElementById('work_start_btn');	
-			
-			if(workbtnElement.value == " 시작 ")
-				alert('총 근무 시간 저장 버튼을 클릭해주세요.');
-			
-			else if(workbtnElement.value == "시작" && click_check == 0){
+            const btnElement = document.getElementById('work_start_btn');
 
-		  		workbtnElement.value = "중지";
-		  		printTime();
-		  		
-		  		if(timer > 0) {
+            if(btnElement.value == " 시작 ")
+                alert('총 근무 시간 저장 버튼을 클릭해주세요.');
+
+            else if(btnElement.value == "시작" && click_check == 0){
+
+                btnElement.value = "중지";
+                printTime();
+
+                if(timer > 0){
                     return;
                 }
 
@@ -193,17 +162,18 @@
                 }, 3600000);
 
                 timer++;
-			}
-			
-			
-			else if(workbtnElement.value == "중지" && click_check == 0){
-				workbtnElement.value = " 시작 ";
-				end_printTime();
-				stop();
-				click_check = 1;
-			}
+            }
 
-		}
+
+            else if(btnElement.value == "중지" && click_check == 0){
+                btnElement.value = " 시작 ";
+                end_printTime();
+                stop();
+                click_check = 1;
+            }
+
+        }
+
         function stop(){
             clearInterval(timer_sec);
             clearInterval(timer_min);
@@ -213,99 +183,25 @@
             if(timer < 0)
                 timer = 0;
         }
-        
-		/*휴게 시간 측정*/
-		function breakTime() { 
 
-            let timer = 0;
-            let click_check = 0;
-			const breakbtnElement = document.getElementById('break_start_btn');	
-			
-			if(breakbtnElement.value == " 시작 ")
-				alert('총 근무 시간 저장 버튼을 클릭해주세요.');
-			
-			else if(breakbtnElement.value == "시작" && click_check == 0){
+        function breakTime(){
+            const btnElement = document.getElementById('break_start_btn');
 
-				breakbtnElement.value = "중지";
-		  		printBreakTime();
-		  		
-		  		if(timer > 0){
-                    return;
-                }
-		  		
-                var sec = parseInt(document.getElementById("b_sec").innerText);
-                var min = parseInt(document.getElementById("b_min").innerText);
-                var hour = parseInt(document.getElementById("b_hour").innerText);               
+            if(btnElement.value == "시작"){
+                btnElement.value = "중지";
+            }
 
-                //start seconds
-                timer_sec = setInterval(function(){
-
-                    sec++;
-                    if(sec == 60) {
-                        sec = "00";
-                    } else if(sec < 10){
-                        sec = "0" + sec;
-                    }
-                    document.getElementById("b_sec").innerText = sec;
-                }, 1000);
-
-                //start minutes
-                timer_min = setInterval(function(){
-                    min++;
-
-                    if(min == 60) {
-                        min = 0;
-                    } else if(min < 10){
-                        min = "0" + min;
-                    }
-
-                    document.getElementById("b_min").innerText = min;
-                }, 60000);
-
-                //start hours
-                timer_hour = setInterval(function(){
-                    //console.log(hour);
-                    hour++;
-
-                    if(hour < 10){
-                        hour = "0" + hour;
-                    }
-
-                    document.getElementById("b_hour").innerText = hour;
-
-                }, 3600000);
-
-                timer++;
-			}
-			
-			else if(breakbtnElement.value == "중지" && click_check == 0){
-				breakbtnElement.value = " 시작 ";
-				end_printBreakTime();
-				stop();
-				click_check = 1;
-			}
-
-		}
-		
-		/*중지 버튼 클릭 시*/
-        function stop(){
-            clearInterval(timer_sec);
-            clearInterval(timer_min);
-            clearInterval(timer_hour);
-
-            timer--;
-            if(timer < 0)
-                timer = 0;
+            else
+                btnElement.value = "시작";
         }
-		
-        /*총 근무 시간 저장하기 버튼 클릭시*/
-		function time_store(){
-            document.getElementById("b_sec").innerText = "00";
-            document.getElementById("b_min").innerText = "00";
-            document.getElementById("b_hour").innerText = "00";
-            document.getElementById("startB").innerText = "00 : 00";
-            document.getElementById("endB").innerText = "00 : 00";
-		}
+
+        function time_store(){
+            document.getElementById("sec").innerText = "00";
+            document.getElementById("min").innerText = "00";
+            document.getElementById("hour").innerText = "00";
+            document.getElementById("startT").innerText = "00 : 00";
+            document.getElementById("endT").innerText = "00 : 00";
+        }
 
     </script>
 
@@ -416,11 +312,11 @@
     <div id="menuBox">
         <img id="menuLogo" src="<c:url value='/images/menu_logo.png' />">
         <ul id="menuList">
-            <li id="menu_main" class="menu" onclick="location.href='/member/main?page=main'"><a class="top_navbar_menu" href="/member/main?page=main">Main</a></li>
-            <li id="menu_record_work_time" class="menu" onclick="location.href='/member/main?page=record'"><a class="top_navbar_menu" href="/member/main?page=record">Record Work Time</a></li>
-            <li id="menu_salary_calculation" class="menu" onclick="location.href='/member/main?page=salary'"><a class="top_navbar_menu" href="/member/main?page=salary">Salary Calculation</a></li>
-            <li id="menu_community_board" class="menu" onclick="location.href='/member/main?page=community'"><a class="top_navbar_menu" href="/member/main?page=community">Community Board</a></li>
-            <li id="menu_my_page" class="menu" onclick="location.href='/member/main?page=mypage'"><a class="top_navbar_menu" href="/member/main?page=mypage">My Page</a></li>
+            <li id="menu_main" class="menu" onclick="location.href='?page=main'"><a class="top_navbar_menu" href="?page=main">Main</a></li>
+            <li id="menu_record_work_time" class="menu" onclick="location.href='?page=record'"><a class="top_navbar_menu" href="?page=record">Record Work Time</a></li>
+            <li id="menu_salary_calculation" class="menu" onclick="location.href='?page=salary'"><a class="top_navbar_menu" href="?page=salary">Salary Calculation</a></li>
+            <li id="menu_community_board" class="menu" onclick="location.href='?page=community'"><a class="top_navbar_menu" href="?page=community">Community Board</a></li>
+            <li id="menu_my_page" class="menu" onclick="location.href='?page=mypage'"><a class="top_navbar_menu" href="?page=mypage">My Page</a></li>
         </ul>
 
         <%--        <div id="profileBox">--%>

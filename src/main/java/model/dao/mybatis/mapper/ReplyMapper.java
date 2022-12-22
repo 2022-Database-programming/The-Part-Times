@@ -1,6 +1,7 @@
 package model.dao.mybatis.mapper;
 
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 import model.dto.ReplyDto;
 
@@ -10,9 +11,9 @@ public interface ReplyMapper {
 	
 	public int insertReply(ReplyDto replayDto);   
  
-	public int updateReply(ReplyDto replayDto, int findReplyId);
+	public int updateReply(@Param("replyDto") ReplyDto replayDto, @Param("findReplyId") int findReplyId);
 	
-	public int updateLikesReply(ReplyDto replayDto, int findReplyId);
+	public int updateLikesReply(@Param("replyDto") ReplyDto replayDto, @Param("findReplyId") int findReplyId);
 
 	public int deleteReply(int id);
 

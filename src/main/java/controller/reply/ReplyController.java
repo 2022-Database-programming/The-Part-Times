@@ -27,19 +27,29 @@ public class ReplyController implements Controller {
 		if (request.getSession() == null) {
 			return "redirect:/";
 		}
+		System.out.println("-----------replycontroller");
 
 		//memberId 세션 찾기
 		String memberId = MEMBER_SESSION_UTILS.getLoginUserId(request.getSession());
+		
+		System.out.println("-----------");
 
 		//memberId의 해당하는 ID 찾기
 		MemberDto memberDto = MEMBER_MANAGER.findMember(memberId);
 		
-		int postId = Integer.parseInt(request.getParameter("postId"));
+		System.out.println("-----------");
+		
+		
+		System.out.println("-----------");
 		
 		if (request.getServletPath().equals("/reply/create")) {	// reply 작성 
+			int postId = Integer.parseInt(request.getParameter("postId"));
+			System.out.println("-----------1");
 			if (request.getMethod().equals("POST")) {
 				ReplyDto reply;
+				System.out.println("-----------2");
 				if(request.getParameter("replyId") != null) {
+					System.out.println("-----------3");
 					reply = new ReplyDto(
 						postId,
 						Integer.parseInt(request.getParameter("replyId")),
@@ -50,7 +60,9 @@ public class ReplyController implements Controller {
 						memberDto.getId(),
 						memberDto.getName()
 						);
+					System.out.println("-----------4");
 				} else {
+					System.out.println("-----------5");
 					reply = new ReplyDto(
 							postId,
 							Integer.parseInt(request.getParameter("isAnonymous")),
@@ -60,21 +72,29 @@ public class ReplyController implements Controller {
 							memberDto.getId(),
 							memberDto.getName()
 					);
+					System.out.println("-----------6");
 				}
 				log.debug("Create Reply : {}", reply);
 				
+				System.out.println("-----------7");
+				
 				REPLY_MANAGER.create(reply);
+				
+				System.out.println("-----------8");
 				
 				System.out.println(postId);
 				System.out.println(reply.getId());
-				System.out.println(reply.getReplyId());
+				//System.out.println(reply.getReplyId());
 				System.out.println(reply.getContent());
+				
+				System.out.println("-----------9");
 				
 				return "redirect:/post/postDetail?id=" + postId;
 			}
 		}
 		
 		if (request.getServletPath().equals("/reply/update")) {
+			int postId = Integer.parseInt(request.getParameter("postId"));
 			if(request.getMethod().equals("POST")) {
 				ReplyDto updateReply;
 				if(request.getParameter("replyId") != null) {
@@ -115,6 +135,7 @@ public class ReplyController implements Controller {
 		}
 		
 		if (request.getServletPath().equals("/reply/delete")) {
+			int postId = Integer.parseInt(request.getParameter("postId"));
 			int id = Integer.parseInt(request.getParameter("id"));
 			if (request.getMethod().equals("POST")) {
 				try {

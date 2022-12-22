@@ -27,6 +27,7 @@ public class ReplyManager {
     }
 
     public int create(ReplyDto replyDto) throws SQLException {
+    	System.out.println("-----manager");
         return replyDao.create(replyDto);
     }
 

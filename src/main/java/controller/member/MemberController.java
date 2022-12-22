@@ -86,7 +86,7 @@ public class MemberController implements Controller {
                     HttpSession session = request.getSession();
                     session.setAttribute(MemberSessionUtils.USER_SESSION_KEY, userId);
 
-                    return "redirect:/content/mainMenu.jsp?page=main";
+                    return "redirect:/member/main?id="+userId;
                 } catch (Exception e) {
                     e.printStackTrace();
                     request.setAttribute("loginFailed", true);
@@ -152,7 +152,7 @@ public class MemberController implements Controller {
             System.out.println(myTotalWorkTimes);
             System.out.println(workplaceNames);
 
-            return "/member/main.jsp";
+            return "/content/mainMenu.jsp?page=main";
         }
 
         return "redirect:/error/noRequestError";

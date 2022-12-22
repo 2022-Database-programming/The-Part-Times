@@ -1,5 +1,6 @@
 package controller.worktime;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import controller.Controller;
 import controller.member.MemberSessionUtils;
 import model.dto.*;
@@ -9,6 +10,7 @@ import model.service.WorkTimeManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -36,6 +38,7 @@ public class WorkTimeController implements Controller {
         if (request.getServletPath().equals("/worktime/today")) {
             if (request.getMethod().equals("GET")) {
                 List<WorkplaceDto> myWorkplaces = PART_TIMER_WORKPLACE_MANAGER.findAllWorkplaceNamesByPartTimerWorkplace(member.getId());
+                System.out.println(myWorkplaces);
                 request.setAttribute("myWorkplaces", myWorkplaces);
 
                 return "/worktime/worktime.jsp";
@@ -87,11 +90,18 @@ public class WorkTimeController implements Controller {
                 // myTodayWorkTime Map
                 HashMap<Integer, List<MyTodayWorkTimeDto>> myTodayWorkTimes = WORK_TIME_MANAGER.findAllMyTodayWorkTimeByDateAndTotalWorkTime(today, myTotalWorkTimeIds);
 
+                ObjectMapper mapper = new ObjectMapper();
+                String jsonString = mapper.writeValueAsString(myTodayWorkTimes);
                 System.out.println(myTodayWorkTimes);
 
-                request.setAttribute("myTodayWorkTime", myTodayWorkTimes);
+                response.setContentType("application/json;charset=utf-8");
+                PrintWriter out = response.getWriter();
 
-                return "/member/main.jsp";
+                out.println(jsonString);
+
+                // request.setAttribute("myTodayWorkTime", myTodayWorkTimes);
+
+                return null;
             }
         }
 

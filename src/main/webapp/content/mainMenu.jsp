@@ -8,44 +8,23 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <script>
-        // top navbar click시, css 처리+화면 전환
+        // top navbar click시, 메뉴 css 처리
         $(document).ready(function () {
             const tabList = document.querySelectorAll('#menuList li');
-            const contentPageList = document.querySelectorAll('.contents')
+            var para = document.location.href.split("?page=")[1];
 
-            for(var i = 0; i < tabList.length; i++){
-                tabList[i].querySelector('a').addEventListener('click', function(e){
-                    e.preventDefault();
-                    for(var j = 0; j < tabList.length; j++){
-                        tabList[j].classList.remove('active');
-                        contentPageList[j].classList.add('disable');
-                    }
-                    this.parentNode.classList.add('active');
-                    const idx = Array.from(document.querySelectorAll('a')).indexOf(e.target);
-                    console.log(idx);
-                    contentPageList[idx].classList.remove('disable');
-                });
+            if(para == "main") {
+                tabList[0].style.fontFamily = 'GmarketSansMedium';
+            } else if(para == "record") {
+                tabList[1].style.fontFamily = 'GmarketSansMedium';
+            } else if(para == "salary") {
+                tabList[2].style.fontFamily = 'GmarketSansMedium';
+            } else if(para == "community") {
+                tabList[3].style.fontFamily = 'GmarketSansMedium';
+            } else {
+                tabList[4].style.fontFamily = 'GmarketSansMedium';
             }
         });
-    </script>
-
-    <script>  // html 불러오는 함수
-    window.addEventListener('load', function() {
-        var allElements = document.getElementsByTagName('*');
-        Array.prototype.forEach.call(allElements, function(el) {
-            var includePath = el.dataset.includePath;
-            if (includePath) {
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        el.outerHTML = this.responseText;
-                    }
-                };
-                xhttp.open('GET', includePath, true);
-                xhttp.send();
-            }
-        });
-    });
     </script>
 
     <!-- salary-calculation -->
@@ -105,10 +84,6 @@
         a, a:hover {
             color: white;
             text-decoration: none;
-        }
-
-        li.active {
-            font-family: 'GmarketSansMedium';
         }
 
         #container {
@@ -202,11 +177,11 @@
     <div id="menuBox">
         <img id="menuLogo" src="<c:url value='/images/menu_logo.png' />">
         <ul id="menuList">
-            <li id="menu_main" class="menu active"><a class="top_navbar_menu" href="#">Main</a></li>
-            <li id="menu_record_work_time" class="menu"><a class="top_navbar_menu" href="#">Record Work Time</a></li>
-            <li id="menu_salary_calculation" class="menu"><a class="top_navbar_menu" href="#">Salary Calculation</a></li>
-            <li id="menu_community_board" class="menu"><a class="top_navbar_menu" href="#">Community Board</a></li>
-            <li id="menu_my_page" class="menu"><a class="top_navbar_menu" href="#">My Page</a></li>
+            <li id="menu_main" class="menu" onclick="location.href='?page=main'"><a class="top_navbar_menu" href="?page=main">Main</a></li>
+            <li id="menu_record_work_time" class="menu" onclick="location.href='?page=record'"><a class="top_navbar_menu" href="?page=record">Record Work Time</a></li>
+            <li id="menu_salary_calculation" class="menu" onclick="location.href='?page=salary'"><a class="top_navbar_menu" href="?page=salary">Salary Calculation</a></li>
+            <li id="menu_community_board" class="menu" onclick="location.href='?page=community'"><a class="top_navbar_menu" href="?page=community">Community Board</a></li>
+            <li id="menu_my_page" class="menu" onclick="location.href='?page=mypage'"><a class="top_navbar_menu" href="?page=mypage">My Page</a></li>
         </ul>
 
 <%--        <div id="profileBox">--%>
@@ -221,21 +196,33 @@
             </div>
         </div>
         <div id="content_container">
-            <div class="contents">
-                <div data-include-path="<c:url value='/content/main.jsp' />"></div>
-            </div>
-            <div class="contents disable">
-                <div data-include-path="<c:url value='/content/record-work-time.jsp' />"></div>
-            </div>
-            <div class="contents disable">
-                <div data-include-path="<c:url value='/content/salary-calculation.jsp' />"></div>
-            </div>
-            <div class="contents disable">
-                <div data-include-path="<c:url value='/content/community-board.jsp' />"></div>
-            </div>
-            <div class="contents disable">
-                <div data-include-path="<c:url value='/content/mypageForm.jsp' />"></div>
-            </div>
+<%--            <div class="contents">--%>
+<%--                <div data-include-path="<c:url value='/content/main.jsp' />"></div>--%>
+<%--            </div>--%>
+<%--            <div class="contents disable">--%>
+<%--                <div data-include-path="<c:url value='/content/record-work-time.jsp' />"></div>--%>
+<%--            </div>--%>
+<%--            <div class="contents disable">--%>
+<%--                <div data-include-path="<c:url value='/content/salary-calculation.jsp' />"></div>--%>
+<%--            </div>--%>
+<%--            <div class="contents disable">--%>
+<%--                <div data-include-path="<c:url value='/content/community-board.jsp' />"></div>--%>
+<%--            </div>--%>
+<%--            <div class="contents disable">--%>
+<%--                <div data-include-path="<c:url value='/content/mypageForm.jsp' />"></div>--%>
+<%--            </div>--%>
+
+            <%if(request.getParameter("page").equals("main")) { %>
+                <jsp:include page="./main.jsp" />
+            <% System.out.println("main.jsp"); } else if(request.getParameter("page").equals("record")) {%>
+                <jsp:include page="./record-work-time.jsp" />
+            <% System.out.println("record.jsp"); } else if(request.getParameter("page").equals("salary")) { %>
+                <jsp:include page="./salary-calculation.jsp" />
+            <%} else if(request.getParameter("page").equals("community")){%>
+                <jsp:include page="./community-board.jsp" />
+            <% }else { %>
+                <jsp:include page="./mypageForm.jsp" />
+            <%} %>
         </div>
     </div>
 </div>

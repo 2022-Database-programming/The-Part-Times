@@ -28,6 +28,7 @@
             text-align: center;
             font-family: 'GmarketSansBold';
             font-size: 45px;
+            margin-top: 2%;
         }
 
         .titleBox {
@@ -51,26 +52,32 @@
 
         .submitButton {
             width: 60%;
-            height: 70%;
+            height: 75%;
             background-color: #89a6d6;
             border-width: 0px;
+            border-radius: 8px;
             color: white;
             margin-top: 2%;
+            font-size: 27px;
+            padding-top: 1%;
         }
 
         .phone1 {
             width: 14%;
-            padding: 1%;
+            padding-top: 0.5%;
+            margin-top: 2%;
         }
 
         .phone2 {
             width: 16%;
-            padding: 1%;
+            padding-top: 0.5%;
+            margin-top: 2%;
         }
 
         .phone3 {
             width: 16%;
-            padding: 1%;
+            padding-top: 0.5%;
+            margin-top: 2%;
         }
 
         .underline {
@@ -81,23 +88,26 @@
             width: 50%;
             height: 50%;
             padding: 1%;
+            margin-top: 1%;
         }
 
-        .table {
+        .register_table {
             margin-left: 25%;
             width: 80%;
             height: 90%;
-            padding: 0;
+            padding-top: 2%;
         }
 
         .dateBox {
             width: 50%;
             height: 50%;
             padding: 1%;
+            margin-top: 2%;
         }
 
         .radioText {
             margin-right: 2%;
+            margin-top: 2%;
         }
     </style>
 </head>
@@ -107,7 +117,7 @@
 </div>
 <div class="inputBox">
     <form name="registerForm" method="POST">
-        <table class="table">
+        <table class="register_table">
             <tr>
                 <td>아이디</td>
                 <td><input type="text" name="memberId" class="underline"></td>
@@ -130,7 +140,7 @@
             </tr>
             <tr>
                 <td>이름</td>
-                <td><input type="text" name="name" class="phone1"></td>
+                <td><input type="text" name="name" class="underline"></td>
             </tr>
             <tr>
                 <td>사용자 유형</td>

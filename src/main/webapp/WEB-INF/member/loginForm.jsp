@@ -58,7 +58,7 @@
 
                 <div id="btnBox">
                     <button class="btn" type='button' onClick="login()">로그인</button>
-                    <button class="btn">회원가입</button>
+                    <button class="btn" onclick="window.open('register.jsp')">회원가입</button>
                 </div>
             </div>
         </div>

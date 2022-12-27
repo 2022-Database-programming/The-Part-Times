@@ -3,3 +3,4 @@ context.properties
 .metadata/
 target/
 .DS_Store
+.settings/
